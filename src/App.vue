@@ -1,14 +1,12 @@
 <script>
 export default {
-  created () {
-
-
+  created() {
     if (!wx.cloud) {
-      console.error('请使用 2.2.3 或以上的基础库以使用云能力')
+      console.error("请使用 2.2.3 或以上的基础库以使用云能力");
     } else {
       wx.cloud.init({
-        traceUser: true,
-      })
+        traceUser: true
+      });
     }
     // 调用API从本地缓存中获取数据
     /*
@@ -32,11 +30,11 @@ export default {
     //   logs.unshift(Date.now())
     //   mpvue.setStorageSync('logs', logs)
     // }
-  },
+  }
   // log () {
   //   console.log(`log at:${Date.now()}`)
   // }
-}
+};
 </script>
 
 <style>
@@ -56,4 +54,10 @@ export default {
   -webkit-transition: width 2s;
   -o-transition: width 2s;
 } */
+button {
+  border: red 1px solid;
+  width: 80px;
+  height: 30px;
+  font-size: 12px;
+}
 </style>

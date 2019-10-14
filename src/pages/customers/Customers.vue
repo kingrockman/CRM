@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <!-- <div class="list" >
+    <div class="list" >
       <input v-model="cus" type="text" />
       <button @click="cus_search">查找</button>
       <div class="item" @click="cus_update(i)" :key="i" v-for="(item,i) in customers">
@@ -10,13 +10,13 @@
           <p>{{item.tel}}</p>
         </div>
       </div>
-    </div>-->
+    </div>
     <div class="detail">
-      <input v-model="name" type="text" placeholder="名称" />
-      <input v-model="number" type="text" placeholder="编号" />
-      <input v-model="tel" type="text" placeholder="电话" />
-      <input v-model="person" type="text" placeholder="联系人" />
-      <input v-model="address" type="text" placeholder="地址" />
+      <input type="text" placeholder="名称" :value="test" />
+      <!-- <input v-model="number" type="text" placeholder="编号" value="{{number}}" />
+      <input v-model="tel" type="text" placeholder="电话" value="{{tel}}" />
+      <input v-model="person" type="text" placeholder="联系人" value="{{person}}" />
+      <input v-model="address" type="text" placeholder="地址" value="{{address}}" />-->
       <button @click="cus_add">保存</button>
       <button @click="back">取消</button>
     </div>
@@ -24,32 +24,29 @@
 </template>
 
 <script>
-import { query, create ,message} from "../../utils";
+import { read, create, message, setData, getData } from "../../utils";
 export default {
+  created() {
+    this.init();
+     this.test='asd'
+  },
   data() {
     return {
+      mode: "list",
       mycus: "",
       subtitle: "vuejs is good",
       newcus: "",
-      customers: [
-        {
-          number: "KH001",
-          name: "晨希",
-          tel: "1300000",
-          person: "李四",
-          address: "市区"
-        },
-        {
-          number: "KH001",
-          name: "晨希2",
-          tel: "1300000",
-          person: "张三",
-          address: "市区"
-        }
-      ]
+      customers: [],
+      test:123
     };
   },
   methods: {
+    async init() {
+      const res = await read();
+      setData("customers", res.data);
+      const list = getData("customers");
+      this.customers = list;
+    },
     async cus_add() {
       var data = {
         number: this.number,
@@ -59,16 +56,24 @@ export default {
         address: this.address
       };
       const res = await create(data);
-      message('添加成功！')
-      console.log(res)
+      message("添加成功！");
+      console.log(res);
+      this.number = "";
+      this.name = "";
+      this.tel = "";
+      this.person = "";
+      this.address = "";
     },
-    async back(){
+    async back() {
+      this.mode = "list";
     },
-    cus_search() {},
+    cus_search() {
+      this.mode = "detail";
+    },
 
     cus_update(i) {
-      this.mycus = { index: i, data: this.customers[i] };
-      // console.log("正在修改" ,this.mycus);
+      console.log(this.test)
+     
     },
     cus_delete(i) {
       this.customers.splice(i, 1);

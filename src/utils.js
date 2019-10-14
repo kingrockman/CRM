@@ -8,23 +8,12 @@ function message(title) {
     })
 }
 
-function query() {
+function setData(key, data) {
+    wx.setStorageSync(key, data)
+}
 
-    return new Promise((resolve, reject) => {
-        wx.cloud.callFunction({
-            name,
-            data: {
-                type: "query",
-                conn
-            },
-            success: (res) => {
-                resolve(res.result)
-            },
-            fail: (err) => {
-                reject(err)
-            }
-        });
-    })
+function getData(key) {
+    return wx.getStorageSync(key)
 }
 
 function create(data) {
@@ -45,4 +34,21 @@ function create(data) {
     })
 }
 
-export { query, create, message }
+function read() {
+
+    return new Promise((resolve, reject) => {
+        wx.cloud.callFunction({
+            name: 'read',
+            data: {
+                conn
+            },
+            success: (res) => {
+                resolve(res.result)
+            },
+            fail: (err) => {
+                reject(err)
+            }
+        });
+    })
+}
+export { read, create, message, setData, getData }
