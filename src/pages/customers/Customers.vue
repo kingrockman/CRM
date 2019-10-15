@@ -45,8 +45,7 @@ import {
   setData,
   getData
 } from "../../utils";
-export default {
-  
+export default {  
   components: {
     Customerlist
   },
@@ -162,7 +161,6 @@ export default {
   position: fixed;
   bottom: 0;
   right: 10rpx;
-  flex-direction: row;
 }
 .detail{
   font-size: 24rpx;

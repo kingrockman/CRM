@@ -75,4 +75,7 @@ textarea {
   border-bottom: pink solid 1px;
   border-top: pink solid 1px;
 }
+div{
+  font-size: 24rpx;
+}
 </style>
