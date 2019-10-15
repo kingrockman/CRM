@@ -59,5 +59,20 @@ button {
   width: 80px;
   height: 30px;
   font-size: 12px;
+  margin: 20rpx auto;
+}
+input {
+  /* margin: 10rpx 30rpx; */
+  padding: 10rpx;
+  margin-bottom: 10rpx;
+  border-bottom: pink solid 1px;
+  border-top: pink solid 1px;
+}
+textarea {
+  width: 100%;  
+  padding: 10rpx;
+  margin-bottom: 10rpx;
+  border-bottom: pink solid 1px;
+  border-top: pink solid 1px;
 }
 </style>

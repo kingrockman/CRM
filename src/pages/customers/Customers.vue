@@ -16,14 +16,20 @@
       </div>
     </div>
     <div class="detail" v-if="!mode">
+      <p>基本信息：</p>
       <input v-model="id" hidden="true" type="text" placeholder="_id" />
       <input v-model="name" type="text" placeholder="名称" />
       <input v-model="number" hidden="true" type="text" placeholder="编号" />
       <input v-model="tel" type="text" placeholder="电话" />
       <input v-model="person" type="text" placeholder="联系人" />
       <input v-model="address" type="text" placeholder="地址" />
-      <button @click="cus_save">保存</button>
-      <button @click="back">取消</button>
+      <p>合同信息：</p>
+      <p>产品信息：</p>
+
+      <div class="tools">
+        <button @click="cus_save">保存</button>
+        <button @click="back">取消</button>
+      </div>
     </div>
   </div>
 </template>
@@ -40,6 +46,7 @@ import {
   getData
 } from "../../utils";
 export default {
+  
   components: {
     Customerlist
   },
@@ -55,12 +62,13 @@ export default {
       name: "",
       tel: "",
       person: "",
-      address: ""
+      address: "",
+      conn:'customers'
     };
   },
   methods: {
     async init() {
-      const res = await read();
+      const res = await read(this.conn);
       setData("customers", res.data);
       const obj = getData("customers");
       this.customers = obj;
@@ -71,7 +79,12 @@ export default {
 
     cus_add(e) {
       this.toggle();
+      this.id = "";
+      this.number = "";
       this.name = e ? e : "";
+      this.tel = "";
+      this.person = "";
+      this.address = "";
       // console.log(e);
     },
     cus_update(i) {
@@ -103,19 +116,14 @@ export default {
         mask: true
       });
       if (obj._id === "") {
-        const res = await create(obj);
+        const res = await create(this.conn,obj);
         await this.init();
         wx.hideLoading();
-        this.id = "";
-        this.number = "";
-        this.name = "";
-        this.tel = "";
-        this.person = "";
-        this.address = "";
+
         message("添加成功!");
         this.toggle();
       } else {
-        const res = await update(obj);
+        const res = await update(this.conn,obj);
         await this.init();
         wx.hideLoading();
         message("修改成功!");
@@ -129,16 +137,36 @@ export default {
 </script>
 
 <style>
-li.done {
-  text-decoration: line-through;
-  color: red;
-}
-div {
-  /* border: solid red 1px; */
-}
 .customers-list {
-  border-bottom: black solid 1px;
-  margin-bottom: 30rpx;
+  border-bottom: gray solid 1px;
+  padding: 50rpx 40rpx;
+}
+.title {
+  font-size: 32rpx;
+  margin-bottom: 20rpx;
+}
+.subtitle {
+  position: relative;
+  flex-direction: row;
+
+  font-size: 24rpx;
+  color: gray;
+}
+.person {
+  float: left;
+}
+.tel {
+  float: right;
+}
+.tools {
+  position: fixed;
+  bottom: 0;
+  right: 10rpx;
+  flex-direction: row;
+}
+.detail{
+  font-size: 24rpx;
+  
 }
 </style>
 
