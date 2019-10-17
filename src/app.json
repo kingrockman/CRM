@@ -2,7 +2,8 @@
     "pages": [
         "pages/me/main",
         "pages/todolist/main",
-        "pages/customers/main"
+        "pages/customers/main",
+        "pages/login/main"
     ],
     "window": {
         "backgroundTextStyle": "light",

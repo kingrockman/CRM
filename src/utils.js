@@ -34,6 +34,19 @@ function login(conn, data) {
   })
 }
 
+function login() {
+
+  return new Promise((resolve, reject) => {
+    wx.cloud.callFunction({
+      name: 'login',
+      success: res => {
+        resolve(res)
+      }
+    })
+
+  })
+}
+
 function create(conn, data) {
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
