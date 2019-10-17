@@ -16,6 +16,19 @@ function getData(key) {
     return wx.getStorageSync(key)
 }
 
+function login() {
+
+    return new Promise((resolve, reject) => {
+        wx.cloud.callFunction({
+            name: 'login',
+            success: res => {
+                resolve(res)
+            }
+        })
+
+    })
+}
+
 function create(conn, data) {
     return new Promise((resolve, reject) => {
         wx.cloud.callFunction({
@@ -89,6 +102,7 @@ function del(conn) {
     })
 }
 export {
+    login,
     create,
     read,
     update,
