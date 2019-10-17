@@ -1,6 +1,8 @@
 <script>
+import { login, setData } from "./utils";
+
 export default {
-  created() {
+  async created() {
     if (!wx.cloud) {
       console.error("请使用 2.2.3 或以上的基础库以使用云能力");
     } else {
@@ -8,6 +10,7 @@ export default {
         traceUser: true
       });
     }
+
     // 调用API从本地缓存中获取数据
     /*
      * 平台 api 差异的处理方式:  api 方法统一挂载到 mpvue 名称空间, 平台判断通过 mpvuePlatform 特征字符串
@@ -69,13 +72,13 @@ input {
   border-top: pink solid 1px;
 }
 textarea {
-  width: 100%;  
+  width: 100%;
   padding: 10rpx;
   margin-bottom: 10rpx;
   border-bottom: pink solid 1px;
   border-top: pink solid 1px;
 }
-div{
+div {
   font-size: 24rpx;
 }
 </style>
