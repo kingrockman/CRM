@@ -2,11 +2,10 @@
   <div class="container">
     <div class="userinfo" v-if="nickName">
       <img :src="avatarUrl" />
-      <p>{{nickName}}</p>
+      <p>欢迎回来，{{nickName}}</p>
     </div>
     <div class="login" v-if="!nickName">
       <input v-model="userName" type="text" placeholder="用户名" />
-      <!-- <input v-model="phone" type="text" placeholder="" /> -->
       <button @click="login">登陆</button>
     </div>
   </div>
@@ -31,7 +30,9 @@ export default {
       }
     },
     async login() {
+        console.log('login');
       const userInfo = await login("users", this.userName);
+        console.log(userInfo);
       if (userInfo.data.length) {
         // console.log(userInfo);
         setData("userInfo", userInfo.data[0]);
