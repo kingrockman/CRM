@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <h1>办公</h1> -->
     <div class="list" v-if="mode">
       <div @click="toDetail(i)"  class="todos" :key="i" v-for="(todo,i) in todos">
         <div class="header">{{todo.customer}}</div>

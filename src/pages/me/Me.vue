@@ -3,6 +3,7 @@
     <div class="userinfo" v-if="nickName">
       <img :src="avatarUrl" />
       <p>欢迎回来，{{nickName}}</p>
+      <!-- <Todolist></Todolist> -->
     </div>
     <div class="login" v-if="!nickName">
       <input v-model="userName" type="text" placeholder="用户名" />
@@ -11,8 +12,12 @@
   </div>
 </template>
 <script>
+import Todolist from "@/components/Todolist";
 import { login, getData, setData } from "../../utils";
 export default {
+  components: {
+    Todolist
+  },
   created() {
     this.init();
   },
@@ -30,9 +35,9 @@ export default {
       }
     },
     async login() {
-        console.log('login');
+      console.log("login");
       const userInfo = await login("users", this.userName);
-        console.log(userInfo);
+      console.log(userInfo);
       if (userInfo.data.length) {
         // console.log(userInfo);
         setData("userInfo", userInfo.data[0]);

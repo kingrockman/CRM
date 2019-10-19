@@ -87,13 +87,14 @@ function update(conn, data) {
     })
 }
 
-function del(conn) {
+function del(conn, data) {
 
     return new Promise((resolve, reject) => {
         wx.cloud.callFunction({
-            name: 'read',
+            name: 'del',
             data: {
-                conn
+                conn,
+                data
             },
             success: (res) => {
                 resolve(res.result)
