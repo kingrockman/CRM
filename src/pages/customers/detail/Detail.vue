@@ -1,6 +1,6 @@
 <template>
   <div class="contanier">
-    <div class="view">
+    <div v-if="!mode">
       <div class="list">
         <p>基本信息</p>
         <div class="item">
@@ -22,6 +22,9 @@
       <div class="list">
         <p>合同信息</p>
       </div>
+      <div class="tools">
+        <button>修改</button>        
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +36,7 @@ export default {
   },
   data() {
     return {
+      mode:false,
       name: "",
       person: "",
       tel: "",
@@ -45,13 +49,18 @@ export default {
       const res = getData("customers");
       const obj = res[index];
     //   console.log(obj);
-      this.initObj(obj);
+      this.setObj(obj);
     },
-    initObj(o) {
+    setObj(o) {
       this.name = o.name;
       this.person = o.person;
       this.tel = o.tel;
       this.address = o.address;
+    },
+    getObj(){
+      return {
+        data
+      }
     }
   }
 };

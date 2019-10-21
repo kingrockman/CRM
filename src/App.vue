@@ -1,5 +1,5 @@
 <script>
-import { login, setData } from "./utils";
+// import { login, setData } from "./utils";
 
 export default {
   async created() {
@@ -57,7 +57,9 @@ export default {
   -o-transition: width 2s;
 } */
 button {
-  border: red 1px solid;
+  /* border: red 1px solid; */
+  background-color: #27ae60;
+  color: white;
   width: 80px;
   height: 30px;
   font-size: 12px;
@@ -79,5 +81,10 @@ textarea {
 }
 div {
   font-size: 24rpx;
+}
+.tools{
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
 }
 </style>
