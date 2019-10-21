@@ -3,6 +3,8 @@
         "pages/me/main",
         "pages/todolist/main",
         "pages/customers/main",
+        "pages/customers/detail/main",
+
         "pages/login/main"
     ],
     "window": {

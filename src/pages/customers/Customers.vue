@@ -45,7 +45,7 @@ import {
   setData,
   getData
 } from "../../utils";
-export default {  
+export default {
   components: {
     Customerlist
   },
@@ -62,7 +62,7 @@ export default {
       tel: "",
       person: "",
       address: "",
-      conn:'customers'
+      conn: "customers"
     };
   },
   methods: {
@@ -87,14 +87,18 @@ export default {
       // console.log(e);
     },
     cus_update(i) {
-      const obj = this.customers[i];
-      this.id = obj._id;
-      this.number = obj.number;
-      this.name = obj.name;
-      this.tel = obj.tel;
-      this.person = obj.person;
-      this.address = obj.address;
-      this.toggle();
+      // const obj = this.customers[i];
+      // this.id = obj._id;
+      // this.number = obj.number;
+      // this.name = obj.name;
+      // this.tel = obj.tel;
+      // this.person = obj.person;
+      // this.address = obj.address;
+      // this.toggle();
+      wx.navigateTo({
+        url: "detail/main?index="+i
+       
+      });
     },
     cus_delete(i) {},
     async cus_save() {
@@ -115,14 +119,13 @@ export default {
         mask: true
       });
       if (obj._id === "") {
-        const res = await create(this.conn,obj);
+        const res = await create(this.conn, obj);
         await this.init();
         wx.hideLoading();
-
         message("添加成功!");
         this.toggle();
       } else {
-        const res = await update(this.conn,obj);
+        const res = await update(this.conn, obj);
         await this.init();
         wx.hideLoading();
         message("修改成功!");
@@ -162,9 +165,8 @@ export default {
   bottom: 0;
   right: 10rpx;
 }
-.detail{
+.detail {
   font-size: 24rpx;
-  
 }
 </style>
 
