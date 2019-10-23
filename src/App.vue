@@ -58,7 +58,7 @@ export default {
 } */
 button {
   /* border: red 1px solid; */
-  background-color: #27ae60;
+  background-color:#27ae60;
   color: white;
   width: 80px;
   height: 30px;

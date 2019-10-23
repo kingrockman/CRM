@@ -1,10 +1,11 @@
 <template>
   <div class="container">
     <div class="list" v-if="mode">
-      <Customerlist @cus_add="cus_add"></Customerlist>
+      <!-- <Customerlist @cus_add="cus_add"></Customerlist> -->
+
       <div
         class="customers-list"
-        @click="cus_update(index)"
+        @click="toDetail(index)"
         :key="index"
         v-for="(cus,index) in customers"
       >
@@ -13,6 +14,9 @@
           <div class="person">{{cus.person}}</div>
           <div class="tel">{{cus.tel}}</div>
         </div>
+      </div>
+      <div class="tools">
+        <button @click="toDetail(-1)">新增客户</button>
       </div>
     </div>
     <div class="detail" v-if="!mode">
@@ -49,8 +53,12 @@ export default {
   components: {
     Customerlist
   },
-  created() {
+  onReady() {
     this.init();
+  },
+  onShow(){
+    this.init();
+
   },
   data() {
     return {
@@ -86,20 +94,12 @@ export default {
       this.address = "";
       // console.log(e);
     },
-    cus_update(i) {
-      // const obj = this.customers[i];
-      // this.id = obj._id;
-      // this.number = obj.number;
-      // this.name = obj.name;
-      // this.tel = obj.tel;
-      // this.person = obj.person;
-      // this.address = obj.address;
-      // this.toggle();
+    toDetail(i) {      
       wx.navigateTo({
         url: "detail/main?index="+i
-       
       });
     },
+    
     cus_delete(i) {},
     async cus_save() {
       if (this.name == "") {

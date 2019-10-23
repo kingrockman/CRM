@@ -5,6 +5,21 @@ function message(title) {
     })
 }
 
+function modal(content) {
+    return new Promise((resolve, reject) => {
+        wx.showModal({
+            content,
+            success: res => {
+                if (res.confirm) {
+                    resolve(true)
+                } else if (res.cancel) {
+                    resolve(false)
+                }
+            }
+        });
+    })
+}
+
 function setData(key, data) {
     wx.setStorageSync(key, data)
 }
@@ -112,6 +127,7 @@ export {
     update,
     del,
     message,
+    modal,
     setData,
     getData
 }
