@@ -1,24 +1,16 @@
 <template>
   <div class="container">
-    <div
-      @click="toDetail(i)"
-      :key="i"
-      v-for="(arr,i) in arrs"
-    >
+    <div class="list" @click="toDetail(i)" :key="i" v-for="(arr,i) in arrs">
       <div class="title">{{arr.name}}</div>
       <div class="subtitle">
-        <div class="person">{{arr.person}}</div>
+        <div class="person">{{arr.createdate}}</div>
         <div class="tel">{{arr.tel}}</div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import {
-  read,
-  setData,
-  getData
-} from "../utils"
+import { read, setData, getData } from "../utils";
 export default {
   onReady() {
     this.init();
@@ -26,10 +18,11 @@ export default {
   onShow() {
     this.init();
   },
+  
   data() {
     return {
-      conn:"products",
-      arrs:"",
+      conn: "products",
+      arrs: ""
     };
   },
   methods: {
@@ -38,16 +31,15 @@ export default {
       setData(this.conn, res.data);
       const obj = getData(this.conn);
       this.arrs = obj;
-      console.log(obj)
+      // console.log(obj);
     },
-    toDetail(i) {      
+    toDetail(i) {
       wx.navigateTo({
-        url: "../customers/detail/main?index="+i
+        url: "../../product/detail/main?index=" + i
       });
-    },
+    }
   }
 };
 </script>
 <style>
-
 </style>

@@ -1,10 +1,10 @@
 {
     "pages": [
         "pages/customers/main",
-        "pages/product/main",
         "pages/me/main",
         "pages/todolist/main",
         "pages/customers/detail/main",
+        "pages/product/main",
         "pages/login/main"
 
     ],

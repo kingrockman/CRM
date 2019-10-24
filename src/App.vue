@@ -65,19 +65,17 @@ button {
   font-size: 12px;
   margin: 20rpx auto;
 }
-input {
-  /* margin: 10rpx 30rpx; */
+/* input {
   padding: 10rpx;
   margin-bottom: 10rpx;
   border-bottom: pink solid 1px;
   border-top: pink solid 1px;
-}
+} */
 textarea {
   width: 100%;
-  padding: 10rpx;
-  margin-bottom: 10rpx;
-  border-bottom: pink solid 1px;
-  border-top: pink solid 1px;
+  position: absolute;
+  display: unset;
+  border: red solid 1px;
 }
 div {
   font-size: 24rpx;
