@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <div class="list" v-if="mode">
-      <!-- <Customerlist @cus_add="cus_add"></Customerlist> -->
+    <div class="list">
+      <Customerlist></Customerlist>
 
-      <div
+      <!-- <div
         class="customers-list"
         @click="toDetail(index)"
         :key="index"
@@ -14,25 +14,9 @@
           <div class="person">{{cus.person}}</div>
           <div class="tel">{{cus.tel}}</div>
         </div>
-      </div>
+      </div> -->
       <div class="tools">
         <button @click="toDetail(-1)">新增客户</button>
-      </div>
-    </div>
-    <div class="detail" v-if="!mode">
-      <p>基本信息：</p>
-      <input v-model="id" hidden="true" type="text" placeholder="_id" />
-      <input v-model="name" type="text" placeholder="名称" />
-      <input v-model="number" hidden="true" type="text" placeholder="编号" />
-      <input v-model="tel" type="text" placeholder="电话" />
-      <input v-model="person" type="text" placeholder="联系人" />
-      <input v-model="address" type="text" placeholder="地址" />
-      <p>合同信息：</p>
-      <p>产品信息：</p>
-
-      <div class="tools">
-        <button @click="cus_save">保存</button>
-        <button @click="back">取消</button>
       </div>
     </div>
   </div>
@@ -53,87 +37,86 @@ export default {
   components: {
     Customerlist
   },
-  onReady() {
-    this.init();
-  },
-  onShow(){
-    this.init();
+  // onReady() {
+  //   this.init();
+  // },
+  // onShow(){
+  //   this.init();
 
-  },
+  // },
   data() {
     return {
-      mode: true,
-      customers: "",
-      id: "",
-      number: "",
-      name: "",
-      tel: "",
-      person: "",
-      address: "",
-      conn: "customers"
+      // mode: true,
+      // customers: "",
+      // id: "",
+      // number: "",
+      // name: "",
+      // tel: "",
+      // person: "",
+      // address: "",
+      // conn: "customers"
     };
   },
   methods: {
-    async init() {
-      const res = await read(this.conn);
-      setData("customers", res.data);
-      const obj = getData("customers");
-      this.customers = obj;
-    },
-    async back() {
-      this.toggle();
-    },
+    // async init() {
+    //   const res = await read(this.conn);
+    //   setData("customers", res.data);
+    //   const obj = getData("customers");
+    //   this.customers = obj;
+    // },
+    // async back() {
+    //   this.toggle();
+    // },
 
-    cus_add(e) {
-      this.toggle();
-      this.id = "";
-      this.number = "";
-      this.name = e ? e : "";
-      this.tel = "";
-      this.person = "";
-      this.address = "";
-      // console.log(e);
-    },
+    // cus_add(e) {
+    //   this.toggle();
+    //   this.id = "";
+    //   this.number = "";
+    //   this.name = e ? e : "";
+    //   this.tel = "";
+    //   this.person = "";
+    //   this.address = "";
+    // },
     toDetail(i) {      
       wx.navigateTo({
         url: "detail/main?index="+i
       });
     },
     
-    cus_delete(i) {},
-    async cus_save() {
-      if (this.name == "") {
-        message("请输入客户名称");
-        return;
-      }
-      const obj = {
-        _id: this.id,
-        number: this.number,
-        name: this.name,
-        tel: this.tel,
-        person: this.person,
-        address: this.address
-      };
-      wx.showLoading({
-        title: "加载中",
-        mask: true
-      });
-      if (obj._id === "") {
-        const res = await create(this.conn, obj);
-        await this.init();
-        wx.hideLoading();
-        message("添加成功!");
-        this.toggle();
-      } else {
-        const res = await update(this.conn, obj);
-        await this.init();
-        wx.hideLoading();
-        message("修改成功!");
-      }
-    },
-    toggle() {
-      this.mode = !this.mode;
-    }
+    // cus_delete(i) {},
+    // async cus_save() {
+    //   if (this.name == "") {
+    //     message("请输入客户名称");
+    //     return;
+    //   }
+    //   const obj = {
+    //     _id: this.id,
+    //     number: this.number,
+    //     name: this.name,
+    //     tel: this.tel,
+    //     person: this.person,
+    //     address: this.address
+    //   };
+    //   wx.showLoading({
+    //     title: "加载中",
+    //     mask: true
+    //   });
+    //   if (obj._id === "") {
+    //     const res = await create(this.conn, obj);
+    //     await this.init();
+    //     wx.hideLoading();
+    //     message("添加成功!");
+    //     this.toggle();
+    //   } else {
+    //     const res = await update(this.conn, obj);
+    //     await this.init();
+    //     wx.hideLoading();
+    //     message("修改成功!");
+    //   }
+    // },
+    // toggle() {
+    //   this.mode = !this.mode;
+    // }
   }
 };
 </script>

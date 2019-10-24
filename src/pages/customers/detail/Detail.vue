@@ -16,12 +16,17 @@
           <div class="value">{{person}}</div>
         </div>
         <div class="item">
+          <div class="key">手机</div>
+          <div class="value">{{tel}}</div>
+        </div>
+        <div class="item">
           <div class="key">地址</div>
           <div class="value">{{address}}</div>
         </div>
       </div>
       <div class="list">
         <p>产品信息</p>
+        <Productlist></Productlist>
       </div>
       <div class="list">
         <p>合同信息</p>
@@ -32,6 +37,7 @@
       </div>
     </div>
     <div v-if="mode">
+      <p>基本信息</p>
       <input v-model="id" hidden="0" type="text" />
       <input v-model="name" type="text" placeholder="客户名称" />
       <input v-model="person" type="text" placeholder="联系人" />
@@ -48,9 +54,13 @@
 </template>
 <script>
 import { getData, create, update, del, modal } from "@/utils";
+import  Productlist  from "@/components/Productlist";
 export default {
   onLoad() {
     this.init();
+  },
+  components: {
+    Productlist
   },
   data() {
     return {
@@ -67,7 +77,6 @@ export default {
     init() {
       const index = this.$root.$mp.query.index;
       if (index == -1) {
-        console.log("新增模式");
         this.cancel = false;
         this.mode = true;
         this.id = "";
@@ -77,7 +86,6 @@ export default {
         this.address = "";
       } else {
         this.mode = false;
-        console.log("修改模式");
         const res = getData("customers");
         this.setObj(res[index]);
       }
@@ -107,21 +115,15 @@ export default {
       const obj = this.getObj();
 
       if (this.id == "") {
-        console.log("新增", obj);
         const res = await create("customers", obj);
         obj.id = res._id;
         this.setObj(obj);
-        // this.toggle()
       } else {
-        console.log("修改", obj);
         const res = await update("customers", obj);
-        // console.log(res)
-        // this.toggle()
       }
       this.toggle();
     },
     async toDel() {
-      console.log(this.id);
       if (await modal("删除吗？")) {
         const r = await del("customers", this.id);
         if (r.stats.removed === 1) {

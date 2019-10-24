@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    
     <div
-      class="customers-list"
       @click="toDetail(i)"
       :key="i"
       v-for="(arr,i) in arrs"
@@ -30,7 +28,7 @@ export default {
   },
   data() {
     return {
-      conn:"customers",
+      conn:"products",
       arrs:"",
     };
   },
@@ -40,7 +38,7 @@ export default {
       setData(this.conn, res.data);
       const obj = getData(this.conn);
       this.arrs = obj;
-      // console.log(obj)
+      console.log(obj)
     },
     toDetail(i) {      
       wx.navigateTo({
