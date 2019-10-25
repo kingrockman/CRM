@@ -2,23 +2,23 @@
   <div class="contanier">
     <div v-if="!mode">
       <div class="list">
-        <p>基本信息</p>
-        <div class="item" hidden="0">
+        <p>{{cus_name}}</p>
+        <div class="item">
           <div class="key">_id</div>
           <div class="value">
-            <textarea  v-model="id" type="text" />
+            <input v-model="id" type="text" />
           </div>
         </div>
-        <div class="item">
+        <div class="item"  hidden="" >
           <div class="key">所属企业</div>
           <div class="value">
-            <textarea v-model="cus_id" type="text" />
+            <input v-model="cus_id" type="text"/>
           </div>
         </div>
         <div class="item">
           <div class="key">序列号</div>
           <div class="value">
-            <textarea v-model="serial" type="text" />
+            <input v-model="serial" type="text" />
           </div>
         </div>
         <div class="item">
@@ -36,27 +36,14 @@
       </div>
       <div class="tools">
         <button class="danger" @click="toDel">删除</button>
-        <button @click="toAlter">修改</button>
-      </div>
-    </div>
-    <div v-if="mode">
-      <p>基本信息</p>
-      <input v-model="id" hidden="0" type="text" />
-      <input v-model="name" type="text" placeholder="客户名称" />
-      <input v-model="person" type="text" placeholder="联系人" />
-      <input v-model="tel" type="text" placeholder="电话" />
-      <input v-model="address" type="text" placeholder="地址" />
-      <div class="tools">
         <button @click="toSave">保存</button>
-        <div v-if="cancel">
-          <button @click="toggle">取消</button>
-        </div>
       </div>
     </div>
+    
   </div>
 </template>
 <script>
-import { getData, create, update, del, modal } from "@/utils";
+import { getData, create, update, del, message, modal,findData } from "@/utils";
 export default {
   onLoad() {
     this.init();
@@ -66,6 +53,8 @@ export default {
     return {
       cancel: false,
       mode: false,
+      conn: "products",
+      cus_name:"",
       id: "",
       name: "",
       cus_id: "",
@@ -81,7 +70,8 @@ export default {
   methods: {
     init() {
       const index = this.$root.$mp.query.index;
-      if (index == -1) {
+      console.log("打开的产品ID：",index)
+      if (index == "") {
         this.cancel = false;
         this.mode = true;
         this.id = "";
@@ -91,15 +81,15 @@ export default {
         this.address = "";
       } else {
         this.mode = false;
-        const res = getData("products");
-        this.setObj(res[index]);
-        console.log(res[index]);
+        const res = getData(this.conn);
+        this.setObj(res.filter(v=>v._id==index)[0]);
       }
     },
     setObj(o) {
       this.id = o._id;
       this.name = o.name;
       this.cus_id = o.cus_id;
+      this.cus_name=findData(getData("customers"),o.cus_id)
       this.cdkey = o.cdkey;
       this.tel = o.tel;
       this.server = o.server;
@@ -130,21 +120,23 @@ export default {
     async toSave() {
       const obj = this.getObj();
       console.log(obj);
-      // if (this.id == "") {
-      //   const res = await create("customers", obj);
-      //   obj.id = res._id;
-      //   this.setObj(obj);
-      // } else {
-      //   const res = await update("customers", obj);
-      // }
+      if (this.id == "") {
+        const res = await create(this.conn, obj);
+        obj.id = res._id;
+        this.setObj(obj);
+      } else {
+        const res = await update(this.conn, obj);
+        message("修改成功！");
+      }
       // this.toggle();
     },
     async toDel() {
       if (await modal("删除吗？")) {
-        const r = await del("customers", this.id);
-        if (r.stats.removed === 1) {
-          wx.switchTab({
-            url: "../main"
+        const r = await del(this.conn, this.id);
+        if (r) {
+          message("删除成功！");
+          wx.navigateBack({
+            delta: 1
           });
         }
       }
@@ -174,9 +166,7 @@ export default {
 .key {
   width: 15%;
 }
-.value{
+.value {
   width: 75%;
-border: blue solid 1px  
-  
 }
 </style>

@@ -26,7 +26,7 @@
       </div>
       <div class="list">
         <p>产品信息</p>
-        <Productlist></Productlist>
+        <Productlist :id="id"></Productlist>
       </div>
       <div class="list">
         <p>合同信息</p>
@@ -56,7 +56,10 @@
 import { getData, create, update, del, modal } from "@/utils";
 import  Productlist  from "@/components/Productlist";
 export default {
-  onLoad() {
+  onReady() {
+    this.init();
+  },
+  onShow() {
     this.init();
   },
   components: {

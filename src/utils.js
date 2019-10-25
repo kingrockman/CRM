@@ -1,8 +1,28 @@
+function findData(a, b) {
+    // console.log(a, b)
+
+    for (let i = 0; i < a.length; i++) {
+        if (a[i]._id == b) {
+            return a[i].name
+        }
+    }
+}
+
 function message(title) {
     wx.showToast({
-        title: title,
+        title,
         mask: true
     })
+}
+
+function show() {
+    wx.showLoading({
+        title: "玩命加载中..."
+    });
+}
+
+function hide() {
+    wx.hideLoading()
 }
 
 function modal(content) {
@@ -65,12 +85,13 @@ function create(conn, data) {
     })
 }
 
-function read(conn) {
+function read(conn, data) {
 
     return new Promise((resolve, reject) => {
         wx.cloud.callFunction({
             name: 'read',
             data: {
+                data,
                 conn
             },
             success: (res) => {
@@ -121,12 +142,15 @@ function del(conn, data) {
     })
 }
 export {
+    findData,
     login,
     create,
     read,
     update,
     del,
     message,
+    show,
+    hide,
     modal,
     setData,
     getData

@@ -1,6 +1,5 @@
 <template>
-  <div class="container">
-    
+  <div class="container">    
     <div
       class="customers-list"
       @click="toDetail(i)"
@@ -40,7 +39,6 @@ export default {
       setData(this.conn, res.data);
       const obj = getData(this.conn);
       this.arrs = obj;
-      // console.log(obj)
     },
     toDetail(i) {      
       wx.navigateTo({

@@ -2,62 +2,54 @@
   <div class="container">
     <div class="list">
       <Customerlist></Customerlist>
-
-      <!-- <div
-        class="customers-list"
-        @click="toDetail(index)"
-        :key="index"
-        v-for="(cus,index) in customers"
-      >
-        <div class="title">{{cus.name}}</div>
-        <div class="subtitle">
-          <div class="person">{{cus.person}}</div>
-          <div class="tel">{{cus.tel}}</div>
-        </div>
-      </div> -->
       <div class="tools">
         <button @click="toDetail(-1)">新增客户</button>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import Customerlist from "@/components/Customerlist";
-import {
-  read,
-  create,
-  update,
-  del,
-  message,
-  setData,
-  getData
-} from "../../utils";
+// import {
+//   read,
+//   create,
+//   update,
+//   del,
+//   message,
+//   setData,
+//   getData
+// } from "../../utils";
 export default {
   components: {
     Customerlist
   },
-  // onReady() {
-  //   this.init();
-  // },
-  // onShow(){
-  //   this.init();
-
-  // },
-  data() {
-    return {
-      // mode: true,
-      // customers: "",
-      // id: "",
-      // number: "",
-      // name: "",
-      // tel: "",
-      // person: "",
-      // address: "",
-      // conn: "customers"
-    };
-  },
   methods: {
+    toDetail(i) {
+      wx.navigateTo({
+        url: "detail/main?index=" + i
+      });
+    }
+
+    // onReady() {
+    //   this.init();
+    // },
+    // onShow(){
+    //   this.init();
+    // },
+    // data() {
+    //   return {
+    //     // mode: true,
+    //     // customers: "",
+    //     // id: "",
+    //     // number: "",
+    //     // name: "",
+    //     // tel: "",
+    //     // person: "",
+    //     // address: "",
+    //     // conn: "customers"
+    //   };
+    // },
+
     // async init() {
     //   const res = await read(this.conn);
     //   setData("customers", res.data);
@@ -67,7 +59,6 @@ export default {
     // async back() {
     //   this.toggle();
     // },
-
     // cus_add(e) {
     //   this.toggle();
     //   this.id = "";
@@ -77,12 +68,6 @@ export default {
     //   this.person = "";
     //   this.address = "";
     // },
-    toDetail(i) {      
-      wx.navigateTo({
-        url: "detail/main?index="+i
-      });
-    },
-    
     // cus_delete(i) {},
     // async cus_save() {
     //   if (this.name == "") {

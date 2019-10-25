@@ -7,8 +7,10 @@ cloud.init()
 exports.main = async(event) => {
     const db = cloud.database();
     const conn = event.conn
+    const data = event.data
+        // return data
     try {
-        return db.collection(conn).get()
+        return db.collection(conn).where(data).get()
 
     } catch (e) {}
 }
