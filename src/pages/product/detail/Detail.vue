@@ -33,6 +33,18 @@
             <input v-model="cdkey" type="text" />
           </div>
         </div>
+        <div class="item">
+          <div class="key">购买日期</div>
+          <div class="value">
+            <input v-model="createdate" type="text" />
+          </div>
+        </div>
+        <div class="item">
+          <div class="key"></div>
+          <div class="value">
+            <input v-model="cdkey" type="text" />
+          </div>
+        </div>
       </div>
       <div class="tools">
         <button class="danger" @click="toDel">删除</button>

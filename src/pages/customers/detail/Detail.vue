@@ -28,9 +28,9 @@
         <p>产品信息</p>
         <Productlist :id="id"></Productlist>
       </div>
-      <div class="list">
+      <!-- <div class="list">
         <p>合同信息</p>
-      </div>
+      </div> -->
       <div class="tools">
         <button class="danger" @click="toDel">删除</button>
         <button @click="toAlter">修改</button>
