@@ -28,9 +28,7 @@
         <p>产品信息</p>
         <Productlist :id="id"></Productlist>
       </div>
-      <!-- <div class="list">
-        <p>合同信息</p>
-      </div> -->
+     
       <div class="tools">
         <button class="danger" @click="toDel">删除</button>
         <button @click="toAlter">修改</button>
@@ -54,7 +52,7 @@
 </template>
 <script>
 import { getData, create, update, del, modal } from "@/utils";
-import  Productlist  from "@/components/Productlist";
+import Productlist from "@/components/Productlist";
 export default {
   onReady() {
     this.init();
@@ -90,7 +88,13 @@ export default {
       } else {
         this.mode = false;
         const res = getData("customers");
-        this.setObj(res[index]);
+        var res1
+        for (let i = 0; i < res.length; i++) {
+          if (res[i]._id == index) {
+             res1 = res[i];
+          }
+        }
+        this.setObj(res1);
       }
     },
     setObj(o) {
@@ -116,7 +120,6 @@ export default {
     },
     async toSave() {
       const obj = this.getObj();
-
       if (this.id == "") {
         const res = await create("customers", obj);
         obj.id = res._id;
@@ -157,8 +160,12 @@ export default {
   display: flex;
   flex-direction: row;
   margin-bottom: 10rpx;
+
 }
 .key {
   width: 15%;
+}
+.value{
+  width: 100%;
 }
 </style>

@@ -36,9 +36,9 @@ export default {
       this.arrs = obj.filter(v=>v.cus_id==this.id);
       hide();     
     },
-    toDetail(i) {
+    toDetail(id) {
       wx.navigateTo({
-        url: "../../product/detail/main?index=" + i
+        url: "../../product/detail/main?id=" + id
       });
     }
   }

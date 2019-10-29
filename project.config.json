@@ -32,6 +32,10 @@
 			"currentL": -1,
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 0,
 			"list": [
@@ -39,7 +43,7 @@
 					"id": 0,
 					"name": "pages/customers/detail/main",
 					"pathName": "pages/customers/detail/main",
-					"query": "index=0",
+					"query": "index=G0OJcaiohDVM6YnThXJ9K9y6Z9cBpS38NPutOTLE5RHE48BD",
 					"scene": null
 				}
 			]

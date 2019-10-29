@@ -81,9 +81,9 @@ export default {
   },
   methods: {
     init() {
-      const index = this.$root.$mp.query.index;
-      console.log("打开的产品ID：",index)
-      if (index == "") {
+      const id = this.$root.$mp.query.id;
+      console.log("打开的产品ID：",id)
+      if (id == "") {
         this.cancel = false;
         this.mode = true;
         this.id = "";
@@ -94,7 +94,7 @@ export default {
       } else {
         this.mode = false;
         const res = getData(this.conn);
-        this.setObj(res.filter(v=>v._id==index)[0]);
+        this.setObj(res.filter(v=>v._id==id)[0]);
       }
     },
     setObj(o) {
@@ -131,7 +131,7 @@ export default {
     },
     async toSave() {
       const obj = this.getObj();
-      console.log(obj);
+      // console.log(obj);
       if (this.id == "") {
         const res = await create(this.conn, obj);
         obj.id = res._id;

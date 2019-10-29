@@ -2,7 +2,7 @@
   <div class="container">
     <input @keyup="toSearch" v-model="search" type="text" placeholder="输入客户名称" />
     <button @click="toSearch">查询</button>
-    <div class="customers-list" @click="toDetail(i)" :key="i" v-for="(arr,i) in arrs">
+    <div class="customers-list" @click="toDetail(arr._id)" :key="i" v-for="(arr,i) in arrs">
       <div class="title">{{arr.name}}</div>
       <div class="subtitle">
         <div class="person">{{arr.person}}</div>
@@ -33,6 +33,7 @@ export default {
       setData(this.conn, res.data);
       const obj = getData(this.conn);
       this.arrs = obj;
+      this.toSearch();
     },
     toDetail(i) {
       wx.navigateTo({
@@ -41,22 +42,40 @@ export default {
     },
     toSearch() {
       const obj = getData(this.conn);
-      this.arrs=obj.filter(v=>v.name==this.search)
-      // var reg =new RegExp(this.search)
-      // console.log(
-      //   obj.filter(v => (
-          
-      //     v.name == "重工"
-      //   ))
-      // );
-      // // var reg = new RegExp(this.search);
-      // // //如果字符串中不包含目标字符会返回-1
-      // // if (str.match(reg)) {
-      // //   //匹配成功do something
-      // // }
+      this.arrs = obj.filter(v => {
+        var reg = new RegExp(this.search);
+        if (v.name.match(reg)) {
+          return v.name;
+        }
+      });
     }
   }
 };
 </script>
 <style>
+input{
+  font-size: 32rpx;
+  margin: 20rpx;
+  padding: 20rpx;
+  border: solid pink 1px;
+}
+.subtitle {
+  position: relative;
+  flex-direction: row;
+  font-size: 24rpx;
+  color: gray;
+}
+.subtitle div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.person {
+  width: 48%;
+  float: left;
+}
+.tel {
+  width: 48%;
+  float: right;
+}
 </style>
