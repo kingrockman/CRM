@@ -31,7 +31,7 @@ export default {
     async init() {
       show()
       const res = await read(this.conn);
-      setData(this.conn, res.data);
+      setData(this.conn, res);
       const obj = getData(this.conn);
       this.arrs = obj.filter(v=>v.cus_id==this.id);
       hide();     

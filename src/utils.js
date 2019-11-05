@@ -16,13 +16,17 @@ function message(title) {
 }
 
 function show() {
-    wx.showLoading({
-        title: "玩命加载中..."
-    });
+    // console.log('utils/show')
+    // wx.showLoading({
+    //     title: "玩命加载中..."
+    // });
+    wx.showNavigationBarLoading()
 }
 
 function hide() {
-    wx.hideLoading()
+    // console.log('utils/hide')
+    // wx.hideLoading()
+    wx.hideNavigationBarLoading()
 }
 
 function modal(content) {

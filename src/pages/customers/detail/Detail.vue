@@ -2,9 +2,9 @@
   <div class="contanier">
     <div v-if="!mode">
       <div class="list">
-        <p>基本信息</p>
-        <div class="item" hidden="0">
-          <div class="key">_id</div>
+        <h4>基本信息</h4>
+        <div class="item">
+          <div class="key">ID</div>
           <div class="value">{{id}}</div>
         </div>
         <div class="item">
@@ -20,27 +20,62 @@
           <div class="value">{{tel}}</div>
         </div>
         <div class="item">
+          <div class="key">QQ</div>
+          <div class="value">{{address}}</div>
+        </div>
+        <div class="item">
+          <div class="key">邮箱</div>
+          <div class="value">{{address}}</div>
+        </div>
+        <div class="item">
           <div class="key">地址</div>
           <div class="value">{{address}}</div>
         </div>
       </div>
       <div class="list">
-        <p>产品信息</p>
+        <h4>产品信息</h4>
         <Productlist :id="id"></Productlist>
       </div>
-     
+
       <div class="tools">
         <button class="danger" @click="toDel">删除</button>
         <button @click="toAlter">修改</button>
       </div>
     </div>
     <div v-if="mode">
-      <p>基本信息</p>
-      <input v-model="id" hidden="0" type="text" />
-      <input v-model="name" type="text" placeholder="客户名称" />
-      <input v-model="person" type="text" placeholder="联系人" />
-      <input v-model="tel" type="text" placeholder="电话" />
-      <input v-model="address" type="text" placeholder="地址" />
+      <div class="list">
+        <p>基本信息</p>
+        <div class="item">
+          <div class="key">ID</div>
+          <div class="value">
+            <input v-model="id" type="text" />
+          </div>
+        </div>
+        <div class="item">
+          <div class="key">客户名称</div>
+          <div class="value">
+        <input v-model="name" type="text" placeholder="客户名称" />
+          </div>
+        </div>
+        <div class="item">
+          <div class="key">联系人</div>
+          <div class="value">
+        <input v-model="person" type="text" placeholder="联系人" />
+          </div>
+        </div>
+        <div class="item">
+          <div class="key">电话</div>
+          <div class="value">
+        <input v-model="tel" type="text" placeholder="电话" />
+          </div>
+        </div>
+        <div class="item">
+          <div class="key">地址</div>
+          <div class="value">
+        <input v-model="address" type="text" placeholder="地址" />
+          </div>
+        </div>
+      </div>
       <div class="tools">
         <button @click="toSave">保存</button>
         <div v-if="cancel">
@@ -88,10 +123,10 @@ export default {
       } else {
         this.mode = false;
         const res = getData("customers");
-        var res1
+        var res1;
         for (let i = 0; i < res.length; i++) {
           if (res[i]._id == index) {
-             res1 = res[i];
+            res1 = res[i];
           }
         }
         this.setObj(res1);
@@ -160,12 +195,17 @@ export default {
   display: flex;
   flex-direction: row;
   margin-bottom: 10rpx;
-
 }
 .key {
-  width: 15%;
+  width: 20%;
 }
-.value{
-  width: 100%;
+.value {
+  width: 100%; 
+}
+input {
+  
+  overflow: hidden;
+  white-space:inherit;
+  text-overflow: ellipsis;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="list" v-if="mode">
-      <div @click="toDetail(i)"  class="todos" :key="i" v-for="(todo,i) in todos">
+      <div @click="toDetail(i)" class="todos" :key="i" v-for="(todo,i) in todos">
         <div class="header">{{todo.customer}}</div>
         <div class="body">{{todo.description}}</div>
         <div class="footer">{{todo.content}}</div>
@@ -16,7 +16,7 @@
       <input v-model="customer" type="text" placeholder="客户名称" />
       <input v-model="description" type="text" placeholder="请求描述" />
       <textarea v-model="content" type="text" placeholder="内容" />
-      <input v-model="done" type="checkbox" >
+      <input v-model="done" type="checkbox" />
 
       <div class="tools">
         <button @click="toSave">保存</button>
@@ -34,10 +34,12 @@ import {
   del,
   setData,
   getData,
-  message
+  message,
+  show,
+  hide
 } from "../../utils";
 export default {
-  created() {
+  onLoad() {
     this.init();
   },
   components: {
@@ -56,12 +58,10 @@ export default {
   },
   methods: {
     async init() {
-      wx.showLoading({
-        title:'正在加载...'
-      })
+      show();
       const res = await read(this.conn);
-      wx.hideLoading()
-      setData("todos", res.data);
+      hide();
+      setData("todos", res);
       this.todos = getData("todos");
       // console.log(res);
     },
@@ -71,8 +71,8 @@ export default {
         return;
       }
       wx.showLoading({
-        title:'正在加载...'
-      })
+        title: "正在加载..."
+      });
       const obj = {
         _id: this.id,
         customer: this.customer,
@@ -96,12 +96,12 @@ export default {
       this.toggle();
     },
     toDetail(i) {
-      this.toggle()
-      const obj=this.todos[i];
-      this.id=obj._id
-      this.customer=obj.customer
-      this.description=obj.description
-      this.content=obj.content
+      this.toggle();
+      const obj = this.todos[i];
+      this.id = obj._id;
+      this.customer = obj.customer;
+      this.description = obj.description;
+      this.content = obj.content;
     },
     toBack() {
       this.toggle();

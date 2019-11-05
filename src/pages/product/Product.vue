@@ -10,6 +10,7 @@
 </template>
 
 <script>
+
 import Productlist from "@/components/Productlist";
 import {
   read,

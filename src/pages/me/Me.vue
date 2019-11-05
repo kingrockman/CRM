@@ -18,7 +18,7 @@ export default {
   components: {
     Todolist
   },
-  created() {
+  onLoad() {
     this.init();
   },
   data() {
@@ -35,9 +35,9 @@ export default {
       }
     },
     async login() {
-      console.log("login");
+      // console.log("login");
       const userInfo = await login("users", this.userName);
-      console.log(userInfo);
+      // console.log(userInfo);
       if (userInfo.data.length) {
         // console.log(userInfo);
         setData("userInfo", userInfo.data[0]);

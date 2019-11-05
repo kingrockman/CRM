@@ -1,10 +1,12 @@
 {
     "pages": [
         "pages/customers/main",
+        "pages/test/main",
         "pages/me/main",
         "pages/todolist/main",
         "pages/customers/detail/main",
         "pages/product/main",
+        "pages/product/detail/main",
         "pages/login/main"
 
     ],
@@ -16,19 +18,13 @@
     },
     "tabBar": {
         "list": [{
-                "pagePath": "pages/todolist/main",
-                "text": "待办",
-                "iconPath": "static/tabs/home.png",
-                "selectedIconPath": "static/tabs/home-active.png"
-            },
-            {
                 "pagePath": "pages/customers/main",
                 "text": "客户",
                 "iconPath": "static/tabs/home.png",
                 "selectedIconPath": "static/tabs/home-active.png"
             },
             {
-                "pagePath": "pages/me/main",
+                "pagePath": "pages/customers/main",
                 "text": "我",
                 "iconPath": "static/tabs/orders.png",
                 "selectedIconPath": "static/tabs/orders-active.png"
