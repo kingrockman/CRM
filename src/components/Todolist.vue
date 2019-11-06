@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import { getData, setData } from "../utils";
+import { getData, setData, create, read } from "../utils";
 export default {
   created() {
     this.init();
@@ -22,9 +22,11 @@ export default {
     };
   },
   methods: {
-    init() {
+    async init() {
+      const res =await read("workPoints")
+      console.log(res)      
       this.workPoints = getData("workPoints");
-      console.log(this.workPoints);
+      // console.log(this.workPoints);
       if (!this.workPoints) {
         this.workPoints = [];
       }
@@ -34,11 +36,20 @@ export default {
         this.workPoints.push({ text: this.myPoint, done: false });
         setData("workPoints", this.workPoints);
         this.init();
-        this.myPoint=""
+        this.saveToServer();
+        this.myPoint = "";
       }
     },
+    async saveToServer() {
+      const userInfo=getData("userInfo")
+      const res = await create("workPoints",{openId:userInfo.openId,data:this.workPoints});
+    },
     toggle(i) {
-      console.log(i);
+      this.saveToServer();
+    },
+    toClear() {
+      this.saveToServer();
+
     }
   }
 };

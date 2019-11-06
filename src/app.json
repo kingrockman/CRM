@@ -1,8 +1,8 @@
 {
     "pages": [
+        "pages/me/main",
         "pages/customers/main",
         "pages/test/main",
-        "pages/me/main",
         "pages/todolist/main",
         "pages/customers/detail/main",
         "pages/product/main",
@@ -24,7 +24,7 @@
                 "selectedIconPath": "static/tabs/home-active.png"
             },
             {
-                "pagePath": "pages/customers/main",
+                "pagePath": "pages/me/main",
                 "text": "我",
                 "iconPath": "static/tabs/orders.png",
                 "selectedIconPath": "static/tabs/orders-active.png"

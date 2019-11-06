@@ -3,7 +3,7 @@
     <div class="userinfo" v-if="nickName">
       <img :src="avatarUrl" />
       <p>欢迎回来，{{nickName}}</p>
-      <!-- <Todolist></Todolist> -->
+      <Todolist></Todolist>
     </div>
     <div class="login" v-if="!nickName">
       <input v-model="userName" type="text" placeholder="用户名" />

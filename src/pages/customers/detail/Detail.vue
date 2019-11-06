@@ -54,25 +54,25 @@
         <div class="item">
           <div class="key">客户名称</div>
           <div class="value">
-        <input v-model="name" type="text" placeholder="客户名称" />
+            <input v-model="name" type="text" placeholder="客户名称" />
           </div>
         </div>
         <div class="item">
           <div class="key">联系人</div>
           <div class="value">
-        <input v-model="person" type="text" placeholder="联系人" />
+            <input v-model="person" type="text" placeholder="联系人" />
           </div>
         </div>
         <div class="item">
           <div class="key">电话</div>
           <div class="value">
-        <input v-model="tel" type="text" placeholder="电话" />
+            <input v-model="tel" type="text" placeholder="电话" />
           </div>
         </div>
         <div class="item">
           <div class="key">地址</div>
           <div class="value">
-        <input v-model="address" type="text" placeholder="地址" />
+            <input v-model="address" type="text" placeholder="地址" />
           </div>
         </div>
       </div>
@@ -129,7 +129,14 @@ export default {
             res1 = res[i];
           }
         }
-        this.setObj(res1);
+
+          this.setObj(res1);
+        // if (res1 == "undefined") {
+        // } else {
+        //   wx.switchTab({
+        //     url: "/pages/customers/main"
+        //   });
+        // }
       }
     },
     setObj(o) {
@@ -200,12 +207,11 @@ export default {
   width: 20%;
 }
 .value {
-  width: 100%; 
+  width: 100%;
 }
 input {
-  
   overflow: hidden;
-  white-space:inherit;
+  white-space: inherit;
   text-overflow: ellipsis;
 }
 </style>
