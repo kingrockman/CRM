@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import { getData, setData, create, read } from "../utils";
+import { getData, setData, create, read,myCloud } from "../utils";
 export default {
   created() {
     this.init();
@@ -23,8 +23,9 @@ export default {
   },
   methods: {
     async init() {
+
       const res =await read("workPoints")
-      console.log(res)      
+      // console.log(res)      
       this.workPoints = getData("workPoints");
       // console.log(this.workPoints);
       if (!this.workPoints) {
@@ -42,7 +43,8 @@ export default {
     },
     async saveToServer() {
       const userInfo=getData("userInfo")
-      const res = await create("workPoints",{openId:userInfo.openId,data:this.workPoints});
+      // const res = await create("workPoints",{openId:userInfo.openId,workPoints:this.workPoints});
+      // const res =await updata("workPoints",)
     },
     toggle(i) {
       this.saveToServer();

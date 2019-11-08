@@ -7,8 +7,8 @@ cloud.init()
 exports.main = async (event) => {
   const db = cloud.database()
   const conn = event.conn
-  const _id = event.data._id
-  const data = event.data
+  const _id = event.obj._id
+  const data = event.obj
   delete data._id
   return db.collection(conn)
     .where({

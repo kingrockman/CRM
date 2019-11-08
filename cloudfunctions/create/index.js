@@ -6,7 +6,7 @@ cloud.init();
 exports.main = async (event) => {
   const db = cloud.database();
   const conn = event.conn
-  const data = event.data
+  const data = event.obj
   delete data._id
   try {
     return db.collection(conn).add({

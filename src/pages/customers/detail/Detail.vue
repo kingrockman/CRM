@@ -3,7 +3,7 @@
     <div v-if="!mode">
       <div class="list">
         <h4>基本信息</h4>
-        <div class="item">
+        <div class="item" v-if="0">
           <div class="key">ID</div>
           <div class="value">{{id}}</div>
         </div>
@@ -32,9 +32,21 @@
           <div class="value">{{address}}</div>
         </div>
       </div>
-      <div class="list">
-        <h4>产品信息</h4>
-        <Productlist :id="id"></Productlist>
+      <h4>产品信息</h4>
+      <div class="list" :key="item" v-for="item in products">
+        <!-- <Productlist :id="id"></Productlist> -->
+        <div class="item">
+          <div class="key">产品名称</div>
+          <div class="value">{{item.name}}</div>
+        </div>
+        <div class="item">
+          <div class="key">CDKEY</div>
+          <div class="value">{{item.cdkey}}</div>
+        </div>
+        <div class="item">
+          <div class="key">序列号</div>
+          <div class="value">{{item.serial}}</div>
+        </div>
       </div>
 
       <div class="tools">
@@ -86,7 +98,8 @@
   </div>
 </template>
 <script>
-import { getData, create, update, del, modal } from "@/utils";
+const conn = "customers";
+import { getData, myCloud, create, update, del, modal } from "@/utils";
 import Productlist from "@/components/Productlist";
 export default {
   onReady() {
@@ -106,7 +119,10 @@ export default {
       name: "",
       person: "",
       tel: "",
-      address: ""
+      address: "",
+      cdkey: "",
+      serial: "",
+      products: []
     };
   },
   methods: {
@@ -120,9 +136,12 @@ export default {
         this.person = "";
         this.tel = "";
         this.address = "";
+        this.cdkey = "";
+        this.serial = "";
       } else {
         this.mode = false;
-        const res = getData("customers");
+        const res = getData(conn);
+
         var res1;
         for (let i = 0; i < res.length; i++) {
           if (res[i]._id == index) {
@@ -130,13 +149,8 @@ export default {
           }
         }
 
-          this.setObj(res1);
-        // if (res1 == "undefined") {
-        // } else {
-        //   wx.switchTab({
-        //     url: "/pages/customers/main"
-        //   });
-        // }
+        console.log(res1.products);
+        this.setObj(res1);
       }
     },
     setObj(o) {
@@ -145,6 +159,9 @@ export default {
       this.person = o.person;
       this.tel = o.tel;
       this.address = o.address;
+      // this.cdkey = o.cdkey;
+      // this.serial = o.serial;
+      this.products = o.products;
     },
     getObj() {
       return {
@@ -152,7 +169,10 @@ export default {
         name: this.name,
         person: this.person,
         tel: this.tel,
-        address: this.address
+        address: this.address,
+        // cdkey: this.cdkey,
+        // serial: this.serial,
+        products: this.products
       };
     },
     toAlter() {
@@ -163,17 +183,17 @@ export default {
     async toSave() {
       const obj = this.getObj();
       if (this.id == "") {
-        const res = await create("customers", obj);
+        const res = await myCloud(1, conn, obj);
         obj.id = res._id;
         this.setObj(obj);
       } else {
-        const res = await update("customers", obj);
+        const res = await myCloud(3, conn, obj);
       }
       this.toggle();
     },
     async toDel() {
       if (await modal("删除吗？")) {
-        const r = await del("customers", this.id);
+        const r = await myCloud(4, conn, this.id);
         if (r.stats.removed === 1) {
           wx.switchTab({
             url: "../main"

@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <input @keyup="toSearch" v-model="search" type="text" placeholder="输入客户名称" />
+    <button @click="toSearch">查询</button>客户总数：{{arrs.length}}
     <div class="list" @click="toDetail(arr._id)" :key="i" v-for="(arr,i) in arrs">
       <div class="title">{{arr.name}}</div>
       <div class="subtitle">
@@ -10,7 +12,8 @@
   </div>
 </template>
 <script>
-import { read, setData, getData,show,hide } from "../utils";
+const conn="products"
+import { read, setData, getData,show,hide, myCloud } from "../utils";
 export default {
   props:["id"],
   onReady() {
@@ -22,7 +25,7 @@ export default {
 
   data() {
     return {
-      conn: "products",
+      // conn: "products",
       id:"",
       arrs: ""
     };
@@ -30,10 +33,11 @@ export default {
   methods: {
     async init() {
       show()
-      const res = await read(this.conn);
-      setData(this.conn, res);
-      const obj = getData(this.conn);
-      this.arrs = obj.filter(v=>v.cus_id==this.id);
+      const res = await myCloud(2,conn);
+      
+      setData(conn, res);
+      const obj = getData(conn);
+      this.arrs = obj//.filter(v=>v.cus_id==this.id);
       hide();     
     },
     toDetail(id) {

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="list">
-      <Productlist ></Productlist>     
+      <Productlist ></Productlist>
       <div class="tools">
         <button @click="toDetail(-1)">新增客户</button>
       </div>

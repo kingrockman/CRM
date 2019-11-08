@@ -10,15 +10,6 @@
 </template>
 <script>
 import Customerlist from "@/components/Customerlist";
-// import {
-//   read,
-//   create,
-//   update,
-//   del,
-//   message,
-//   setData,
-//   getData
-// } from "../../utils";
 export default {
   components: {
     Customerlist

@@ -70,14 +70,35 @@ function login(conn, data) {
     })
 }
 
+function myCloud(name, conn, obj, key) {
+    // var name
+    switch (name) {
+        case 1:
+            name = "create"
+            break;
+        case 2:
+            name = "read"
 
-function create(conn, data) {
+            break;
+        case 3:
+            name = "update"
+
+            break;
+        case 4:
+            name = "del"
+
+            break;
+
+        default:
+            return
+    }
     return new Promise((resolve, reject) => {
         wx.cloud.callFunction({
-            name: 'create',
+            name,
             data: {
                 conn,
-                data
+                obj,
+                key,
             },
             success: (res) => {
                 resolve(res.result)
@@ -89,33 +110,52 @@ function create(conn, data) {
     })
 }
 
-function read(conn, data) {
+// function create(conn, data) {
+//     return new Promise((resolve, reject) => {
+//         wx.cloud.callFunction({
+//             name: 'create',
+//             data: {
+//                 conn,
+//                 data
+//             },
+//             success: (res) => {
+//                 resolve(res.result)
+//             },
+//             fail: (err) => {
+//                 reject(err)
+//             }
+//         })
+//     })
+// }
 
-    return new Promise((resolve, reject) => {
-        wx.cloud.callFunction({
-            name: 'read',
-            data: {
-                data,
-                conn
-            },
-            success: (res) => {
-                resolve(res.result)
-            },
-            fail: (err) => {
-                reject(err)
-            }
-        });
-    })
-}
+// function read(conn, key) {
 
-function update(conn, data) {
+//     return new Promise((resolve, reject) => {
+//         wx.cloud.callFunction({
+//             name: 'read',
+//             data: {
+//                 conn,
+//                 key,
+//             },
+//             success: (res) => {
+//                 resolve(res.result)
+//             },
+//             fail: (err) => {
+//                 reject(err)
+//             }
+//         });
+//     })
+// }
+
+function update(conn, data, key) {
 
     return new Promise((resolve, reject) => {
         wx.cloud.callFunction({
             name: 'update',
             data: {
                 conn,
-                data
+                data,
+                key
             },
             success: (res) => {
                 resolve(res.result)
@@ -127,14 +167,14 @@ function update(conn, data) {
     })
 }
 
-function del(conn, data) {
+function del(conn, key) {
 
     return new Promise((resolve, reject) => {
         wx.cloud.callFunction({
             name: 'del',
             data: {
                 conn,
-                data
+                key
             },
             success: (res) => {
                 resolve(res.result)
@@ -152,6 +192,7 @@ export {
     read,
     update,
     del,
+    myCloud,
     message,
     show,
     hide,

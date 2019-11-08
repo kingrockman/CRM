@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <input @keyup="toSearch" v-model="search" type="text" placeholder="输入客户名称" />
-    <button @click="toSearch">查询</button>
+    <button @click="toSearch">查询</button>{{arrs.length==0?"玩命加载中...":"客户总数："+arrs.length}}
     <div class="customers-list" @click="toDetail(arr._id)" :key="arr._id" v-for="arr in arrs">
       <div class="title">{{arr.name}}</div>
       <div class="subtitle">
@@ -13,7 +13,8 @@
   </div>
 </template>
 <script>
-import { read, setData, getData, show, hide } from "../utils";
+const conn= "customers"
+import { read, setData, getData, show, hide,myCloud } from "../utils";
 export default {
   onReady() {
     this.init();
@@ -23,7 +24,6 @@ export default {
   },
   data() {
     return {
-      conn: "customers",
       search: "",
       arrs: [],
     };
@@ -31,12 +31,12 @@ export default {
 
   methods: {
     async init() {
-      show();
-      const res = await read(this.conn);
-      setData(this.conn, res);
-      const obj = getData(this.conn);
-      this.arrs = obj;
-      hide();
+      const res =await myCloud(2,conn)
+      setData(conn, res);
+      const obj = getData(conn);
+      // this.arrs = obj;
+      this.toSearch();
+
     },
     toDetail(i) {
       wx.navigateTo({
@@ -45,7 +45,7 @@ export default {
     },
    
     toSearch() {
-      const obj = getData(this.conn);
+      const obj = getData(conn);
       this.arrs = obj.filter(v => {
         var reg = new RegExp(this.search);
         if (v.name.match(reg)) {
