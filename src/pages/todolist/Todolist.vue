@@ -1,117 +1,139 @@
 <template>
-  <div>
-    <div class="list" v-if="mode">
-      <div @click="toDetail(i)" class="todos" :key="i" v-for="(todo,i) in todos">
-        <div class="header">{{todo.customer}}</div>
-        <div class="body">{{todo.description}}</div>
-        <div class="footer">{{todo.content}}</div>
-      </div>
-      <div class="tools">
-        <button @click="toAdd">新增</button>
-      </div>
-    </div>
-    <Todocard></Todocard>
-    <div class="detail" v-if="!mode">
-      <input v-model="id" v-if="level==10" type="text" placeholder="_id" />
-      <input v-model="customer" type="text" placeholder="客户名称" />
-      <input v-model="description" type="text" placeholder="请求描述" />
-      <textarea v-model="content" type="text" placeholder="内容" />
-      <input v-model="done" type="checkbox" />
-
-      <div class="tools">
-        <button @click="toSave">保存</button>
-        <button @click="toBack">取消</button>
+  <div class="container">
+    <!-- <Tpllist :tpl="tpl"></Tpllist> -->
+    <!-- <Card :myCard="myCard"></Card> -->
+    <Card :myCard="myCard" ></Card>
+    <div class="list" @click="toDetail(item)" v-for="item in arrs" :key="item._id">
+      <div class="title">{{item["description"]}}</div>
+      <div class="row">
+        <div class="left">{{item["status"]}}</div>
+        <div class="middle">{{item["createDate"]}}</div>
+        <div class="right">{{item["handler"]}}</div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import Todocard from "./todo/Todocard";
-import {
-  create,
-  read,
-  update,
-  del,
-  setData,
-  getData,
-  message,
-  show,
-  hide
-} from "../../utils";
+import { DBPost } from "@/DBPost";
+import Tpllist from "@/components/Tpllist";
+import Card from "@/components/Card";
+import { myCloud } from '../../utils';
+var todos = new DBPost("todos");
 export default {
-  onLoad() {
-    this.init();
+  async onLoad() {
+    await todos.read();
+
+    this.arrs = todos.obj;
   },
   components: {
-    Todocard
+    Tpllist,
+    Card
   },
   data() {
     return {
-      mode: true,
-      conn: "todos",
-      id: "",
-      customer: "",
-      description: "",
-      content: "",
-      todos: []
+      myCard:"",
+      arrs: [],
+      tpl: { key: "todos", template: [] }
     };
   },
+  
   methods: {
-    async init() {
-      show();
-      const res = await read(this.conn);
-      hide();
-      setData("todos", res);
-      this.todos = getData("todos");
-      // console.log(res);
-    },
-    async toSave() {
-      if (this.customer == "" || this.description == "") {
-        message("请录入完成信息！");
-        return;
-      }
-      wx.showLoading({
-        title: "正在加载..."
-      });
-      const obj = {
-        _id: this.id,
-        customer: this.customer,
-        description: this.description,
-        content: this.content
-      };
-      if (this.id == "") {
-        await create(this.conn, obj);
-      } else {
-        await update(this.conn, obj);
-      }
-      await this.init();
-      message("操作成功！");
-      this.toggle();
-    },
-    toAdd() {
-      this.id = "";
-      this.customer = "";
-      this.description = "";
-      this.content = "";
-      this.toggle();
-    },
     toDetail(i) {
-      this.toggle();
-      const obj = this.todos[i];
-      this.id = obj._id;
-      this.customer = obj.customer;
-      this.description = obj.description;
-      this.content = obj.content;
-    },
-    toBack() {
-      this.toggle();
-    },
-    toggle() {
-      this.mode = !this.mode;
+      console.log(i);
+this.myCard=i
     }
   }
 };
 </script>
+
+
+<!--<script>
+// import Tpllist from "@/components/Tpllist";
+// import {
+//   create,
+//   read,
+//   update,
+//   del,
+//   setData,
+//   getData,
+//   message,
+//   show,
+//   hide
+// } from "../../utils";
+// export default {
+//   onLoad() {
+//     this.init();
+//   },
+//   components: {
+//     Tpllist
+//   },
+//   data() {
+//     return {
+//       mode: true,
+//       conn: "todos",
+//       id: "",
+//       customer: "",
+//       description: "",
+//       content: "",
+//       todos: []
+//     };
+//   },
+//   methods: {
+//     async init() {
+//       show();
+//       const res = await read(this.conn);
+//       hide();
+//       setData("todos", res);
+//       this.todos = getData("todos");
+//       // console.log(res);
+//     },
+//     async toSave() {
+//       if (this.customer == "" || this.description == "") {
+//         message("请录入完成信息！");
+//         return;
+//       }
+//       wx.showLoading({
+//         title: "正在加载..."
+//       });
+//       const obj = {
+//         _id: this.id,
+//         customer: this.customer,
+//         description: this.description,
+//         content: this.content
+//       };
+//       if (this.id == "") {
+//         await create(this.conn, obj);
+//       } else {
+//         await update(this.conn, obj);
+//       }
+//       await this.init();
+//       message("操作成功！");
+//       this.toggle();
+//     },
+//     toAdd() {
+//       this.id = "";
+//       this.customer = "";
+//       this.description = "";
+//       this.content = "";
+//       this.toggle();
+//     },
+//     toDetail(i) {
+//       this.toggle();
+//       const obj = this.todos[i];
+//       this.id = obj._id;
+//       this.customer = obj.customer;
+//       this.description = obj.description;
+//       this.content = obj.content;
+//     },
+//     toBack() {
+//       this.toggle();
+//     },
+//     toggle() {
+//       this.mode = !this.mode;
+//     }
+//   }
+// };
+</script>-->
 <style>
 .todos {
   margin-bottom: 30rpx;
@@ -132,4 +154,5 @@ export default {
   bottom: 0;
   right: 10rpx;
 }
+
 </style>

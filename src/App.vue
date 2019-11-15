@@ -40,6 +40,29 @@ export default {
 </script>
 
 <style>
+button {
+  /* border: red 1px solid; */
+  background-color:#27ae60;
+  color: white;
+  width: 80px;
+  height: 30px;
+  font-size: 12px;
+  margin: 20rpx auto;
+}
+textarea {
+  width: 100%;
+  position: absolute;
+  display: unset;
+  border: red solid 1px;
+}
+div {
+  font-size: 24rpx;
+}
+.tools{
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
 /* .container {
   height: 100%;
   display: flex;
@@ -56,33 +79,11 @@ export default {
   -webkit-transition: width 2s;
   -o-transition: width 2s;
 } */
-button {
-  /* border: red 1px solid; */
-  background-color:#27ae60;
-  color: white;
-  width: 80px;
-  height: 30px;
-  font-size: 12px;
-  margin: 20rpx auto;
-}
+
 /* input {
   padding: 10rpx;
   margin-bottom: 10rpx;
   border-bottom: pink solid 1px;
   border-top: pink solid 1px;
 } */
-textarea {
-  width: 100%;
-  position: absolute;
-  display: unset;
-  border: red solid 1px;
-}
-div {
-  font-size: 24rpx;
-}
-.tools{
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-}
 </style>
