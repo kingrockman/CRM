@@ -40,9 +40,28 @@ export default {
 </script>
 
 <style>
+.card {
+  font-size: 50rpx;
+  padding: 10rpx;
+}
+.card-item {
+  display: flex;
+  flex-direction: row;
+  margin: 15rpx 5rpx;
+}
+.right {
+  padding-left: 10rpx;
+  width: 100%;
+}
+.left {
+  width: 30%;
+}
+.list {
+  border-bottom: #27ae60 solid 1px;
+}
 button {
   /* border: red 1px solid; */
-  background-color:#27ae60;
+  background-color: #27ae60;
   color: white;
   width: 80px;
   height: 30px;
@@ -58,10 +77,18 @@ textarea {
 div {
   font-size: 24rpx;
 }
-.tools{
+.tools {
   position: fixed;
   bottom: 10px;
-  right: 10px;
+}
+.navbar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+}
+.navbar button {
+  margin: 0 100rpx;
 }
 /* .container {
   height: 100%;

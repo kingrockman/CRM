@@ -41,9 +41,9 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "pages/customers/detail/main",
-					"pathName": "pages/customers/detail/main",
-					"query": "index=nCT3e3Mg8JhLXq6jzJj2Gxb8pmYUbnvlLjKkqZ2Y90fee24G",
+					"name": "pages/todolist/detail/main",
+					"pathName": "pages/todolist/detail/main",
+					"query": "index=075734515d88804d03290e9d03100b6c",
 					"scene": null
 				}
 			]

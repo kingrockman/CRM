@@ -1,46 +1,72 @@
 <template>
   <div class="container">
-    <!-- <Tpllist :tpl="tpl"></Tpllist> -->
-    <!-- <Card :myCard="myCard"></Card> -->
-    <Card :myCard="myCard" ></Card>
-    <div class="list" @click="toDetail(item)" v-for="item in arrs" :key="item._id">
-      <div class="title">{{item["description"]}}</div>
-      <div class="row">
-        <div class="left">{{item["status"]}}</div>
-        <div class="middle">{{item["createDate"]}}</div>
-        <div class="right">{{item["handler"]}}</div>
+    <!-- <Card :myCard="myCard" @toggle="test" v-if="!mode"></Card> -->
+    <!-- <Mylist :list="list" @toDetail="toDetail" v-if="mode"></Mylist> -->
+    <div v-if="mode">
+      <input @click="toSearch" type="text" placeholder="查找" v-model="keywords" />
+      <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
+        <div class="title">{{item[showitem[0]]}}</div>
+        <div class="row">
+          <div class="left">{{item[showitem[1]]}}</div>
+          <div class="middle">{{item[showitem[3]]}}</div>
+          <div class="right">{{item[showitem[2]]}}</div>
+        </div>
       </div>
+      <!-- <div class="tools">
+        <button>新增</button>
+        <button @click="toggle">取消</button>
+      </div>-->
     </div>
   </div>
 </template>
 <script>
 import { DBPost } from "@/DBPost";
-import Tpllist from "@/components/Tpllist";
+import Mylist from "@/components/Mylist";
 import Card from "@/components/Card";
-import { myCloud } from '../../utils';
-var todos = new DBPost("todos");
+import { myCloud } from "../../utils";
+var todos = new DBPost("todos", [
+  "description",
+  "status",
+  "handler",
+  "createDate"
+]);
 export default {
   async onLoad() {
     await todos.read();
-
+    this.showitem = todos.list;
     this.arrs = todos.obj;
   },
   components: {
-    Tpllist,
+    Mylist,
     Card
   },
   data() {
     return {
-      myCard:"",
+      myCard: null,
       arrs: [],
-      tpl: { key: "todos", template: [] }
+      mode: true,
+      showitem: []
     };
   },
-  
+
   methods: {
+    toggle() {
+      this.mode = !this.mode;
+    },
     toDetail(i) {
-      console.log(i);
-this.myCard=i
+      wx.navigateTo({
+        url: "detail/main?index="+i
+      });
+    },
+    toSearch() {
+
+      this.arrs = todos.obj.filter(v => {
+        var reg = new RegExp(this.keywords);
+        if (v.description.match(reg)) {
+          return v.description;
+        }
+      });
+      
     }
   }
 };
@@ -154,5 +180,4 @@ this.myCard=i
   bottom: 0;
   right: 10rpx;
 }
-
 </style>

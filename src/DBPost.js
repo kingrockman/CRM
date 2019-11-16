@@ -1,9 +1,15 @@
 import utils from './utils'
 class DBPost {
 
-    constructor(conn) {
+    constructor(conn, list) {
         this.conn = conn
+        this.list = list
         console.log(`创建了一个 ${conn} 对象！`)
+    }
+    rules(obj) {
+        obj.each((k, v) => {
+            console.log(k, v)
+        })
     }
     getInfo() {
         return { conn: this.conn }
@@ -14,7 +20,16 @@ class DBPost {
     getData() {
         return wx.getStorageSync(this.conn)
     }
+    getDataById(key) {
+        var obj = this.getData()
+        for (let i = 0; i < obj.length; i++) {
+            if (obj[i]._id == key) {
+                return obj[i]
+                console.log(obj[i]);
+            }
 
+        }
+    }
     create(obj) {
         console.log("正在执行create!")
         return new Promise((resolve, reject) => {
