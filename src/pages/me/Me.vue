@@ -3,7 +3,6 @@
     <div class="userinfo" v-if="nickName">
       <img :src="avatarUrl" />
       <p>欢迎回来，{{nickName}}</p>
-      <!-- <Todolist></Todolist> -->
     </div>
     <div class="login" v-if="!nickName">
       <input v-model="userName" type="text" placeholder="用户名" />
@@ -28,6 +27,7 @@ export default {
     };
   },
   methods: {
+   
     init() {
       const userInfo = getData("userInfo");
       if (userInfo) {
@@ -40,8 +40,51 @@ export default {
         setData("userInfo", userInfo.data[0]);
         this.init();
       }
-    }
+    },
+    //  test() {
+    //   var token = getData("token");
+    //   var env = "king181013906-27fb3f";
+    //   // var url = `https://api.weixin.qq.com/tcb/invokecloudfunction?access_token=${token}&env=${env}&name=login`;
+    //   var url = `https://api.weixin.qq.com/tcb/databasequery?access_token=${token}`;
+    //   console.log(url);
+    //   wx.request({
+    //     url,
+    //     data: {
+    //       env,
+    //       query:
+    //         'db.collection("todos").where({ _id:/[a-z]/g }).limit(10).skip(1).get()'
+    //     },
+    //     success: res => {
+    //       console.log(res);
+    //     }
+    //   });
+
+    //   // wx.login({
+    //   //   success(res) {
+    //   //     if (res.code) {
+    //   //       //发起网络请求
+    //   //       wx.request({
+    //   //         url: `https://api.weixin.qq.com/sns/jscode2session?appid=wx466af9243f255de5&secret=3ee1a3f0716aa13ae69bc88ea79cb487&js_code=${
+    //   //           res.code
+    //   //         }&grant_type=authorization_code`,
+
+    //   //         success: res => {
+
+    //   //           if(typeof res.data.errcode != 'undefined') return console.log("请求失败");
+    //   //           console.log(res.data);
+
+    //   //         }
+    //   //       });
+    //   //     } else {
+    //   //       console.log("登录失败！" + res.errMsg);
+    //   //     }
+    //   //   }
+    //   // });
+    // },
   }
+
+
+
 };
 </script>
 <style>

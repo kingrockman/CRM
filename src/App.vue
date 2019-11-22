@@ -1,6 +1,5 @@
 <script>
-// import { login, setData } from "./utils";
-
+import { setData } from "./utils";
 export default {
   async created() {
     if (!wx.cloud) {
@@ -10,6 +9,23 @@ export default {
         traceUser: true
       });
     }
+
+    // var a = {
+    //   appid: "wx466af9243f255de5",
+    //   secret: "3ee1a3f0716aa13ae69bc88ea79cb487"
+    // };
+    // var access_token = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${
+    //   a.appid
+    // }&secret=${a.secret}`;
+
+    // // console.log(access_token);
+    // wx.request({
+    //   url: access_token,
+
+    //   success: res => {
+    //     setData("token", res.data.access_token);
+    //   }
+    // });
     // 调用API从本地缓存中获取数据
     /*
      * 平台 api 差异的处理方式:  api 方法统一挂载到 mpvue 名称空间, 平台判断通过 mpvuePlatform 特征字符串
@@ -69,10 +85,12 @@ button {
   margin: 20rpx auto;
 }
 textarea {
-  width: 100%;
+  /* 
   position: absolute;
-  display: unset;
-  border: red solid 1px;
+  display: unset; */
+  width: 100%;
+  /* height: auto; */
+  /* border: red solid 1px; */
 }
 div {
   font-size: 24rpx;

@@ -21,14 +21,33 @@ class DBPost {
         return wx.getStorageSync(this.conn)
     }
     getDataById(key) {
-        var obj = this.getData()
-        for (let i = 0; i < obj.length; i++) {
-            if (obj[i]._id == key) {
-                return obj[i]
-                console.log(obj[i]);
-            }
+        return new Promise((resolve, reject) => {
+            wx.cloud.callFunction({
+                name: "read",
+                data: {
+                    conn: this.conn,
+                    // obj,
+                    data: { _id: key }
+                },
+                success: (res) => {
+                    // this.obj = res.result
+                    // this.setData(res.result)
+                    resolve(res.result)
+                },
+                fail: (err) => {
+                    reject(err)
+                }
+            })
+        })
 
-        }
+        // var obj = this.getData()
+        // for (let i = 0; i < obj.length; i++) {
+        //     if (obj[i]._id == key) {
+        //         return obj[i]
+        //         console.log(obj[i]);
+        //     }
+
+        // }
     }
     create(obj) {
         console.log("正在执行create!")

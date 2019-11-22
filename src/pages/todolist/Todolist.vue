@@ -1,9 +1,11 @@
 <template>
   <div class="container">
-    <!-- <Card :myCard="myCard" @toggle="test" v-if="!mode"></Card> -->
-    <!-- <Mylist :list="list" @toDetail="toDetail" v-if="mode"></Mylist> -->
-    <div v-if="mode">
-      <input @click="toSearch" type="text" placeholder="查找" v-model="keywords" />
+    <div class="tools">
+      <button @click="toDetail(-1)">新增</button>
+    </div>
+    <!-- <div v-if="mode"> -->
+      <!-- <input  type="text" placeholder="查找" v-model="keywords" /> -->
+      <!-- <button @click="toSearch">查询</button> -->
       <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
         <div class="title">{{item[showitem[0]]}}</div>
         <div class="row">
@@ -12,11 +14,7 @@
           <div class="right">{{item[showitem[2]]}}</div>
         </div>
       </div>
-      <!-- <div class="tools">
-        <button>新增</button>
-        <button @click="toggle">取消</button>
-      </div>-->
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 <script>
@@ -31,21 +29,22 @@ var todos = new DBPost("todos", [
   "createDate"
 ]);
 export default {
-  async onLoad() {
+  async onShow() {
     await todos.read();
     this.showitem = todos.list;
     this.arrs = todos.obj;
   },
   components: {
     Mylist,
-    Card
+    Card,
   },
   data() {
     return {
       myCard: null,
       arrs: [],
       mode: true,
-      showitem: []
+      showitem: [],
+      keywords: ""
     };
   },
 
@@ -55,112 +54,29 @@ export default {
     },
     toDetail(i) {
       wx.navigateTo({
-        url: "detail/main?index="+i
+        url: "detail/main?index=" + i
       });
     },
     toSearch() {
-
-      this.arrs = todos.obj.filter(v => {
-        var reg = new RegExp(this.keywords);
-        if (v.description.match(reg)) {
-          return v.description;
-        }
-      });
+      console.log(this.keywords);
       
+      // this.arrs = todos.obj.filter(v => {
+      //   var reg = new RegExp(this.keywords);
+      //   if (v.description.match(reg)) {
+      //     return v.description;
+      //   }
+      // });
     }
   }
 };
 </script>
-
-
-<!--<script>
-// import Tpllist from "@/components/Tpllist";
-// import {
-//   create,
-//   read,
-//   update,
-//   del,
-//   setData,
-//   getData,
-//   message,
-//   show,
-//   hide
-// } from "../../utils";
-// export default {
-//   onLoad() {
-//     this.init();
-//   },
-//   components: {
-//     Tpllist
-//   },
-//   data() {
-//     return {
-//       mode: true,
-//       conn: "todos",
-//       id: "",
-//       customer: "",
-//       description: "",
-//       content: "",
-//       todos: []
-//     };
-//   },
-//   methods: {
-//     async init() {
-//       show();
-//       const res = await read(this.conn);
-//       hide();
-//       setData("todos", res);
-//       this.todos = getData("todos");
-//       // console.log(res);
-//     },
-//     async toSave() {
-//       if (this.customer == "" || this.description == "") {
-//         message("请录入完成信息！");
-//         return;
-//       }
-//       wx.showLoading({
-//         title: "正在加载..."
-//       });
-//       const obj = {
-//         _id: this.id,
-//         customer: this.customer,
-//         description: this.description,
-//         content: this.content
-//       };
-//       if (this.id == "") {
-//         await create(this.conn, obj);
-//       } else {
-//         await update(this.conn, obj);
-//       }
-//       await this.init();
-//       message("操作成功！");
-//       this.toggle();
-//     },
-//     toAdd() {
-//       this.id = "";
-//       this.customer = "";
-//       this.description = "";
-//       this.content = "";
-//       this.toggle();
-//     },
-//     toDetail(i) {
-//       this.toggle();
-//       const obj = this.todos[i];
-//       this.id = obj._id;
-//       this.customer = obj.customer;
-//       this.description = obj.description;
-//       this.content = obj.content;
-//     },
-//     toBack() {
-//       this.toggle();
-//     },
-//     toggle() {
-//       this.mode = !this.mode;
-//     }
-//   }
-// };
-</script>-->
 <style>
+input {
+  font-size: 32rpx;
+  margin: 20rpx;
+  padding: 20rpx;
+  border: solid pink 1px;
+}
 .todos {
   margin-bottom: 30rpx;
   border-bottom: gray 1px solid;

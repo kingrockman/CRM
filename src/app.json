@@ -1,14 +1,13 @@
 {
     "pages": [
         "pages/todolist/main",
+        "pages/me/main",
         "pages/todolist/detail/main",
         "pages/customers/main",
-        "pages/me/main",
         "pages/product/main",
         "pages/customers/detail/main",
         "pages/product/detail/main",
         "pages/login/main"
-
     ],
     "window": {
         "backgroundTextStyle": "light",
