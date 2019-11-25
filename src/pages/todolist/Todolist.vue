@@ -4,16 +4,17 @@
       <button @click="toDetail(-1)">新增</button>
     </div>
     <!-- <div v-if="mode"> -->
-      <!-- <input  type="text" placeholder="查找" v-model="keywords" /> -->
-      <!-- <button @click="toSearch">查询</button> -->
-      <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
-        <div class="title">{{item[showitem[0]]}}</div>
-        <div class="row">
-          <div class="left">{{item[showitem[1]]}}</div>
-          <div class="middle">{{item[showitem[3]]}}</div>
-          <div class="right">{{item[showitem[2]]}}</div>
-        </div>
+    <!-- <input  type="text" placeholder="查找" v-model="keywords" /> -->
+    <!-- <button @click="toSearch">查询</button> -->
+    <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
+      <div class="title">{{item[showitem[0]]}}</div>
+      <!-- <div class="title">{{item[showitem[3]]}}</div> -->
+      <div class="subtitle">
+        <div class="left">{{item[showitem[1]]}}</div>
+        <!-- <div class="middle">{{item[showitem[3]]}}</div> -->
+        <div class="right">{{item[showitem[2]]}}</div>
       </div>
+    </div>
     <!-- </div> -->
   </div>
 </template>
@@ -36,7 +37,7 @@ export default {
   },
   components: {
     Mylist,
-    Card,
+    Card
   },
   data() {
     return {
@@ -59,7 +60,7 @@ export default {
     },
     toSearch() {
       console.log(this.keywords);
-      
+
       // this.arrs = todos.obj.filter(v => {
       //   var reg = new RegExp(this.keywords);
       //   if (v.description.match(reg)) {
@@ -71,7 +72,7 @@ export default {
 };
 </script>
 <style>
-input {
+/* input {
   font-size: 32rpx;
   margin: 20rpx;
   padding: 20rpx;
@@ -95,5 +96,5 @@ input {
   position: fixed;
   bottom: 0;
   right: 10rpx;
-}
+} */
 </style>

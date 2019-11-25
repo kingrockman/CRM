@@ -2,11 +2,11 @@
   <div class="container">
     <input @keyup="toSearch" v-model="search" type="text" placeholder="输入客户名称" />
     <button @click="toSearch">查询</button>{{arrs.length==0?"玩命加载中...":"客户总数："+arrs.length}}
-    <div class="customers-list" @click="toDetail(arr._id)" :key="arr._id" v-for="arr in arrs">
+    <div class="list" @click="toDetail(arr._id)" :key="arr._id" v-for="arr in arrs">
       <div class="title">{{arr.name}}</div>
       <div class="subtitle">
-        <div class="person">{{arr.person}}</div>
-        <div class="tel">{{arr.tel}}</div>
+        <div class="left">{{arr.person}}</div>
+        <div class="right">{{arr.tel}}</div>
       </div>
     </div>
     
@@ -57,7 +57,7 @@ export default {
 };
 </script>
 <style>
-input {
+/* input {
   font-size: 32rpx;
   margin: 20rpx;
   padding: 20rpx;
@@ -81,5 +81,5 @@ input {
 .tel {
   width: 48%;
   float: right;
-}
+} */
 </style>

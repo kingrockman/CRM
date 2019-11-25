@@ -8,6 +8,25 @@ function findData(a, b) {
     }
 }
 
+function formatDate(time) {
+    // var time = new Date()
+    var year = time.getFullYear()
+    var month = time.getMonth() + 1
+    var day = time.getDate()
+        // console.log(time);
+    return year + "年" + month + "月" + day + "日"
+        // console.log(year + "年" + month + "月" + day + "日");
+
+    // if (typeof time == "number") {
+    //     console.log("number");
+
+    // } else {
+    //     time = time.getTime(time)
+    //     console.log(time);
+
+    // }
+}
+
 function message(title) {
     wx.showToast({
         title,
@@ -198,5 +217,6 @@ export {
     hide,
     modal,
     setData,
-    getData
+    getData,
+    formatDate
 }

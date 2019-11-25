@@ -1,0 +1,115 @@
+div {
+    font-size: 24rpx;
+}
+
+.title {
+    font-size: 32rpx;
+    margin-bottom: 20rpx;
+}
+
+.subtitle {
+    position: relative;
+    flex-direction: row;
+    font-size: 24rpx;
+}
+
+.subtitle div {
+    overflow: hidden;
+    flex-direction: row;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.subtitle .left {
+    width: 48%;
+    float: left;
+}
+
+.subtitle .right {
+    width: 48%;
+    float: right;
+}
+
+.card {
+    font-size: 50rpx;
+    padding: 10rpx;
+}
+
+.card-item {
+    display: flex;
+    flex-direction: row;
+    margin: 15rpx 5rpx;
+}
+
+.right {
+    padding-left: 10rpx;
+    width: 100%;
+}
+
+.left {
+    width: 30%;
+}
+
+.list {
+    border-bottom: #3498db solid 1px;
+    padding: 10rpx 25rpx;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    width: 80px;
+    height: 30px;
+    font-size: 12px;
+    margin: 20rpx auto;
+}
+
+.danger {
+    background-color: #e74c3c;
+}
+
+textarea {
+    width: 100%;
+}
+
+.navbar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+}
+
+.navbar button {
+    margin: 0 100rpx;
+}
+
+.input {
+    font-size: 32rpx;
+    margin: 20rpx;
+    padding: 20rpx;
+    border: solid pink 1px;
+}
+
+.todos {
+    margin-bottom: 30rpx;
+    border-bottom: gray 1px solid;
+}
+
+.header {
+    font-size: 32rpx;
+    margin-bottom: 10rpx;
+}
+
+.body {
+    margin-bottom: 10rpx;
+}
+
+.footer {
+    margin-bottom: 10rpx;
+}
+
+.tools {
+    position: fixed;
+    bottom: 20px;
+    right: 20rpx;
+}
