@@ -1,33 +1,33 @@
 <template>
   <div class="contanier">
     <div v-if="!mode">
-      <div class="list">
+      <div class="card">
         <h4>基本信息</h4>
-        <div class="item" v-if="0">
+        <div class="card-item" v-if="0">
           <div class="key">ID</div>
           <div class="value">{{id}}</div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">名称</div>
           <div class="value">{{name}}</div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">联系人</div>
           <div class="value">{{person}}</div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">手机</div>
           <div class="value">{{tel}}</div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">QQ</div>
           <div class="value">{{address}}</div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">邮箱</div>
           <div class="value">{{address}}</div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">地址</div>
           <div class="value">{{address}}</div>
         </div>
@@ -35,53 +35,55 @@
       <h4>产品信息</h4>
       <div class="list" :key="item" v-for="item in products">
         <!-- <Productlist :id="id"></Productlist> -->
-        <div class="item">
+        <div class="card-item">
           <div class="key">产品名称</div>
           <div class="value">{{item.name}}</div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">CDKEY</div>
           <div class="value">{{item.cdkey}}</div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">序列号</div>
           <div class="value">{{item.serial}}</div>
         </div>
       </div>
 
       <div class="tools">
-        <button class="danger" @click="toDel">删除</button>
-        <button @click="toAlter">修改</button>
+        <div class="navbar">
+          <button @click="toAlter">修改</button>
+          <button class="danger" @click="toDel">删除</button>
+        </div>
       </div>
     </div>
     <div v-if="mode">
-      <div class="list">
+      <div class="card">
         <p>基本信息</p>
-        <div class="item">
+        <div class="card-item">
           <div class="key">ID</div>
           <div class="value">
             <input v-model="id" type="text" />
           </div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">客户名称</div>
           <div class="value">
             <input v-model="name" type="text" placeholder="客户名称" />
           </div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">联系人</div>
           <div class="value">
             <input v-model="person" type="text" placeholder="联系人" />
           </div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">电话</div>
           <div class="value">
             <input v-model="tel" type="text" placeholder="电话" />
           </div>
         </div>
-        <div class="item">
+        <div class="card-item">
           <div class="key">地址</div>
           <div class="value">
             <input v-model="address" type="text" placeholder="地址" />
@@ -89,9 +91,9 @@
         </div>
       </div>
       <div class="tools">
-        <button @click="toSave">保存</button>
-        <div v-if="cancel">
-          <button @click="toggle">取消</button>
+        <div class="navbar">
+          <button v-if="cancel" @click="toggle">取消</button>
+          <button @click="toSave">保存</button>
         </div>
       </div>
     </div>

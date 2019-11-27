@@ -2,50 +2,50 @@
   <div class="container">
     <div class="card">
       <div class="card-item" hidden>
-        <div class="left">编号</div>:
-        <div class="right">
+        <div class="key">编号</div>:
+        <div class="value">
           <input type="text" v-model="arrs._id" :disabled="mode" />
         </div>
       </div>
       <div class="card-item">
-        <div class="left">客户名称</div>:
-        <div class="right">
+        <div class="key">客户名称</div>:
+        <div class="value">
           <input type="text" v-model="arrs.customer" :disabled="mode" />
         </div>
       </div>
       <div class="card-item">
-        <div class="left">服务内容</div>:
-        <div class="right">
+        <div class="key">服务内容</div>:
+        <div class="value">
           <input type="text" v-model="arrs.description" :disabled="mode" />
         </div>
       </div>
       <div class="card-item">
-        <div class="left">工作内容</div>:
-        <div class="right">
+        <div class="key">工作内容</div>:
+        <div class="value">
           <textarea type="text" v-model="arrs.detail" :disabled="mode"></textarea>
         </div>
       </div>
       <div class="card-item">
-        <div class="left">处理人</div>:
-        <div class="right">
+        <div class="key">处理人</div>:
+        <div class="value">
           <input type="text" v-model="arrs.handler" :disabled="mode" />
         </div>
       </div>
       <div class="card-item">
-        <div class="left">状态</div>:
-        <div class="right">
+        <div class="key">状态</div>:
+        <div class="value">
           <input type="text" v-model="arrs.status" :disabled="mode" />
         </div>
       </div>
       <div class="card-item">
-        <div class="left">创建日期</div>:
-        <div class="right">
+        <div class="key">创建日期</div>:
+        <div class="value">
           <input type="text" v-model="arrs.createDate" disabled />
         </div>
       </div>
       <div class="card-item">
-        <div class="left">创建者</div>:
-        <div class="right">
+        <div class="key">创建者</div>:
+        <div class="value">
           <input type="text" v-model="arrs.creater" disabled />
         </div>
       </div>
@@ -56,7 +56,7 @@
         <button class="danger" @click="toDel(arrs._id)">删除</button>
       </div>
       <div class="navbar" v-if="!mode">
-        <button @click="mode=!mode">取消</button>
+        <button v-if="cancel" @click="mode=!mode">取消</button>
         <button @click="toSave">保存</button>
       </div>
     </div>
@@ -64,9 +64,7 @@
 </template>
 <script>
 import { DBPost } from "@/DBPost";
-// import { getData } from "@/utils";
-// import { formatDate } from '../../../utils';
-import { getData,formatDate } from "../../../utils";
+import { getData, formatDate } from "../../../utils";
 var todos = new DBPost("todos");
 var index;
 export default {
@@ -77,20 +75,23 @@ export default {
   data() {
     return {
       arrs: {},
-      mode: true
+      mode: true,
+      cancel: true
     };
   },
   methods: {
     async init() {
       // this.arrs = {};
       index = this.$root.$mp.query.index;
+      this.cancel = true;
 
       if (index == -1) {
+        this.cancel = false;
         this.arrs = {};
         var userInfo = getData("userInfo");
 
         this.arrs.creater = userInfo.userName;
-        this.arrs.createDate =formatDate(new Date());
+        this.arrs.createDate = formatDate(new Date());
         this.mode = false;
 
         return console.log("新增模式", getData("userInfo"));
@@ -109,6 +110,8 @@ export default {
         // this.mode=false
         const res = await todos.create(this.arrs);
         this.$root.$mp.query.index = res.result._id;
+
+        this.cancel = true;
         console.log("新增了:");
       } else {
         await todos.update(this.arrs);
