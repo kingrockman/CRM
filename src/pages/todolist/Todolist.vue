@@ -4,8 +4,8 @@
       <button @click="toDetail(-1)">新增</button>
     </div>
     <!-- <div v-if="mode"> -->
-    <!-- <input  type="text" placeholder="查找" v-model="keywords" /> -->
-    <!-- <button @click="toSearch">查询</button> -->
+    <input type="text" placeholder="查找" v-model="keywords" />
+    <button @click="toSearch">查询</button>
     <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
       <div class="title">{{item[showitem[0]]}}</div>
       <!-- <div class="title">{{item[showitem[3]]}}</div> -->
@@ -30,10 +30,8 @@ var todos = new DBPost("todos", [
   "createDate"
 ]);
 export default {
-  async onShow() {
-    await todos.read();
-    this.showitem = todos.list;
-    this.arrs = todos.obj;
+  onShow() {
+    this.toSearch();
   },
   components: {
     Mylist,
@@ -58,9 +56,12 @@ export default {
         url: "detail/main?index=" + i
       });
     },
-    toSearch() {
-      console.log(this.keywords);
+    async toSearch() {
+      // console.log(this.keywords);
+      await todos.read(this.keywords);
 
+      this.showitem = todos.list;
+      this.arrs = todos.obj;
       // this.arrs = todos.obj.filter(v => {
       //   var reg = new RegExp(this.keywords);
       //   if (v.description.match(reg)) {

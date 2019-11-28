@@ -23,14 +23,5 @@ export default {
 </script>
 
 <style>
-/* 
-.tools {
-  position: fixed;
-  bottom: 0;
-  right: 10rpx;
-}
-.detail {
-  font-size: 24rpx;
-} */
 </style>
 

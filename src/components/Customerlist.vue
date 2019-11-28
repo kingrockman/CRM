@@ -34,7 +34,7 @@ export default {
       const res =await myCloud(2,conn)
       setData(conn, res);
       const obj = getData(conn);
-      // this.arrs = obj;
+      this.arrs = obj;
       this.toSearch();
 
     },

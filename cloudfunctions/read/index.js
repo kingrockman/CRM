@@ -10,21 +10,28 @@ exports.main = async (event) => {
     skip: 100,
     limit: 100
   }
+
   const conn = event.conn
   const data = event.data
+  const where = {
+    customer: new RegExp(event.key)
+  }
   // len.skip = len.limit = 100
-  // var newList = []
+  var newList = []
   var {
     total: count
-  } = await db.collection(conn).where(data).count()
+  } = await db.collection(conn).where(where).count()
   var j = Math.floor(count / len.skip)
   // console.log(Math.floor(j))
-  return j
+  // return c
 
-  // for (let i = 0; i < j; i++) {
-  //   var obj = await db.collection(conn).where(data)
-  //     .skip(i * len.skip).limit(len.limit).get()
-  //   newList.push(...obj.data)
-  // }
-  // return newList
+  for (let i = 0; i <= j; i++) {
+    var obj = await db.collection(conn).where(where)
+      .skip(i * len.skip).limit(len.limit)
+      .get()
+    newList.push(...obj.data)
+  }
+
+
+  return newList
 }
