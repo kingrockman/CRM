@@ -22,7 +22,7 @@
 import { DBPost } from "@/DBPost";
 import Mylist from "@/components/Mylist";
 import Card from "@/components/Card";
-import { myCloud } from "../../utils";
+// import { myCloud } from "../../utils";
 var todos = new DBPost("todos", [
   "description",
   "status",
@@ -58,10 +58,11 @@ export default {
     },
     async toSearch() {
       // console.log(this.keywords);
-      await todos.read(this.keywords);
-
+      var reg = { customer: this.keywords };
+      console.log(await todos.read("customer", this.keywords));
       this.showitem = todos.list;
       this.arrs = todos.obj;
+
       // this.arrs = todos.obj.filter(v => {
       //   var reg = new RegExp(this.keywords);
       //   if (v.description.match(reg)) {

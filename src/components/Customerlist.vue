@@ -1,20 +1,20 @@
 <template>
   <div class="container">
     <input @keyup="toSearch" v-model="search" type="text" placeholder="输入客户名称" />
-    <button @click="toSearch">查询</button>{{arrs.length==0?"玩命加载中...":"客户总数："+arrs.length}}
+    <button @click="toSearch">查询</button>
+    {{arrs.length==0?"玩命加载中...":"客户总数："+arrs.length}}
     <div class="list" @click="toDetail(arr._id)" :key="arr._id" v-for="arr in arrs">
-      <div class="title">{{arr.name}}</div>
+      <div class="title">{{arr.customer}}</div>
       <div class="subtitle">
         <div class="left">{{arr.person}}</div>
         <div class="right">{{arr.tel}}</div>
       </div>
     </div>
-    
   </div>
 </template>
 <script>
-const conn= "customers"
-import { read, setData, getData, show, hide,myCloud } from "../utils";
+const conn = "customers";
+import { read, setData, getData, show, hide, myCloud } from "../utils";
 export default {
   onReady() {
     this.init();
@@ -25,25 +25,24 @@ export default {
   data() {
     return {
       search: "",
-      arrs: [],
+      arrs: []
     };
   },
 
   methods: {
     async init() {
-      const res =await myCloud(2,conn)
+      const res = await myCloud(2, conn);
       setData(conn, res);
       const obj = getData(conn);
       this.arrs = obj;
       this.toSearch();
-
     },
     toDetail(i) {
       wx.navigateTo({
         url: "../customers/detail/main?index=" + i
       });
     },
-   
+
     toSearch() {
       const obj = getData(conn);
       this.arrs = obj.filter(v => {

@@ -13,9 +13,19 @@ exports.main = async (event) => {
 
   const conn = event.conn
   const data = event.data
-  const where = {
-    customer: new RegExp(event.key)
+  // const where = {
+  //   customer: new RegExp(event.key)
+  // }
+  var where = {}
+
+  console.log(typeof where);
+  for (var i in event.where) {
+
+    where[i] = new RegExp(event.where[i])
+
   }
+  console.log(where);
+
   // len.skip = len.limit = 100
   var newList = []
   var {

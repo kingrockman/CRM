@@ -34,8 +34,8 @@ class DBPost {
           }
         },
         success: (res) => {
-          // this.obj = res.result
-          // this.setData(res.result)
+          this.obj = res.result
+          this.setData(res.result)
           resolve(res.result)
         },
         fail: (err) => {
@@ -71,20 +71,24 @@ class DBPost {
       })
     })
   }
-  read(key, obj) {
+  read(key, value, obj) {
     console.log("正在执行read!")
+    // console.log(where);
+
     return new Promise((resolve, reject) => {
       wx.cloud.callFunction({
         name: "read",
         data: {
           conn: this.conn,
-          obj,
-          key
+          where: {
+            [key]: value
+          },
+          obj
         },
         success: (res) => {
           this.obj = res.result
           this.setData(res.result)
-          resolve()
+          resolve(res.result)
         },
         fail: (err) => {
           reject(err)

@@ -1,39 +1,39 @@
 {
-    "pages": [
-        "pages/todolist/main",
-        "pages/me/main",
-        "pages/todolist/detail/main",
-        "pages/customers/main",
-        "pages/product/main",
-        "pages/customers/detail/main",
-        "pages/product/detail/main",
-        "pages/login/main"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "WeChat",
-        "navigationBarTextStyle": "black"
-    },
-    "tabBar": {
-        "list": [{
-                "pagePath": "pages/todolist/main",
-                "text": "待办",
-                "iconPath": "static/tabs/home.png",
-                "selectedIconPath": "static/tabs/home-active.png"
-            },
-            {
-                "pagePath": "pages/customers/main",
-                "text": "客户",
-                "iconPath": "static/tabs/home.png",
-                "selectedIconPath": "static/tabs/home-active.png"
-            },
-            {
-                "pagePath": "pages/me/main",
-                "text": "我",
-                "iconPath": "static/tabs/orders.png",
-                "selectedIconPath": "static/tabs/orders-active.png"
-            }
-        ]
-    }
+  "pages": [
+    "pages/todolist/main",
+    "pages/customers/main",
+    "pages/me/main",
+    "pages/todolist/detail/main",
+    "pages/product/main",
+    "pages/customers/detail/main",
+    "pages/product/detail/main",
+    "pages/login/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [{
+        "pagePath": "pages/todolist/main",
+        "text": "待办",
+        "iconPath": "static/tabs/home.png",
+        "selectedIconPath": "static/tabs/home-active.png"
+      },
+      {
+        "pagePath": "pages/customers/main",
+        "text": "客户",
+        "iconPath": "static/tabs/home.png",
+        "selectedIconPath": "static/tabs/home-active.png"
+      },
+      {
+        "pagePath": "pages/me/main",
+        "text": "我",
+        "iconPath": "static/tabs/orders.png",
+        "selectedIconPath": "static/tabs/orders-active.png"
+      }
+    ]
+  }
 }

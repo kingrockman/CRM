@@ -97,9 +97,9 @@ export default {
         return console.log("新增模式", getData("userInfo"));
       }
       this.mode = true;
-      const res = await todos.getDataById(index);
+      const res = await todos.read({ _id: index });
       this.arrs = res[0];
-      // console.log(res[0]);
+      console.log(res, 1);
     },
 
     async toSave() {
