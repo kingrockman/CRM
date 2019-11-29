@@ -59,7 +59,7 @@ export default {
     async toSearch() {
       // console.log(this.keywords);
       var reg = { customer: this.keywords };
-      console.log(await todos.read("customer", this.keywords));
+      console.log(await todos.read({ customer: this.keywords }));
       this.showitem = todos.list;
       this.arrs = todos.obj;
 

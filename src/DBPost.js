@@ -71,7 +71,7 @@ class DBPost {
       })
     })
   }
-  read(key, value, obj) {
+  read(where, obj) {
     console.log("正在执行read!")
     // console.log(where);
 
@@ -80,9 +80,7 @@ class DBPost {
         name: "read",
         data: {
           conn: this.conn,
-          where: {
-            [key]: value
-          },
+          where,
           obj
         },
         success: (res) => {

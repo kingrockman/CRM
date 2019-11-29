@@ -9,7 +9,7 @@
         </div>
         <div class="card-item">
           <div class="key">名称</div>
-          <div class="value">{{name}}</div>
+          <div class="value">{{customer}}</div>
         </div>
         <div class="card-item">
           <div class="key">联系人</div>
@@ -68,7 +68,7 @@
         <div class="card-item">
           <div class="key">客户名称</div>
           <div class="value">
-            <input v-model="name" type="text" placeholder="客户名称" />
+            <input v-model="customer" type="text" placeholder="客户名称" />
           </div>
         </div>
         <div class="card-item">
