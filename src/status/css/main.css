@@ -2,6 +2,7 @@ html {
   margin: 0;
   padding: 0;
   font-size: 24rpx;
+  color: #3c3c3c;
 }
 
 
@@ -11,6 +12,7 @@ html {
 }
 
 .title {
+  font-weight: 700;
   font-size: 32rpx;
   margin-bottom: 20rpx;
 }

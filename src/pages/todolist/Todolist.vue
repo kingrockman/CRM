@@ -8,11 +8,11 @@
     <button @click="toSearch">查询</button>
     <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
       <div class="title">{{item[showitem[0]]}}</div>
-      <!-- <div class="title">{{item[showitem[3]]}}</div> -->
+      <div class="subtitle">{{item[showitem[1]]}}</div>
       <div class="subtitle">
-        <div class="left">{{item[showitem[1]]}}</div>
+        <div class="left">{{item[showitem[2]]}}</div>
         <!-- <div class="middle">{{item[showitem[3]]}}</div> -->
-        <div class="right">{{item[showitem[2]]}}</div>
+        <div class="right">{{item[showitem[3]]}}</div>
       </div>
     </div>
     <div class="placeholder"></div>
@@ -26,9 +26,9 @@ import Mylist from "@/components/Mylist";
 import Card from "@/components/Card";
 // import { myCloud } from "../../utils";
 var todos = new DBPost("todos", [
+  "customer",
   "description",
   "status",
-  "handler",
   "createDate"
 ]);
 export default {
