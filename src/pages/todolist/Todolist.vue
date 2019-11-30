@@ -15,6 +15,8 @@
         <div class="right">{{item[showitem[2]]}}</div>
       </div>
     </div>
+    <div class="placeholder"></div>
+
     <!-- </div> -->
   </div>
 </template>

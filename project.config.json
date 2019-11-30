@@ -55,6 +55,13 @@
 					"pathName": "pages/todolist/detail/main",
 					"query": "index=f885cb355d8c8dbc05068ec93ce674ff",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/customers/detail/main",
+					"pathName": "pages/customers/detail/main",
+					"query": "index=nCT3e3Mg8JhLXq6jzJj2Gxb8pmYUbnvlLjKkqZ2Y90fee24G",
+					"scene": null
 				}
 			]
 		}

@@ -10,23 +10,18 @@
         <div class="right">{{arr[showitme[3]]}}</div>
       </div>
     </div>
+    <div class="placeholder"></div>
   </div>
 </template>
 <script>
-// const conn = "customers";
 import { DBPost } from "@/DBPost";
 var customer = new DBPost("customers", ["customer", "person", "", "tel"]);
-// import { read, setData, getData, show, hide, myCloud } from "../utils";
 export default {
   onReady() {
     console.log("ready");
 
     this.init();
   },
-  // onShow() {
-  //   console.log("show");
-  //   this.init();
-  // },
   data() {
     return {
       search: "",
@@ -47,43 +42,8 @@ export default {
         url: "../customers/detail/main?index=" + i
       });
     }
-
-    // toSearch() {
-    //   const obj = getData(conn);
-    //   this.arrs = obj.filter(v => {
-    //     var reg = new RegExp(this.search);
-    //     if (v.name.match(reg)) {
-    //       return v.name;
-    //     }
-    //   });
-    // }
   }
 };
 </script>
 <style>
-/* input {
-  font-size: 32rpx;
-  margin: 20rpx;
-  padding: 20rpx;
-  border: solid pink 1px;
-}
-.subtitle {
-  position: relative;
-  flex-direction: row;
-  font-size: 24rpx;
-  color: gray;
-}
-.subtitle div {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.person {
-  width: 48%;
-  float: left;
-}
-.tel {
-  width: 48%;
-  float: right;
-} */
 </style>
