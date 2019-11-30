@@ -3,15 +3,15 @@
     <div class="tools">
       <button @click="toDetail(-1)">新增</button>
     </div>
-    <!-- <div v-if="mode"> -->
-    <input type="text" placeholder="查找" v-model="keywords" />
-    <button @click="toSearch">查询</button>
+    <div class="searchbox">
+      <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
+      <input class="searchbtn" type="text" @click="toSearch" value="查询" disabled />
+    </div>
     <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
       <div class="title">{{item[showitem[0]]}}</div>
       <div class="subtitle">{{item[showitem[1]]}}</div>
       <div class="subtitle">
         <div class="left">{{item[showitem[2]]}}</div>
-        <!-- <div class="middle">{{item[showitem[3]]}}</div> -->
         <div class="right">{{item[showitem[3]]}}</div>
       </div>
     </div>

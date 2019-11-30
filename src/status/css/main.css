@@ -40,14 +40,8 @@ html {
   float: right;
 }
 
-/* 
-.card {
-  font-size: 50rpx;
-  padding: 10rpx;
-} */
 
 .card-item {
-  /* border-bottom: solid 1px red; */
   background-color: #fff;
   display: flex;
   flex-direction: row;
@@ -84,18 +78,41 @@ input {
 }
 
 textarea {
-  width: 90%;
+  width: 100%;
   border-radius: 3px;
   background-color: #eee;
 }
 
 button {
   background-color: #3498db;
-  color: white;
+  color: #fff;
   width: 80px;
   height: 30px;
-  font-size: 12px;
-  margin: 20rpx auto;
+  font-size: 14px;
+  text-align: center;
+  line-height: 30px;
+  /* margin: 20rpx auto; */
+}
+
+.searchbox {
+  margin: 0 auto;
+  width: 90%;
+  font-size: 16px;
+}
+
+.searchbox>.searchval {
+  border-radius: 3px 0 0 3px;
+  padding: 10rpx;
+  width: 74%;
+  display: inline-block;
+}
+
+.searchbox>.searchbtn {
+  border-radius: 0 3px 3px 0;
+  padding: 10rpx;
+  width: 20%;
+  display: inline-block;
+  text-align: center;
 }
 
 .danger {

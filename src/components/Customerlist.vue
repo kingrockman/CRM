@@ -1,7 +1,11 @@
 <template>
   <div class="container">
-    <input v-model="search" type="text" placeholder="输入客户名称" />
-    <button @click="init">查询</button>
+    <!-- <input v-model="search" type="text" placeholder="输入客户名称" />
+    <button @click="init">查询</button>-->
+    <div class="searchbox">
+      <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
+      <input class="searchbtn" type="text" @click="toSearch" value="查询" disabled />
+    </div>
     {{arrs.length==0?"玩命加载中...":"客户总数："+arrs.length}}
     <div class="list" @click="toDetail(arr._id)" :key="arr._id" v-for="arr in arrs">
       <div class="title">{{arr[showitme[0]]}}</div>
