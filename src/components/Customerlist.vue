@@ -4,7 +4,7 @@
     <button @click="init">查询</button>-->
     <div class="searchbox">
       <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
-      <input class="searchbtn" type="text" @click="toSearch" value="查询" disabled />
+      <input class="searchbtn" type="text" @click="init" value="查询" disabled />
     </div>
     {{arrs.length==0?"玩命加载中...":"客户总数："+arrs.length}}
     <div class="list" @click="toDetail(arr._id)" :key="arr._id" v-for="arr in arrs">
@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      search: "",
+      keywords: "",
       showitme: [],
       arrs: []
     };
@@ -37,7 +37,7 @@ export default {
   methods: {
     async init() {
       this.arrs = [];
-      const res = await customer.read({ customer: this.search });
+      const res = await customer.read({ customer: this.keywords });
       this.showitme = customer.list;
       this.arrs = customer.obj;
     },

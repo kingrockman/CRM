@@ -32,13 +32,57 @@
           <input v-model="arrs.address" type="text" placeholder="地址" :disabled="mode" />
         </div>
       </div>
+      <p>产品信息</p>
+      <div class="porducts" v-for="pt in arrs.products" :key="pt">
+        <div class="card-item">
+          <div class="key">产品名称</div>
+          <div class="value">
+            <input v-model="pt.name" type="text" placeholder="产品名称" :disabled="mode" />
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="key">服务期</div>
+          <div class="value">
+            <input v-model="pt.viability" type="text" placeholder="服务期" :disabled="mode" />
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="key">序列号</div>
+          <div class="value">
+            <input v-model="pt.serial" type="text" placeholder="序列号" :disabled="mode" />
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="key">CDKEY</div>
+          <div class="value">
+            <input v-model="pt.cdkey" type="text" placeholder="CDKEY" :disabled="mode" />
+          </div>
+        </div>
+      </div>
+      <input type="button" @click="addProducts" value="添加产品" :disabled="mode" />
       <div class="card-item">
         <div class="key">备注</div>
         <div class="value">
           <textarea v-model="arrs.remark" type="text" placeholder="备注" :disabled="mode"></textarea>
         </div>
       </div>
+      <div class="card-item">
+        <div class="key">创建者</div>
+        <div class="value">
+          <input v-model="arrs.creater" type="text" disabled />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">创建日期</div>
+        <div class="value">
+          <input v-model="arrs.ct_date" type="text" disabled />
+        </div>
+      </div>
     </div>
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
     <div class="tools">
       <div class="navbar" v-if="mode">
         <button @click="mode=!mode">修改</button>
@@ -53,6 +97,7 @@
 </template>
 <script>
 import { DBPost } from "@/DBPost";
+import { getData, formatDate } from "../../../utils";
 var customer = new DBPost("customers", ["customer", "person", "", "tel"]);
 var index;
 export default {
@@ -72,11 +117,28 @@ export default {
       if (index == -1) {
         console.log("新增");
         this.arrs = {};
+
+        var userInfo = getData("userInfo");
+        this.arrs.creater = userInfo.userName;
+        this.arrs.ct_date = formatDate(new Date());
+        this.arrs.products = [
+          {
+            name: "",
+            serial: "",
+            cdkey: "",
+            viability: ""
+          },
+          {
+            name: "",
+            serial: "",
+            cdkey: "",
+            viability: ""
+          }
+        ];
         this.mode = this.cancel = false;
       } else {
         await customer.read({ _id: index });
         this.arrs = customer.obj[0];
-        // console.log("修改", customer.obj);
       }
     },
 
@@ -106,7 +168,17 @@ export default {
       this.init();
       this.mode = true;
     },
+    addProducts() {
+      console.log(this.arrs.products);
 
+      this.arrs.products.push({
+        name: "1",
+        serial: "1",
+        cdkey: "1",
+        viability: "1"
+      });
+      console.log(this.arrs.products);
+    },
     toDel(i) {
       wx.showModal({
         title: "提示",

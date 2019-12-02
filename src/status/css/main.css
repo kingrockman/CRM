@@ -95,15 +95,19 @@ button {
 }
 
 .searchbox {
+  position: fixed;
+  top: 0;
+  /* left: 5%; */
+  background-color: #fff;
   margin: 0 auto;
-  width: 90%;
+  width: 100%;
   font-size: 16px;
 }
 
 .searchbox>.searchval {
   border-radius: 3px 0 0 3px;
   padding: 10rpx;
-  width: 74%;
+  width: 75%;
   display: inline-block;
 }
 
@@ -120,8 +124,7 @@ button {
 }
 
 .placeholder {
-  width: 100px;
-  height: 100px;
+  height: 50px;
 }
 
 /* 

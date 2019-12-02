@@ -7,6 +7,7 @@
       <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
       <input class="searchbtn" type="text" @click="toSearch" value="查询" disabled />
     </div>
+    <div class="placeholder"></div>
     <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
       <div class="title">{{item[showitem[0]]}}</div>
       <div class="subtitle">{{item[showitem[1]]}}</div>
@@ -29,7 +30,7 @@ var todos = new DBPost("todos", [
   "customer",
   "description",
   "status",
-  "createDate"
+  "re_date"
 ]);
 export default {
   onShow() {

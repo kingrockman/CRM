@@ -37,16 +37,23 @@
           <input type="text" v-model="arrs.status" :disabled="mode" />
         </div>
       </div>
+
       <div class="card-item">
-        <div class="key">创建日期</div>:
+        <div class="key">上门时间</div>:
         <div class="value">
-          <input type="text" v-model="arrs.createDate" disabled />
+          <input type="text" v-model="arrs.re_date" :disabled="mode" />
         </div>
       </div>
       <div class="card-item">
         <div class="key">创建者</div>:
         <div class="value">
           <input type="text" v-model="arrs.creater" disabled />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">创建日期</div>:
+        <div class="value">
+          <input type="text" v-model="arrs.ct_date" disabled />
         </div>
       </div>
     </div>
@@ -89,9 +96,8 @@ export default {
         this.cancel = false;
         this.arrs = {};
         var userInfo = getData("userInfo");
-
         this.arrs.creater = userInfo.userName;
-        this.arrs.createDate = formatDate(new Date());
+        this.arrs.ct_date = formatDate(new Date());
         this.mode = false;
 
         return console.log("新增模式", getData("userInfo"));
