@@ -127,16 +127,12 @@ export default {
             serial: "",
             cdkey: "",
             viability: ""
-          },
-          {
-            name: "",
-            serial: "",
-            cdkey: "",
-            viability: ""
           }
         ];
         this.mode = this.cancel = false;
       } else {
+        this.mode = this.cancel = true;
+
         await customer.read({ _id: index });
         this.arrs = customer.obj[0];
       }
@@ -172,10 +168,10 @@ export default {
       console.log(this.arrs.products);
 
       this.arrs.products.push({
-        name: "1",
-        serial: "1",
-        cdkey: "1",
-        viability: "1"
+        name: "",
+        serial: "",
+        cdkey: "",
+        viability: ""
       });
       console.log(this.arrs.products);
     },
