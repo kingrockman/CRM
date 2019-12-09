@@ -71,7 +71,7 @@ class DBPost {
       })
     })
   }
-  read(where, obj) {
+  read(pages, where) {
     console.log("正在执行read!")
     // console.log(where);
 
@@ -80,12 +80,12 @@ class DBPost {
         name: "read",
         data: {
           conn: this.conn,
+          pages,
           where,
-          obj
         },
         success: (res) => {
-          this.obj = res.result
-          this.setData(res.result)
+          // this.obj = res.result
+          // this.setData(res.result)
           resolve(res.result)
         },
         fail: (err) => {

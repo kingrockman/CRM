@@ -1,11 +1,19 @@
 <template>
-  <div class="container">
+  <div class="container" style="padding:30px 0">
     <div class="tools">
       <button @click="toDetail(-1)">新增</button>
     </div>
     <div class="searchbox">
       <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
-      <input class="searchbtn" type="text" @click="toSearch" value="查询" disabled />
+      <input class="searchbtn" type="text" @click="init" value="查询" disabled />
+      <scroll-view class="scrollpages" scroll-x>
+        <div
+          :class="queryPage.currentPage-1==i?'scrollpagesitem active':'scrollpagesitem'"
+          v-for="i in queryPage.totalPage"
+          :key="i"
+          @click="handleCPage(i)"
+        >{{i+1}}</div>
+      </scroll-view>
     </div>
     <div class="placeholder"></div>
     <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
@@ -25,7 +33,6 @@
 import { DBPost } from "@/DBPost";
 import Mylist from "@/components/Mylist";
 import Card from "@/components/Card";
-// import { myCloud } from "../../utils";
 var todos = new DBPost("todos", [
   "customer",
   "description",
@@ -34,7 +41,7 @@ var todos = new DBPost("todos", [
 ]);
 export default {
   onShow() {
-    this.toSearch();
+    this.init();
   },
   components: {
     Mylist,
@@ -46,7 +53,12 @@ export default {
       arrs: [],
       mode: true,
       showitem: [],
-      keywords: ""
+      keywords: "",
+      queryPage: {
+        totalPage: 1,
+        pageSize: 10,
+        currentPage: 1
+      }
     };
   },
 
@@ -59,19 +71,19 @@ export default {
         url: "detail/main?index=" + i
       });
     },
-    async toSearch() {
-      // console.log(this.keywords);
-      var reg = { customer: this.keywords };
-      console.log(await todos.read({ customer: this.keywords }));
-      this.showitem = todos.list;
-      this.arrs = todos.obj;
+    async init() {
+      const res = await todos.read(this.queryPage, {
+        customer: this.keywords
+      });
 
-      // this.arrs = todos.obj.filter(v => {
-      //   var reg = new RegExp(this.keywords);
-      //   if (v.description.match(reg)) {
-      //     return v.description;
-      //   }
-      // });
+      this.queryPage.totalPage = res.totalPage;
+      this.showitem = todos.list;
+      this.arrs = res.data;
+    },
+    handleCPage(i) {
+      this.queryPage.currentPage = i;
+      this.init();
+      // console.log(i);
     }
   }
 };
@@ -102,4 +114,16 @@ export default {
   bottom: 0;
   right: 10rpx;
 } */
+
+.scrollpages {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.scrollpagesitem {
+  display: inline-block;
+  padding: 30rpx;
+}
+.active {
+  color: red;
+}
 </style>

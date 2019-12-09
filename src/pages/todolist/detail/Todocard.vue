@@ -76,8 +76,9 @@ var todos = new DBPost("todos");
 var index;
 export default {
   onLoad() {
+    console.log("tododetail");
+
     this.init();
-    // formatDate(new Date());
   },
   data() {
     return {
@@ -88,7 +89,6 @@ export default {
   },
   methods: {
     async init() {
-      // this.arrs = {};
       index = this.$root.$mp.query.index;
       this.cancel = true;
 
@@ -103,9 +103,8 @@ export default {
         return console.log("新增模式", getData("userInfo"));
       }
       this.mode = true;
-      const res = await todos.read({ _id: index });
-      this.arrs = res[0];
-      console.log(res, 1);
+      const res = await todos.read({}, { _id: index });
+      this.arrs = res.data[0];
     },
 
     async toSave() {

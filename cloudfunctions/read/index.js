@@ -6,42 +6,33 @@ cloud.init()
 // 云函数入口函数
 exports.main = async (event) => {
   const db = cloud.database()
-  var len = {
-    skip: 100,
-    limit: 100
-  }
-
+  const pageSize = event.pages.pageSize ? event.pages.pageSize : 100
+  const currentPage = event.pages.currentPage ? event.pages.currentPage : 1
   const conn = event.conn
-  const data = event.data
-  // const where = {
-  //   customer: new RegExp(event.key)
-  // }
   var where = {}
-
-  console.log(typeof where);
   for (var i in event.where) {
-
     where[i] = new RegExp(event.where[i])
-
   }
-  console.log(where);
-
-  // len.skip = len.limit = 100
-  var newList = []
   var {
     total: count
   } = await db.collection(conn).where(where).count()
-  var j = Math.floor(count / len.skip)
-  // console.log(Math.floor(j))
-  // return c
-
-  for (let i = 0; i <= j; i++) {
-    var obj = await db.collection(conn).where(where)
-      .skip(i * len.skip).limit(len.limit)
-      .get()
-    newList.push(...obj.data)
+  var totalPage = Math.ceil(count / pageSize)
+  var {
+    data: obj
+  } = await db.collection(conn).where(where)
+    .skip((currentPage - 1) * pageSize).limit(pageSize)
+    .orderBy('ct_date', 'asc')
+    .get()
+  console.log({
+    data: obj,
+    totalPage,
+    pageSize,
+    currentPage
+  });
+  return {
+    data: obj,
+    totalPage,
+    pageSize,
+    currentPage
   }
-
-
-  return newList
 }

@@ -133,8 +133,8 @@ export default {
       } else {
         this.mode = this.cancel = true;
 
-        await customer.read({ _id: index });
-        this.arrs = customer.obj[0];
+        const res = await customer.read("", { _id: index });
+        this.arrs = res.data[0];
       }
     },
 
