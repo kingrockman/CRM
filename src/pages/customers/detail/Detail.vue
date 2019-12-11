@@ -178,7 +178,7 @@ export default {
     toDel(i) {
       wx.showModal({
         title: "提示",
-        content: "这是一个模态弹窗",
+        content: "是否删除该客户",
         success: async res => {
           if (res.confirm) {
             await customer.del(i);
