@@ -151,7 +151,6 @@ export default {
         this.cancel = true;
         console.log("新增了:");
       } else {
-        // console.log("修改了:", 123);
         const res = await customer.update(this.arrs);
         console.log("修改了:", res);
       }
@@ -183,7 +182,6 @@ export default {
           if (res.confirm) {
             await customer.del(i);
             wx.navigateBack();
-            // wx.reLaunch({ url: "../main" });
             console.log("用户点击确定");
           } else if (res.cancel) {
             console.log("用户点击取消");
@@ -191,59 +189,8 @@ export default {
         }
       });
     }
-
-    // async toSave() {
-    //   const obj = this.getObj();
-    //   if (this.id == "") {
-    //     const res = await myCloud(1, conn, obj);
-    //     obj.id = res._id;
-    //     this.setObj(obj);
-    //   } else {
-    //     const res = await myCloud(3, conn, obj);
-    //   }
-    //   this.toggle();
-    // },
-    // async toDel() {
-    //   if (await modal("删除吗？")) {
-    //     const r = await myCloud(4, conn, this.id);
-    //     if (r.stats.removed === 1) {
-    //       wx.switchTab({
-    //         url: "../main"
-    //       });
-    //     }
-    //   }
-    // },
-    // toggle() {
-    //   this.mode = !this.mode;
-    // }
   }
 };
 </script>
 <style>
-/* .danger {
-  background-color: #c0392b;
-}
-.list {
-  padding: 20rpx;
-  border-bottom: black solid 1px;
-}
-.list p {
-  margin-bottom: 20rpx;
-}
-.item {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 10rpx;
-}
-.key {
-  width: 20%;
-}
-.value {
-  width: 100%;
-}
-input {
-  overflow: hidden;
-  white-space: inherit;
-  text-overflow: ellipsis;
-} */
 </style>

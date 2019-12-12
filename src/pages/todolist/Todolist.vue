@@ -25,8 +25,6 @@
       </div>
     </div>
     <div class="placeholder"></div>
-
-    <!-- </div> -->
   </div>
 </template>
 <script>
@@ -42,6 +40,7 @@ var todos = new DBPost("todos", [
 export default {
   onShow() {
     this.init();
+    // console.log(new Date("2019-12-8").getTime());
   },
   components: {
     Mylist,

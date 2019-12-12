@@ -73,11 +73,9 @@
 import { DBPost } from "@/DBPost";
 import { getData, formatDate } from "../../../utils";
 var todos = new DBPost("todos");
-var index;
+var index, thisTime;
 export default {
   onLoad() {
-    console.log("tododetail");
-
     this.init();
   },
   data() {
@@ -90,21 +88,23 @@ export default {
   methods: {
     async init() {
       index = this.$root.$mp.query.index;
+      console.log("init()");
       this.cancel = true;
 
-      if (index == -1) {
+      if (index === "-1") {
+        console.log("新增模式");
         this.cancel = false;
+        this.mode = false;
         this.arrs = {};
         var userInfo = getData("userInfo");
         this.arrs.creater = userInfo.userName;
         this.arrs.ct_date = formatDate(new Date());
-        this.mode = false;
-
-        return console.log("新增模式", getData("userInfo"));
+      } else {
+        console.log("修改模式");
+        this.mode = true;
+        const res = await todos.read({}, { _id: index });
+        this.arrs = res.data[0];
       }
-      this.mode = true;
-      const res = await todos.read({}, { _id: index });
-      this.arrs = res.data[0];
     },
 
     async toSave() {
@@ -112,7 +112,7 @@ export default {
         title: "加载中"
       });
       if (index == -1) {
-        // this.mode=false
+        this.arrs.ct_date = thisTime.getTime();
         const res = await todos.create(this.arrs);
         this.$root.$mp.query.index = res.result._id;
 
@@ -134,12 +134,11 @@ export default {
     toDel(i) {
       wx.showModal({
         title: "提示",
-        content: "这是一个模态弹窗",
+        content: "是否删除该服务请求",
         success: async res => {
           if (res.confirm) {
             await todos.del(i);
             wx.navigateBack();
-            // wx.reLaunch({ url: "../main" });
             console.log("用户点击确定");
           } else if (res.cancel) {
             console.log("用户点击取消");

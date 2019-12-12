@@ -36,3 +36,13 @@ exports.main = async (event) => {
     currentPage
   }
 }
+
+function formatDate(time) {
+  // var time = "2019年11月10日";
+  time = time.replace("年", "-");
+  time = time.replace("月", "-");
+  time = time.replace("日", "");
+  time = new Date(time)
+  console.log(time);
+  return time.getTime()
+}
