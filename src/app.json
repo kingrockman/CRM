@@ -2,6 +2,7 @@
   "pages": [
     "pages/todolist/main",
     "pages/customers/main",
+    "pages/project/main",
     "pages/me/main",
     "pages/todolist/detail/main",
     "pages/product/main",

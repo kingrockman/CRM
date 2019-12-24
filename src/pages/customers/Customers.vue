@@ -2,21 +2,21 @@
   <div class="container" style="padding:70px 0">
     <div class="searchbox">
       <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
-      <input class="searchbtn" type="text" @click="init" value="查询" disabled />
+      <input class="searchbtn" type="text" @click="getCustomersData" value="查询" disabled />
       <scroll-view class="scrollpages" scroll-x>
         <div
-          :class="queryPage.currentPage-1==i?'scrollpagesitem active':'scrollpagesitem'"
-          v-for="i in queryPage.totalPage"
+          :class="pageQuery.currentPage-1==i?'scrollpagesitem active':'scrollpagesitem'"
+          v-for="i in pageQuery.totalPage"
           :key="i"
           @click="handleCPage(i)"
         >{{i+1}}</div>
       </scroll-view>
     </div>
     <div class="list" @click="toDetail(arr._id)" :key="arr._id" v-for="arr in arrs">
-      <div class="title">{{arr[showitem[0]]}}</div>
+      <div class="title">{{arr.customer}}</div>
       <div class="subtitle">
-        <div class="left">{{arr[showitem[1]]}}</div>
-        <div class="right">{{arr[showitem[3]]}}</div>
+        <div class="left">{{arr.person}}</div>
+        <div class="right">{{arr.tel}}</div>
       </div>
     </div>
     <div class="placeholder"></div>
@@ -27,34 +27,39 @@
 </template>
 <script>
 import { DBPost } from "@/DBPost";
-var customer = new DBPost("customers", ["customer", "person", "", "tel"]);
+import { clouds } from "@/clouds";
+// var customer = new DBPost("customers", ["customer", "person", "", "tel"]);
 export default {
   onReady() {
     console.log("ready");
 
-    this.init();
+    this.getCustomersData();
   },
   data() {
     return {
       keywords: "",
       showitem: [],
       arrs: [],
-      queryPage: {
-        totalPage: 1,
+      pageQuery: {
+        totalPage: 0,
         pageSize: 10,
         currentPage: 1
       }
     };
   },
   methods: {
-    async init() {
+    async getCustomersData() {
       this.arrs = [];
-      const res = await customer.read(this.queryPage, {
-        customer: this.keywords
+      // const res = await customer.read(this.pageQuery, {
+      //   customer: this.keywords
+      // });
+      const { result: res } = await clouds("cusRead", {
+        key: this.keywords,
+        pageQuery: this.pageQuery
       });
-      // console.log(res);
-      this.queryPage.totalPage = res.totalPage;
-      this.showitem = customer.list;
+      console.log(res);
+      this.pageQuery.totalPage = res.totalPage;
+      // this.showitem = customer.list;
       this.arrs = res.data;
     },
 
@@ -64,8 +69,9 @@ export default {
       });
     },
     handleCPage(i) {
-      this.queryPage.currentPage = i;
-      this.init();
+      if (this.pageQuery.currentPage == i) return;
+      this.pageQuery.currentPage = i;
+      this.getCustomersData();
       // console.log(i);
     }
   }

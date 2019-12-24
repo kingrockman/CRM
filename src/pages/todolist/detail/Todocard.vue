@@ -10,7 +10,15 @@
       <div class="card-item">
         <div class="key">客户名称</div>:
         <div class="value">
-          <input type="text" v-model="arrs.customer" :disabled="mode" />
+          <input type="text" @input="getCusList" v-model="arrs.customer" :disabled="mode" />
+          <ul class="ul-customer">
+            <li
+              @click="setCusName(item.customer)"
+              v-for="item in customers"
+              :key="item"
+            >{{item.customer}}</li>
+          </ul>
+          <!-- <button @click="setCusName">12</button> -->
         </div>
       </div>
       <div class="card-item">
@@ -71,18 +79,21 @@
 </template>
 <script>
 import { DBPost } from "@/DBPost";
-import { getData, formatDate } from "../../../utils";
+import { clouds } from "@/clouds";
+import { getData, formatDate } from "@/utils";
 var todos = new DBPost("todos");
 var index, thisTime;
 export default {
   onLoad() {
     this.init();
   },
+
   data() {
     return {
       arrs: {},
       mode: true,
-      cancel: true
+      cancel: true,
+      customers: []
     };
   },
   methods: {
@@ -102,8 +113,11 @@ export default {
       } else {
         console.log("修改模式");
         this.mode = true;
-        const res = await todos.read({}, { _id: index });
-        this.arrs = res.data[0];
+        // const res = await todos.read({}, { _id: index });
+        const res = await clouds("cusById", { _id: index });
+        console.log(res);
+
+        // this.arrs = res;
       }
     },
 
@@ -111,15 +125,17 @@ export default {
       wx.showLoading({
         title: "加载中"
       });
-      if (index == -1) {
-        this.arrs.ct_date = thisTime.getTime();
-        const res = await todos.create(this.arrs);
-        this.$root.$mp.query.index = res.result._id;
+      console.log(index);
 
+      if (index == -1) {
+        const { result: res } = await clouds("cusCreate", this.arrs);
+        this.$root.$mp.query.index = res._id;
         this.cancel = true;
-        console.log("新增了:");
+        console.log("新增了:", res);
       } else {
-        await todos.update(this.arrs);
+        console.log("修改了", this.arrs);
+
+        await clouds("cusUpdate", this.arrs);
       }
       wx.hideLoading();
       wx.showToast({
@@ -137,7 +153,7 @@ export default {
         content: "是否删除该服务请求",
         success: async res => {
           if (res.confirm) {
-            await todos.del(i);
+            const re = await clouds("cusDel", { _id: i });
             wx.navigateBack();
             console.log("用户点击确定");
           } else if (res.cancel) {
@@ -145,9 +161,30 @@ export default {
           }
         }
       });
+    },
+    async getCusList() {
+      console.log("getList");
+      this.customers = [{ customer: "正在加载数据" }];
+      if (this.arrs.customer == "") return (this.customers = []);
+      const { result: res } = await clouds("cusList", {
+        key: this.arrs.customer
+      });
+      console.log(res.data);
+      this.customers = res.data;
+    },
+    setCusName(val) {
+      // console.log(this.$mp.page);
+      this.arrs.customer = val;
+      this.$forceUpdate();
+      this.customers = [];
+      // this.getCusList();
     }
   }
 };
 </script>
+
 <style>
+.ul-customer > li {
+  padding-bottom: 8px;
+}
 </style>
