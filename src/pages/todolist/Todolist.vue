@@ -8,8 +8,8 @@
       <input class="searchbtn" type="text" @click="init" value="查询" disabled />
       <scroll-view class="scrollpages" scroll-x>
         <div
-          :class="queryPage.currentPage-1==i?'scrollpagesitem active':'scrollpagesitem'"
-          v-for="i in queryPage.totalPage"
+          :class="pageQuery.currentPage-1==i?'scrollpagesitem active':'scrollpagesitem'"
+          v-for="i in pageQuery.totalPage"
           :key="i"
           @click="handleCPage(i)"
         >{{i+1}}</div>
@@ -17,26 +17,27 @@
     </div>
     <div class="placeholder"></div>
     <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
-      <div class="title">{{item[showitem[0]]}}</div>
-      <div class="subtitle">{{item[showitem[1]]}}</div>
+      <div class="title">{{item.customer}}</div>
+      <div class="subtitle">{{item.description}}</div>
       <div class="subtitle">
-        <div class="left">{{item[showitem[2]]}}</div>
-        <div class="right">{{item[showitem[3]]}}</div>
+        <div class="left">{{item.status}}</div>
+        <div class="right">{{item.re_date}}</div>
       </div>
     </div>
     <div class="placeholder"></div>
   </div>
 </template>
 <script>
-import { DBPost } from "@/DBPost";
+// import { DBPost } from "@/DBPost";
+import { clouds } from "@/clouds";
 import Mylist from "@/components/Mylist";
 import Card from "@/components/Card";
-var todos = new DBPost("todos", [
-  "customer",
-  "description",
-  "status",
-  "re_date"
-]);
+// var todos = new DBPost("todos", [
+//   "customer",
+//   "description",
+//   "status",
+//   "re_date"
+// ]);
 export default {
   onShow() {
     this.init();
@@ -53,8 +54,8 @@ export default {
       mode: true,
       showitem: [],
       keywords: "",
-      queryPage: {
-        totalPage: 1,
+      pageQuery: {
+        totalPage: 0,
         pageSize: 10,
         currentPage: 1
       }
@@ -71,16 +72,23 @@ export default {
       });
     },
     async init() {
-      const res = await todos.read(this.queryPage, {
-        customer: this.keywords
-      });
+      // const res = await clouds(this.pageQuery, {
+      //   customer: this.keywords
+      // });
+      console.log("init");
 
-      this.queryPage.totalPage = res.totalPage;
-      this.showitem = todos.list;
+      const { result: res } = await clouds("todoRead", {
+        key: this.keywords,
+        pageQuery: this.pageQuery
+      });
+      console.log(res);
+
+      this.pageQuery.totalPage = res.totalPage;
+      // this.showitem = todos.list;
       this.arrs = res.data;
     },
     handleCPage(i) {
-      this.queryPage.currentPage = i;
+      this.pageQuery.currentPage = i;
       this.init();
       // console.log(i);
     }

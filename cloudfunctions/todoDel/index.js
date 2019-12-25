@@ -4,11 +4,8 @@ const cloud = require('wx-server-sdk')
 cloud.init()
 
 // 云函数入口函数
-exports.main = async (event, context) => {
+exports.main = async event => {
   const db = cloud.database();
-  const conn = "customers"
-  // console.log(event.obj)
+  const conn = "todos"
   return db.collection(conn).doc(event._id).remove()
-  return event
-
 }

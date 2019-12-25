@@ -18,7 +18,6 @@
               :key="item"
             >{{item.customer}}</li>
           </ul>
-          <!-- <button @click="setCusName">12</button> -->
         </div>
       </div>
       <div class="card-item">
@@ -68,7 +67,7 @@
     <div class="tools">
       <div class="navbar" v-if="mode">
         <button @click="mode=!mode">修改</button>
-        <button class="danger" @click="toDel(arrs._id)">删除</button>
+        <button class="danger" @click="toDel">删除</button>
       </div>
       <div class="navbar" v-if="!mode">
         <button v-if="cancel" @click="mode=!mode">取消</button>
@@ -78,10 +77,8 @@
   </div>
 </template>
 <script>
-import { DBPost } from "@/DBPost";
 import { clouds } from "@/clouds";
 import { getData, formatDate } from "@/utils";
-var todos = new DBPost("todos");
 var index, thisTime;
 export default {
   onLoad() {
@@ -101,7 +98,6 @@ export default {
       index = this.$root.$mp.query.index;
       console.log("init()");
       this.cancel = true;
-
       if (index === "-1") {
         console.log("新增模式");
         this.cancel = false;
@@ -113,11 +109,10 @@ export default {
       } else {
         console.log("修改模式");
         this.mode = true;
-        // const res = await todos.read({}, { _id: index });
-        const res = await clouds("cusById", { _id: index });
+        const { result: res } = await clouds("todoById", { _id: index });
         console.log(res);
 
-        // this.arrs = res;
+        this.arrs = res.data[0];
       }
     },
 
@@ -128,14 +123,13 @@ export default {
       console.log(index);
 
       if (index == -1) {
-        const { result: res } = await clouds("cusCreate", this.arrs);
+        const { result: res } = await clouds("todoCreate", this.arrs);
         this.$root.$mp.query.index = res._id;
         this.cancel = true;
         console.log("新增了:", res);
       } else {
+        await clouds("todoUpdate", this.arrs);
         console.log("修改了", this.arrs);
-
-        await clouds("cusUpdate", this.arrs);
       }
       wx.hideLoading();
       wx.showToast({
@@ -147,13 +141,13 @@ export default {
       this.mode = true;
     },
 
-    toDel(i) {
+    toDel() {
       wx.showModal({
         title: "提示",
         content: "是否删除该服务请求",
         success: async res => {
           if (res.confirm) {
-            const re = await clouds("cusDel", { _id: i });
+            const re = await clouds("todoDel", { _id: index });
             wx.navigateBack();
             console.log("用户点击确定");
           } else if (res.cancel) {
@@ -173,11 +167,9 @@ export default {
       this.customers = res.data;
     },
     setCusName(val) {
-      // console.log(this.$mp.page);
       this.arrs.customer = val;
       this.$forceUpdate();
       this.customers = [];
-      // this.getCusList();
     }
   }
 };

@@ -6,9 +6,12 @@ cloud.init()
 // 云函数入口函数
 exports.main = async (event, context) => {
   const db = cloud.database();
-  const conn = "customers"
-  // console.log(event.obj)
-  return db.collection(conn).doc(event._id).remove()
-  return event
-
+  const conn = "todos"
+  try {
+    return db.collection(conn).add({
+      data: event
+    })
+  } catch (e) {
+    console.log("新增操作出错");
+  }
 }

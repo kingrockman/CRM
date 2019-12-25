@@ -5,13 +5,11 @@ cloud.init()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const db = cloud.database()
-  const conn = "todos"
+  // const db = cloud.database()
+  // const conn = "todos"
 
-  const {
-    data: res
-  } = await db.collection(conn).where(event).get()
-  console.log(res);
+  // return  db.collection(conn).where(event).get()
+  // console.log(res);
   return event
 
 }

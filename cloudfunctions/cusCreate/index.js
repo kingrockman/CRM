@@ -6,7 +6,7 @@ cloud.init()
 // 云函数入口函数
 exports.main = async (event, context) => {
   const db = cloud.database();
-  const conn = "todos"
+  const conn = "customers"
   try {
     return db.collection(conn).add({
       data: event

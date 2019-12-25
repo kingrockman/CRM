@@ -1,4 +1,4 @@
-function clouds(name, data) {
+export function clouds(name, data) {
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       name,
@@ -13,6 +13,6 @@ function clouds(name, data) {
   })
 }
 
-export {
-  clouds
-}
+// export {
+//   clouds
+// }
