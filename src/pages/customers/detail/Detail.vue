@@ -86,7 +86,7 @@
     <div class="tools">
       <div class="navbar" v-if="mode">
         <button @click="mode=!mode">修改</button>
-        <button class="danger" @click="toDel(arrs._id)">删除</button>
+        <button class="danger" @click="toDel">删除</button>
       </div>
       <div class="navbar" v-if="!mode">
         <button v-if="cancel" @click="mode=!mode">取消</button>
@@ -96,9 +96,8 @@
   </div>
 </template>
 <script>
-import { DBPost } from "@/DBPost";
+import { clouds } from "@/clouds";
 import { getData, formatDate } from "../../../utils";
-var customer = new DBPost("customers", ["customer", "person", "", "tel"]);
 var index;
 export default {
   onShow() {
@@ -115,9 +114,8 @@ export default {
     async init() {
       index = this.$root.$mp.query.index;
       if (index == -1) {
-        console.log("新增");
+        console.log("新增模式");
         this.arrs = {};
-
         var userInfo = getData("userInfo");
         this.arrs.creater = userInfo.userName;
         this.arrs.ct_date = formatDate(new Date());
@@ -131,27 +129,26 @@ export default {
         ];
         this.mode = this.cancel = false;
       } else {
+        console.log("修改模式");
         this.mode = this.cancel = true;
-
-        const res = await customer.read("", { _id: index });
+        const { result: res } = await clouds("cusById", { _id: index });
+        console.log(res);
         this.arrs = res.data[0];
       }
     },
 
     async toSave() {
-      console.log("修改了:");
-
       wx.showLoading({
         title: "加载中"
       });
       if (index == -1) {
-        const res = await customer.create(this.arrs);
+        const res = await clouds("cusCreate", this.arrs);
         this.$root.$mp.query.index = this._id = res.result._id;
-
         this.cancel = true;
         console.log("新增了:");
       } else {
-        const res = await customer.update(this.arrs);
+        console.log("开始修改数据", this.arrs);
+        const res = await clouds("cusUpdate", this.arrs);
         console.log("修改了:", res);
       }
       wx.hideLoading();
@@ -174,13 +171,13 @@ export default {
       });
       console.log(this.arrs.products);
     },
-    toDel(i) {
+    toDel() {
       wx.showModal({
         title: "提示",
         content: "是否删除该客户",
         success: async res => {
           if (res.confirm) {
-            await customer.del(i);
+            await clouds("cusDel", { _id: index });
             wx.navigateBack();
             console.log("用户点击确定");
           } else if (res.cancel) {

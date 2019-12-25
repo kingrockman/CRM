@@ -12,11 +12,11 @@
         >{{i+1}}</div>
       </scroll-view>
     </div>
-    <div class="list" @click="toDetail(arr._id)" :key="arr._id" v-for="arr in arrs">
-      <div class="title">{{arr.customer}}</div>
+    <div class="list" @click="toDetail(item._id)" :key="item._id" v-for="item in arrs">
+      <div class="title">{{item.customer}}</div>
       <div class="subtitle">
-        <div class="left">{{arr.person}}</div>
-        <div class="right">{{arr.tel}}</div>
+        <div class="left">{{item.person}}</div>
+        <div class="right">{{item.tel}}</div>
       </div>
     </div>
     <div class="placeholder"></div>
@@ -26,19 +26,14 @@
   </div>
 </template>
 <script>
-import { DBPost } from "@/DBPost";
 import { clouds } from "@/clouds";
-// var customer = new DBPost("customers", ["customer", "person", "", "tel"]);
 export default {
   onReady() {
-    console.log("ready");
-
     this.getCustomersData();
   },
   data() {
     return {
       keywords: "",
-      showitem: [],
       arrs: [],
       pageQuery: {
         totalPage: 0,
@@ -50,19 +45,14 @@ export default {
   methods: {
     async getCustomersData() {
       this.arrs = [];
-      // const res = await customer.read(this.pageQuery, {
-      //   customer: this.keywords
-      // });
       const { result: res } = await clouds("cusRead", {
         key: this.keywords,
         pageQuery: this.pageQuery
       });
       console.log(res);
       this.pageQuery.totalPage = res.totalPage;
-      // this.showitem = customer.list;
       this.arrs = res.data;
     },
-
     toDetail(i) {
       wx.navigateTo({
         url: "detail/main?index=" + i
@@ -72,7 +62,6 @@ export default {
       if (this.pageQuery.currentPage == i) return;
       this.pageQuery.currentPage = i;
       this.getCustomersData();
-      // console.log(i);
     }
   }
 };

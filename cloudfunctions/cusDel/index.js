@@ -7,8 +7,6 @@ cloud.init()
 exports.main = async (event, context) => {
   const db = cloud.database();
   const conn = "customers"
-  // console.log(event.obj)
   return db.collection(conn).doc(event._id).remove()
-  return event
 
 }

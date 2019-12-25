@@ -57,10 +57,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "pages/customers/detail/main",
 					"pathName": "pages/customers/detail/main",
-					"query": "index=nCT3e3Mg8JhLXq6jzJj2Gxb8pmYUbnvlLjKkqZ2Y90fee24G",
+					"query": "index=e8f863ba5e032dbb06f4f70f1578c8ed",
 					"scene": null
 				}
 			]
