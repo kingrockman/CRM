@@ -177,6 +177,6 @@ export default {
 
 <style>
 .ul-customer > li {
-  padding-bottom: 8px;
+  padding-top: 8px;
 }
 </style>
