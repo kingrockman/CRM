@@ -28,7 +28,7 @@
 <script>
 import { clouds } from "@/clouds";
 export default {
-  onReady() {
+  onShow() {
     this.getCustomersData();
   },
   data() {

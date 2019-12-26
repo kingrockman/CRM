@@ -1,13 +1,13 @@
 {
   "pages": [
-    "pages/customers/main",
-    "pages/todolist/main",
-    "pages/project/main",
-    "pages/me/main",
-    "pages/todolist/detail/main",
     "pages/product/main",
+    "pages/customers/main",
     "pages/customers/detail/main",
+    "pages/project/main",
+    "pages/todolist/main",
+    "pages/todolist/detail/main",
     "pages/product/detail/main",
+    "pages/me/main",
     "pages/login/main"
   ],
   "window": {
@@ -26,6 +26,12 @@
       {
         "pagePath": "pages/customers/main",
         "text": "客户",
+        "iconPath": "static/tabs/home.png",
+        "selectedIconPath": "static/tabs/home-active.png"
+      },
+      {
+        "pagePath": "pages/product/main",
+        "text": "产品",
         "iconPath": "static/tabs/home.png",
         "selectedIconPath": "static/tabs/home-active.png"
       },

@@ -30,8 +30,8 @@
 <script>
 // import { DBPost } from "@/DBPost";
 import { clouds } from "@/clouds";
-import Mylist from "@/components/Mylist";
-import Card from "@/components/Card";
+// import Mylist from "@/components/Mylist";
+// import Card from "@/components/Card";
 // var todos = new DBPost("todos", [
 //   "customer",
 //   "description",
@@ -43,10 +43,10 @@ export default {
     this.init();
     // console.log(new Date("2019-12-8").getTime());
   },
-  components: {
-    Mylist,
-    Card
-  },
+  // components: {
+  //   Mylist,
+  //   Card
+  // },
   data() {
     return {
       myCard: null,

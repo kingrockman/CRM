@@ -1,184 +1,196 @@
 <template>
   <div class="contanier">
-    <div v-if="!mode">
-      <div class="list">
-        <p>{{cus_name}}</p>
-        <div class="item">
-          <div class="key">_id</div>
-          <div class="value">
-            <input v-model="id" type="text" />
-          </div>
-        </div>
-        <div class="item"  hidden="" >
-          <div class="key">所属企业</div>
-          <div class="value">
-            <input v-model="cus_id" type="text"/>
-          </div>
-        </div>
-        <div class="item">
-          <div class="key">序列号</div>
-          <div class="value">
-            <input v-model="serial" type="text" />
-          </div>
-        </div>
-        <div class="item">
-          <div class="key">手机</div>
-          <div class="value">
-            <input v-model="tel" type="text" />
-          </div>
-        </div>
-        <div class="item">
-          <div class="key">CD-KEY</div>
-          <div class="value">
-            <input v-model="cdkey" type="text" />
-          </div>
-        </div>
-        <div class="item">
-          <div class="key">购买日期</div>
-          <div class="value">
-            <input v-model="createdate" type="text" />
-          </div>
-        </div>
-        <div class="item">
-          <div class="key"></div>
-          <div class="value">
-            <input v-model="cdkey" type="text" />
-          </div>
+    <div class="card">
+      <div class="card-item" hidden>
+        <div class="key">客户ID</div>
+        <div class="value">
+          <input v-model="arrs.cus_id" type="text" placeholder="客户名称" :disabled="mode" />
         </div>
       </div>
-      <div class="tools">
+      <div class="card-item">
+        <div class="key">客户名称</div>
+        <div class="value">
+          <input v-model="arrs.cus_name" type="text" placeholder="客户名称" :disabled="mode" />
+        </div>
+      </div>
+      <div class="card-item" hidden>
+        <div class="key">ID</div>
+        <div class="value">
+          <input v-model="arrs._id" type="text" />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">产品名称</div>
+        <div class="value">
+          <input v-model="arrs.pt_name" type="text" placeholder="产品名称" :disabled="mode" />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">产品模块</div>
+        <div class="value">
+          <input v-model="arrs.pt_module" type="text" placeholder="产品模块" :disabled="mode" />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">CDKEY</div>
+        <div class="value">
+          <input v-model="arrs.cdkey" type="text" placeholder="CDKEY" :disabled="mode" />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">序列号</div>
+        <div class="value">
+          <input v-model="arrs.serial" type="text" placeholder="序列号" :disabled="mode" />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">服务器名称</div>
+        <div class="value">
+          <input v-model="arrs.server" type="text" placeholder="服务器名称" :disabled="mode" />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">服务器IP</div>
+        <div class="value">
+          <input v-model="arrs.ip" type="text" placeholder="服务器IP" :disabled="mode" />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">数据库版本</div>
+        <div class="value">
+          <input v-model="arrs.sql" type="text" placeholder="数据库版本" :disabled="mode" />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">数据库密码</div>
+        <div class="value">
+          <input v-model="arrs.sql_sa" type="text" placeholder="数据库密码" :disabled="mode" />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">创建人</div>
+        <div class="value">
+          <input v-model="arrs.creater" type="text" disabled />
+        </div>
+      </div>
+      <div class="card-item">
+        <div class="key">创建日期</div>
+        <div class="value">
+          <input v-model="arrs.ct_date" type="text" disabled />
+        </div>
+      </div>
+    </div>
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
+    <div class="tools">
+      <div class="navbar" v-if="mode">
+        <button @click="mode=!mode">修改</button>
         <button class="danger" @click="toDel">删除</button>
+      </div>
+      <div class="navbar" v-if="!mode">
+        <button v-if="cancel" @click="mode=!mode">取消</button>
         <button @click="toSave">保存</button>
       </div>
     </div>
-    
   </div>
 </template>
 <script>
-import { getData, create, update, del, message, modal,findData } from "@/utils";
+import { clouds } from "@/clouds";
+import { getData, formatDate } from "../../../utils";
+var index;
 export default {
-  onLoad() {
+  onShow() {
     this.init();
   },
-
   data() {
     return {
-      cancel: false,
-      mode: false,
-      conn: "products",
-      cus_name:"",
-      id: "",
-      name: "",
-      cus_id: "",
-      cdkey: "",
-      tel: "",
-      server: "",
-      ip: "",
-      password: "",
-      serial: "",
-      createdate: ""
+      cancel: true,
+      mode: true,
+      arrs: {}
     };
   },
   methods: {
-    init() {
-      const id = this.$root.$mp.query.id;
-      console.log("打开的产品ID：",id)
-      if (id == "") {
-        this.cancel = false;
-        this.mode = true;
-        this.id = "";
-        this.name = "";
-        this.person = "";
-        this.tel = "";
-        this.address = "";
+    async init() {
+      index = this.$root.$mp.query.index;
+      console.log(index);
+
+      if (index == -1) {
+        console.log("新增模式");
+        this.arrs = {};
+        var userInfo = getData("userInfo");
+        this.arrs.creater = userInfo.userName;
+        this.arrs.ct_date = formatDate(new Date());
+        this.arrs.products = [
+          {
+            name: "",
+            serial: "",
+            cdkey: "",
+            viability: ""
+          }
+        ];
+        this.mode = this.cancel = false;
       } else {
-        this.mode = false;
-        const res = getData(this.conn);
-        this.setObj(res.filter(v=>v._id==id)[0]);
+        console.log("修改模式");
+        this.mode = this.cancel = true;
+        const { result: res } = await clouds("ptById", { _id: index });
+        this.arrs = res.data[0];
+        console.log(this.arrs);
       }
     },
-    setObj(o) {
-      this.id = o._id;
-      this.name = o.name;
-      this.cus_id = o.cus_id;
-      this.cus_name=findData(getData("customers"),o.cus_id)
-      this.cdkey = o.cdkey;
-      this.tel = o.tel;
-      this.server = o.server;
-      this.ip = o.ip;
-      this.password = o.password;
-      this.serial = o.serial;
-      this.createdate = o.createdate;
-    },
-    getObj() {
-      return {
-        _id: this.id,
-        name: this.name,
-        cus_id: this.cus_id,
-        cdkey: this.cdkey,
-        tel: this.tel,
-        server: this.server,
-        ip: this.ip,
-        password: this.password,
-        serial: this.serial,
-        createdate: this.createdate
-      };
-    },
-    toAlter() {
-      const obj = this.getObj();
-      this.cancel = true;
-      this.toggle();
-    },
+
     async toSave() {
-      const obj = this.getObj();
-      // console.log(obj);
-      if (this.id == "") {
-        const res = await create(this.conn, obj);
-        obj.id = res._id;
-        this.setObj(obj);
+      wx.showLoading({
+        title: "加载中"
+      });
+      if (index == -1) {
+        const res = await clouds("ptCreate", this.arrs);
+        this.$root.$mp.query.index = this._id = res.result._id;
+        this.cancel = true;
+        console.log("新增了:");
       } else {
-        const res = await update(this.conn, obj);
-        message("修改成功！");
+        console.log("开始修改数据", this.arrs);
+        const res = await clouds("ptUpdate", this.arrs);
+        console.log("修改了:", res);
       }
-      // this.toggle();
+      wx.hideLoading();
+      wx.showToast({
+        title: "完成",
+        icon: "success",
+        duration: 1000
+      });
+      this.init();
+      this.mode = true;
     },
-    async toDel() {
-      if (await modal("删除吗？")) {
-        const r = await del(this.conn, this.id);
-        if (r) {
-          message("删除成功！");
-          wx.navigateBack({
-            delta: 1
-          });
+    addProducts() {
+      console.log(this.arrs.products);
+
+      this.arrs.products.push({
+        name: "",
+        serial: "",
+        cdkey: "",
+        viability: ""
+      });
+      console.log(this.arrs.products);
+    },
+    toDel() {
+      wx.showModal({
+        title: "提示",
+        content: "是否删除该产品",
+        success: async res => {
+          if (res.confirm) {
+            await clouds("ptDel", { _id: index });
+            wx.navigateBack();
+            console.log("用户点击确定");
+          } else if (res.cancel) {
+            console.log("用户点击取消");
+          }
         }
-      }
-    },
-    toggle() {
-      this.mode = !this.mode;
+      });
     }
   }
 };
 </script>
 <style>
-.danger {
-  background-color: #c0392b;
-}
-.list {
-  padding: 20rpx;
-  border-bottom: black solid 1px;
-}
-.list p {
-  margin-bottom: 20rpx;
-}
-.item {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 10rpx;
-}
-.key {
-  width: 15%;
-}
-.value {
-  width: 75%;
-}
 </style>
