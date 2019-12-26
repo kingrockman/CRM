@@ -32,40 +32,18 @@
           <input v-model="arrs.address" type="text" placeholder="地址" :disabled="mode" />
         </div>
       </div>
-      <p>产品信息</p>
-      <div class="porducts" v-for="pt in arrs.products" :key="pt">
-        <div class="card-item">
-          <div class="key">产品名称</div>
-          <div class="value">
-            <input v-model="pt.name" type="text" placeholder="产品名称" :disabled="mode" />
-          </div>
-        </div>
-        <div class="card-item">
-          <div class="key">服务期</div>
-          <div class="value">
-            <input v-model="pt.viability" type="text" placeholder="服务期" :disabled="mode" />
-          </div>
-        </div>
-        <div class="card-item">
-          <div class="key">序列号</div>
-          <div class="value">
-            <input v-model="pt.serial" type="text" placeholder="序列号" :disabled="mode" />
-          </div>
-        </div>
-        <div class="card-item">
-          <div class="key">CDKEY</div>
-          <div class="value">
-            <input v-model="pt.cdkey" type="text" placeholder="CDKEY" :disabled="mode" />
-          </div>
-        </div>
-      </div>
-      <input type="button" @click="addProducts" value="添加产品" :disabled="mode" />
       <div class="card-item">
         <div class="key">备注</div>
         <div class="value">
           <textarea v-model="arrs.remark" type="text" placeholder="备注" :disabled="mode"></textarea>
         </div>
       </div>
+      <p>产品信息</p>
+      <div class="card-item" v-for="(pt,i) in products" :key="pt" @click="toProducts(pt._id)">
+        <div class="key">产品{{i+1}}</div>
+        <div class="value">{{pt.pt_name}}</div>
+      </div>
+
       <div class="card-item">
         <div class="key">创建者</div>
         <div class="value">
@@ -107,7 +85,8 @@ export default {
     return {
       cancel: true,
       mode: true,
-      arrs: {}
+      arrs: {},
+      products: []
     };
   },
   methods: {
@@ -132,7 +111,18 @@ export default {
         console.log("修改模式");
         this.mode = this.cancel = true;
         const { result: res } = await clouds("cusById", { _id: index });
-        console.log(res);
+        console.log("客户明细", res);
+
+        const { result: res_pt } = await clouds("ptRead", {
+          key: res.data[0].customer,
+          pageQuery: {
+            totalPage: 0,
+            pageSize: 100,
+            currentPage: 1
+          }
+        });
+        console.log("产品明细", res_pt);
+        this.products = res_pt.data;
         this.arrs = res.data[0];
       }
     },
@@ -185,9 +175,18 @@ export default {
           }
         }
       });
+    },
+    toProducts(i) {
+      console.log(i);
+      wx.navigateTo({
+        url: "../../product/detail/main?index=" + i
+      });
     }
   }
 };
 </script>
 <style>
+.porducts {
+  color: red;
+}
 </style>
