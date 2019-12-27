@@ -5,7 +5,7 @@
     </div>
     <div class="searchbox">
       <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
-      <input class="searchbtn" type="text" @click="init" value="查询" disabled />
+      <input class="searchbtn" type="text" @click="handleSearch" value="查询" disabled />
       <scroll-view class="scrollpages" scroll-x>
         <div
           :class="pageQuery.currentPage-1==i?'scrollpagesitem active':'scrollpagesitem'"
@@ -28,25 +28,17 @@
   </div>
 </template>
 <script>
-// import { DBPost } from "@/DBPost";
 import { clouds } from "@/clouds";
-// import Mylist from "@/components/Mylist";
-// import Card from "@/components/Card";
-// var todos = new DBPost("todos", [
-//   "customer",
-//   "description",
-//   "status",
-//   "re_date"
-// ]);
 export default {
   onShow() {
-    this.init();
-    // console.log(new Date("2019-12-8").getTime());
+    this.getTodosData();
   },
-  // components: {
-  //   Mylist,
-  //   Card
-  // },
+
+  onReachBottom() {
+    this.pageQuery.currentPage++;
+    this.getTodosData();
+    console.log("到底了", this.arrs);
+  },
   data() {
     return {
       myCard: null,
@@ -56,7 +48,7 @@ export default {
       keywords: "",
       pageQuery: {
         totalPage: 0,
-        pageSize: 10,
+        pageSize: 20,
         currentPage: 1
       }
     };
@@ -71,57 +63,31 @@ export default {
         url: "detail/main?index=" + i
       });
     },
-    async init() {
-      // const res = await clouds(this.pageQuery, {
-      //   customer: this.keywords
-      // });
-      console.log("init");
-
+    async getTodosData() {
+      console.log("getTodosData");
       const { result: res } = await clouds("todoRead", {
         key: this.keywords,
         pageQuery: this.pageQuery
       });
       console.log(res);
-
-      this.pageQuery.totalPage = res.totalPage;
-      // this.showitem = todos.list;
-      this.arrs = res.data;
+      this.pageQuery.totalPage = Math.ceil(
+        res.totalPage / this.pageQuery.pageSize
+      );
+      this.arrs.push(...res.data);
     },
     handleCPage(i) {
       this.pageQuery.currentPage = i;
-      this.init();
-      // console.log(i);
+      this.getTodosData();
+    },
+    handleSearch() {
+      this.pageQuery.currentPage = 1;
+      this.arrs = [];
+      this.getTodosData();
     }
   }
 };
 </script>
 <style>
-/* input {
-  font-size: 32rpx;
-  margin: 20rpx;
-  padding: 20rpx;
-  border: solid pink 1px;
-}
-.todos {
-  margin-bottom: 30rpx;
-  border-bottom: gray 1px solid;
-}
-.header {
-  font-size: 32rpx;
-  margin-bottom: 10rpx;
-}
-.body {
-  margin-bottom: 10rpx;
-}
-.footer {
-  margin-bottom: 10rpx;
-}
-.tools {
-  position: fixed;
-  bottom: 0;
-  right: 10rpx;
-} */
-
 .scrollpages {
   white-space: nowrap;
   overflow: hidden;

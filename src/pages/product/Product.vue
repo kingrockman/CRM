@@ -50,7 +50,9 @@ export default {
         pageQuery: this.pageQuery
       });
       console.log(res);
-      this.pageQuery.totalPage = res.totalPage;
+      this.pageQuery.totalPage = Math.ceil(
+        res.totalPage / this.pageQuery.pageSize
+      );
       this.arrs = res.data;
     },
     toDetail(i) {

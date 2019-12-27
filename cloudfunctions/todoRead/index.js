@@ -25,7 +25,7 @@ exports.main = async event => {
 
   return {
     data: obj,
-    totalPage,
+    totalPage: count,
     pageSize,
     currentPage
   }
