@@ -6,7 +6,7 @@
     </div>
     <div class="login" v-if="!nickName">
       <input v-model="userName" type="text" placeholder="用户名" />
-      <button @click="login">登陆</button>
+      <button class="btn" @click="login">登陆</button>
     </div>
     <input @change="getCuslistData" type="text" v-model="key" />
     <!-- <input type="text" /> -->

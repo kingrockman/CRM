@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button open-type="getUserInfo" @click="login">授权登录</button>
+    <button class="btn" open-type="getUserInfo" @click="login">授权登录</button>
   </div>
 </template>
 <script>

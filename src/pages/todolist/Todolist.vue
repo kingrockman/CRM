@@ -1,7 +1,7 @@
 <template>
   <div class="container" style="padding:30px 0">
     <div class="tools">
-      <button @click="toDetail(-1)">新增</button>
+      <button class="btn" @click="toDetail(-1)">新增</button>
     </div>
     <div class="searchbox">
       <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
@@ -16,7 +16,7 @@
       </scroll-view>-->
     </div>
     <!-- <div class="placeholder"></div> -->
-    <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
+    <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item">
       <div class="title">{{item.customer}}</div>
       <div class="subtitle">{{item.description}}</div>
       <div class="subtitle">

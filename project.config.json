@@ -67,7 +67,7 @@
 					"id": 2,
 					"name": "产品明细",
 					"pathName": "pages/product/detail/main",
-					"query": "index=e5237a27-7523-40ef-aea2-a318ea5e1575",
+					"query": "index=-1",
 					"scene": null
 				}
 			]

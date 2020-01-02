@@ -21,7 +21,7 @@
     </div>
     <div class="placeholder"></div>
     <div class="tools">
-      <button @click="toDetail(-1)">新增</button>
+      <button class="btn" @click="toDetail(-1)">新增</button>
     </div>-->
   </div>
 </template>

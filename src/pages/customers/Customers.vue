@@ -12,7 +12,7 @@
         >{{i+1}}</div>
       </scroll-view>-->
     </div>
-    <div class="list" @click="toDetail(item._id)" :key="item._id" v-for="item in arrs">
+    <div class="list" @click="toDetail(item._id)" :key="item" v-for="item in arrs">
       <div class="title">{{item.customer}}</div>
       <div class="subtitle">
         <div class="left">{{item.person}}</div>
@@ -21,7 +21,7 @@
     </div>
     <div class="placeholder"></div>
     <div class="tools">
-      <button @click="toDetail(-1)">新增</button>
+      <button class="btn" @click="toDetail(-1)">新增</button>
     </div>
   </div>
 </template>

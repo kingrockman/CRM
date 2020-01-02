@@ -77,13 +77,22 @@ input {
   border-radius: 3px;
 }
 
+/* input:hover {
+  border: 1px solid red;
+} */
+
 textarea {
   width: 100%;
   border-radius: 3px;
   background-color: #eee;
 }
 
-button {
+/* 
+textarea:hover {
+  border: 1px solid red;
+} */
+
+.btn {
   background-color: #3498db;
   color: #fff;
   width: 80px;
@@ -92,6 +101,10 @@ button {
   text-align: center;
   line-height: 30px;
   /* margin: 20rpx auto; */
+}
+
+.btn:hover {
+  background-color: #2980b9;
 }
 
 .searchbox {
@@ -121,6 +134,10 @@ button {
 
 .danger {
   background-color: #e74c3c;
+}
+
+.danger:hover {
+  background-color: #c0392b;
 }
 
 .placeholder {

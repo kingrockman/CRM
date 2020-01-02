@@ -39,11 +39,14 @@
         </div>
       </div>
       <p>产品信息</p>
-      <div class="card-item" v-for="(pt,i) in products" :key="pt" @click="toProducts(pt._id)">
-        <div class="key">产品{{i+1}}</div>
-        <div class="value">{{pt.pt_name}}</div>
+      <div class="porducts" v-for="pt in products" :key="pt" @click="toProducts(pt._id)">
+        <div>
+          <div class="ptName">{{pt.pt_name}}</div>
+          <div class="ptDate">{{pt.ct_date}}</div>
+        </div>
+        <div>{{pt.pt_module}}</div>
       </div>
-
+      <!-- <button>+</button> -->
       <div class="card-item">
         <div class="key">创建者</div>
         <div class="value">
@@ -63,12 +66,12 @@
     <div class="placeholder"></div>
     <div class="tools">
       <div class="navbar" v-if="mode">
-        <button @click="mode=!mode">修改</button>
-        <button class="danger" @click="toDel">删除</button>
+        <button class="btn" @click="mode=!mode">修改</button>
+        <button class="btn danger" @click="toDel">删除</button>
       </div>
       <div class="navbar" v-if="!mode">
-        <button v-if="cancel" @click="mode=!mode">取消</button>
-        <button @click="toSave">保存</button>
+        <button class="btn" v-if="cancel" @click="mode=!mode">取消</button>
+        <button class="btn" @click="toSave">保存</button>
       </div>
     </div>
   </div>
@@ -152,7 +155,6 @@ export default {
     },
     addProducts() {
       console.log(this.arrs.products);
-
       this.arrs.products.push({
         name: "",
         serial: "",
@@ -187,6 +189,19 @@ export default {
 </script>
 <style>
 .porducts {
-  color: red;
+  padding: 5px 20px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #000;
+}
+.porducts > div:first-child {
+  padding-bottom: 5px;
+}
+.ptName {
+  float: left;
+}
+.ptDate {
+  float: right;
+  /* background-color: red; */
 }
 </style>

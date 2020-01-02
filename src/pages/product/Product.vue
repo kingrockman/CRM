@@ -12,16 +12,16 @@
         >{{i+1}}</div>
       </scroll-view>-->
     </div>
-    <div class="list" @click="toDetail(item._id)" :key="item._id" v-for="item in arrs">
+    <div class="list" @click="toDetail(item._id)" :key="item" v-for="item in arrs">
       <div class="title">{{item.cus_name}}</div>
       <div class="subtitle">
         <div class="left">{{item.pt_name}}</div>
-        <div class="right"></div>
+        <div class="right">{{item.ct_date}}</div>
       </div>
     </div>
     <div class="placeholder"></div>
     <div class="tools">
-      <button @click="toDetail(-1)">新增</button>
+      <button class="btn" @click="toDetail(-1)">新增</button>
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@ import { clouds } from "@/clouds";
 export default {
   onShow() {
     this.getPorductsData();
+    this.arrs = [];
   },
   onReachBottom() {
     if (this.pageQuery.currentPage < this.pageQuery.totalPage) {

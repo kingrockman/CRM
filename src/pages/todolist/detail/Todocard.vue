@@ -66,12 +66,12 @@
     </div>
     <div class="tools">
       <div class="navbar" v-if="mode">
-        <button @click="mode=!mode">修改</button>
-        <button class="danger" @click="toDel">删除</button>
+        <button class="btn" @click="mode=!mode">修改</button>
+        <button class="btn danger" @click="toDel">删除</button>
       </div>
       <div class="navbar" v-if="!mode">
-        <button v-if="cancel" @click="mode=!mode">取消</button>
-        <button @click="toSave">保存</button>
+        <button class="btn" v-if="cancel" @click="mode=!mode">取消</button>
+        <button class="btn" @click="toSave">保存</button>
       </div>
     </div>
   </div>

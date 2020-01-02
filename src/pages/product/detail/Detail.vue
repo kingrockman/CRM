@@ -10,7 +10,17 @@
       <div class="card-item">
         <div class="key">客户名称</div>
         <div class="value">
-          <input v-model="arrs.cus_name" type="text" placeholder="客户名称" :disabled="mode" />
+          <!-- <input type="text" placeholder="客户名称" :disabled="mode" v-model="arrs.cus_name" /> -->
+          <input
+            type="text"
+            placeholder="客户名称"
+            :disabled="mode"
+            v-model="arrs.cus_name"
+            @input="getCusList"
+          />
+          <ul class="ul-customer">
+            <li @click="setCusName(item)" v-for="item in customers" :key="item">{{item.customer}}</li>
+          </ul>
         </div>
       </div>
       <div class="card-item" hidden>
@@ -86,12 +96,12 @@
     <div class="placeholder"></div>
     <div class="tools">
       <div class="navbar" v-if="mode">
-        <button @click="mode=!mode">修改</button>
-        <button class="danger" @click="toDel">删除</button>
+        <button class="btn" @click="mode=!mode">修改</button>
+        <button class="btn danger" @click="toDel">删除</button>
       </div>
       <div class="navbar" v-if="!mode">
-        <button v-if="cancel" @click="mode=!mode">取消</button>
-        <button @click="toSave">保存</button>
+        <button class="btn" v-if="cancel" @click="mode=!mode">取消</button>
+        <button class="btn" @click="toSave">保存</button>
       </div>
     </div>
   </div>
@@ -108,7 +118,8 @@ export default {
     return {
       cancel: true,
       mode: true,
-      arrs: {}
+      arrs: {},
+      customers: []
     };
   },
   methods: {
@@ -122,14 +133,14 @@ export default {
         var userInfo = getData("userInfo");
         this.arrs.creater = userInfo.userName;
         this.arrs.ct_date = formatDate(new Date());
-        this.arrs.products = [
-          {
-            name: "",
-            serial: "",
-            cdkey: "",
-            viability: ""
-          }
-        ];
+        // this.arrs.products = [
+        //   {
+        //     name: "",
+        //     serial: "",
+        //     cdkey: "",
+        //     viability: ""
+        //   }
+        // ];
         this.mode = this.cancel = false;
       } else {
         console.log("修改模式");
@@ -148,7 +159,7 @@ export default {
         const res = await clouds("ptCreate", this.arrs);
         this.$root.$mp.query.index = this._id = res.result._id;
         this.cancel = true;
-        console.log("新增了:");
+        console.log("新增了:", this.arrs);
       } else {
         console.log("开始修改数据", this.arrs);
         const res = await clouds("ptUpdate", this.arrs);
@@ -163,17 +174,16 @@ export default {
       this.init();
       this.mode = true;
     },
-    addProducts() {
-      console.log(this.arrs.products);
-
-      this.arrs.products.push({
-        name: "",
-        serial: "",
-        cdkey: "",
-        viability: ""
-      });
-      console.log(this.arrs.products);
-    },
+    // addProducts() {
+    //   console.log(this.arrs.products);
+    //   this.arrs.products.push({
+    //     name: "",
+    //     serial: "",
+    //     cdkey: "",
+    //     viability: ""
+    //   });
+    //   console.log(this.arrs.products);
+    // },
     toDel() {
       wx.showModal({
         title: "提示",
@@ -188,6 +198,23 @@ export default {
           }
         }
       });
+    },
+    async getCusList() {
+      console.log("getList");
+      this.customers = [{ customer: "正在加载数据" }];
+      if (this.arrs.cus_name == "") return (this.customers = []);
+      const { result: res } = await clouds("cusList", {
+        key: this.arrs.cus_name
+      });
+      console.log(res.data);
+      this.customers = res.data;
+    },
+    setCusName(val) {
+      console.log(val);
+      this.arrs.cus_id = val._id;
+      this.arrs.cus_name = val.customer;
+      this.$forceUpdate();
+      this.customers = [];
     }
   }
 };
