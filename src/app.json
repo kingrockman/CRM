@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/me/main",
     "pages/todolist/main",
     "pages/product/main",
     "pages/customers/main",
@@ -7,7 +8,6 @@
     "pages/project/main",
     "pages/todolist/detail/main",
     "pages/product/detail/main",
-    "pages/me/main",
     "pages/login/main"
   ],
   "window": {

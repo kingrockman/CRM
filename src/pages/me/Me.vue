@@ -8,14 +8,19 @@
       <input v-model="userName" type="text" placeholder="用户名" />
       <button @click="login">登陆</button>
     </div>
+    <input @change="getCuslistData" type="text" v-model="key" />
+    <!-- <input type="text" /> -->
+    <Cuslist :porp="key"></Cuslist>
   </div>
 </template>
 <script>
 import Todolist from "@/components/Todolist";
+import Cuslist from "@/components/Cuslist";
 import { login, getData, setData } from "../../utils";
 export default {
   components: {
-    Todolist
+    Todolist,
+    Cuslist
   },
   onLoad() {
     this.init();
@@ -27,7 +32,6 @@ export default {
     };
   },
   methods: {
-   
     init() {
       const userInfo = getData("userInfo");
       if (userInfo) {
@@ -40,7 +44,7 @@ export default {
         setData("userInfo", userInfo.data[0]);
         this.init();
       }
-    },
+    }
     //  test() {
     //   var token = getData("token");
     //   var env = "king181013906-27fb3f";
@@ -82,9 +86,6 @@ export default {
     //   // });
     // },
   }
-
-
-
 };
 </script>
 <style>

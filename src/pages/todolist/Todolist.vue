@@ -5,17 +5,17 @@
     </div>
     <div class="searchbox">
       <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
-      <input class="searchbtn" type="text" @click="handleSearch" value="查询" disabled />
-      <scroll-view class="scrollpages" scroll-x>
+      <input class="searchbtn" type="text" @click="getTodosData(true)" value="查询" disabled />
+      <!-- <scroll-view class="scrollpages" scroll-x>
         <div
           :class="pageQuery.currentPage-1==i?'scrollpagesitem active':'scrollpagesitem'"
           v-for="i in pageQuery.totalPage"
           :key="i"
           @click="handleCPage(i)"
         >{{i+1}}</div>
-      </scroll-view>
+      </scroll-view>-->
     </div>
-    <div class="placeholder"></div>
+    <!-- <div class="placeholder"></div> -->
     <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item._id">
       <div class="title">{{item.customer}}</div>
       <div class="subtitle">{{item.description}}</div>
@@ -35,9 +35,11 @@ export default {
   },
 
   onReachBottom() {
-    this.pageQuery.currentPage++;
-    this.getTodosData();
-    console.log("到底了", this.arrs);
+    if (this.pageQuery.currentPage < this.pageQuery.totalPage) {
+      this.pageQuery.currentPage++;
+      this.getTodosData();
+      console.log("到底了", this.arrs);
+    }
   },
   data() {
     return {
@@ -63,8 +65,12 @@ export default {
         url: "detail/main?index=" + i
       });
     },
-    async getTodosData() {
+    async getTodosData(flag) {
       console.log("getTodosData");
+      if (flag) {
+        this.pageQuery.currentPage = 1;
+        this.arrs = [];
+      }
       const { result: res } = await clouds("todoRead", {
         key: this.keywords,
         pageQuery: this.pageQuery
