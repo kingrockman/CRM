@@ -60,7 +60,7 @@
       <div class="card-item">
         <div class="key">创建日期</div>:
         <div class="value">
-          <input type="text" v-model="arrs.ct_date" disabled />
+          <input type="text" v-model="ct_date" disabled />
         </div>
       </div>
     </div>
@@ -90,7 +90,8 @@ export default {
       arrs: {},
       mode: true,
       cancel: true,
-      customers: []
+      customers: [],
+      ct_date: formatDate(new Date())
     };
   },
   methods: {
@@ -105,13 +106,13 @@ export default {
         this.arrs = {};
         var userInfo = getData("userInfo");
         this.arrs.creater = userInfo.userName;
-        this.arrs.ct_date = formatDate(new Date());
+        // this.arrs.ct_date = formatDate(new Date());
       } else {
         console.log("修改模式");
         this.mode = true;
         const { result: res } = await clouds("todoById", { _id: index });
-        console.log(res);
-
+        res.data[0].ct_date = formatDate(ct_date);
+        console.log(res.data[0]);
         this.arrs = res.data[0];
       }
     },
@@ -123,13 +124,15 @@ export default {
       console.log(index);
 
       if (index == -1) {
+        this.arrs.ct_date = new Date(this.ct_date).getTime();
         const { result: res } = await clouds("todoCreate", this.arrs);
         this.$root.$mp.query.index = res._id;
         this.cancel = true;
         console.log("新增了:", res);
       } else {
-        await clouds("todoUpdate", this.arrs);
-        console.log("修改了", this.arrs);
+        console.log(this.arrs);
+        // await clouds("todoUpdate", this.arrs);
+        // console.log("修改了", this.arrs);
       }
       wx.hideLoading();
       wx.showToast({

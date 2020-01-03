@@ -8,15 +8,16 @@
       <input v-model="userName" type="text" placeholder="用户名" />
       <button class="btn" @click="login">登陆</button>
     </div>
-    <input @change="getCuslistData" type="text" v-model="key" />
-    <!-- <input type="text" /> -->
-    <Cuslist :porp="key"></Cuslist>
+    <!-- 日期选择器 -->
+    <picker mode="date" @change="bindTimeChange">
+      <span class="picker">{{time}}</span>
+    </picker>
   </div>
 </template>
 <script>
 import Todolist from "@/components/Todolist";
 import Cuslist from "@/components/Cuslist";
-import { login, getData, setData } from "../../utils";
+import { login, getData, setData, formatDate, formatDates } from "@/utils";
 export default {
   components: {
     Todolist,
@@ -24,11 +25,18 @@ export default {
   },
   onLoad() {
     this.init();
+    // 1575158400000="2019-12-01"
+    // const dt = new Date("2020-12-01").getTime();
+    // const day = new Date();
+    // console.log(dt, typeof new Date(dt), new Date(dt));
+    // console.log(dt, typeof formatDate(dt), formatDate(dt));
   },
+
   data() {
     return {
       avatarUrl: "../../static/images/user.png",
-      nickName: ""
+      nickName: "",
+      time: formatDate(new Date())
     };
   },
   methods: {
@@ -44,7 +52,12 @@ export default {
         setData("userInfo", userInfo.data[0]);
         this.init();
       }
+    },
+    bindTimeChange(val) {
+      console.log(new Date(val.target.value).getTime());
+      this.time = val.target.value;
     }
+
     //  test() {
     //   var token = getData("token");
     //   var env = "king181013906-27fb3f";
@@ -62,28 +75,24 @@ export default {
     //       console.log(res);
     //     }
     //   });
-
-    //   // wx.login({
-    //   //   success(res) {
-    //   //     if (res.code) {
-    //   //       //发起网络请求
-    //   //       wx.request({
-    //   //         url: `https://api.weixin.qq.com/sns/jscode2session?appid=wx466af9243f255de5&secret=3ee1a3f0716aa13ae69bc88ea79cb487&js_code=${
-    //   //           res.code
-    //   //         }&grant_type=authorization_code`,
-
-    //   //         success: res => {
-
-    //   //           if(typeof res.data.errcode != 'undefined') return console.log("请求失败");
-    //   //           console.log(res.data);
-
-    //   //         }
-    //   //       });
-    //   //     } else {
-    //   //       console.log("登录失败！" + res.errMsg);
-    //   //     }
-    //   //   }
-    //   // });
+    // wx.login({
+    //   success(res) {
+    //     if (res.code) {
+    //       //发起网络请求
+    //       wx.request({
+    //         url: `https://api.weixin.qq.com/sns/jscode2session?appid=wx466af9243f255de5&secret=3ee1a3f0716aa13ae69bc88ea79cb487&js_code=${
+    //           res.code
+    //         }&grant_type=authorization_code`,
+    //         success: res => {
+    //           if(typeof res.data.errcode != 'undefined') return console.log("请求失败");
+    //           console.log(res.data);
+    //         }
+    //       });
+    //     } else {
+    //       console.log("登录失败！" + res.errMsg);
+    //     }
+    //   }
+    // });
     // },
   }
 };

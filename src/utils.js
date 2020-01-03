@@ -8,11 +8,14 @@ function findData(a, b) {
   }
 }
 
+
+
 function formatDate(time) {
-  var year = time.getFullYear()
-  var month = time.getMonth() + 1
-  var day = time.getDate()
-  return year + "年" + month + "月" + day + "日"
+  if (typeof time !== "object") time = new Date(time)
+  const year = time.getFullYear()
+  const month = (time.getMonth() + 1) + ''
+  const day = time.getDate() + ''
+  return year + "-" + month.padStart(2, "0") + "-" + day.padStart(2, "0")
 }
 
 function message(title) {

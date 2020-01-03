@@ -6,16 +6,7 @@
     <div class="searchbox">
       <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
       <input class="searchbtn" type="text" @click="getTodosData(true)" value="查询" disabled />
-      <!-- <scroll-view class="scrollpages" scroll-x>
-        <div
-          :class="pageQuery.currentPage-1==i?'scrollpagesitem active':'scrollpagesitem'"
-          v-for="i in pageQuery.totalPage"
-          :key="i"
-          @click="handleCPage(i)"
-        >{{i+1}}</div>
-      </scroll-view>-->
     </div>
-    <!-- <div class="placeholder"></div> -->
     <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item">
       <div class="title">{{item.customer}}</div>
       <div class="subtitle">{{item.description}}</div>
@@ -31,7 +22,7 @@
 import { clouds } from "@/clouds";
 export default {
   onShow() {
-    this.getTodosData();
+    this.getTodosData(true);
   },
 
   onReachBottom() {

@@ -29,7 +29,7 @@
 import { clouds } from "@/clouds";
 export default {
   onShow() {
-    this.getCustomersData();
+    this.getCustomersData(true);
   },
   onReachBottom() {
     if (this.pageQuery.currentPage < this.pageQuery.totalPage) {
