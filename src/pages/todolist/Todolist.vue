@@ -7,12 +7,12 @@
       <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
       <input class="searchbtn" type="text" @click="getTodosData(true)" value="查询" disabled />
     </div>
-    <div class="list" @click="toDetail(item._id)" v-for="item in arrs" :key="item">
+    <div class="list" @click="toDetail(item._id)" v-for="(item,i) in arrs" :key="item">
       <div class="title">{{item.customer}}</div>
       <div class="subtitle">{{item.description}}</div>
       <div class="subtitle">
         <div class="left">{{item.status}}</div>
-        <div class="right">{{item.re_date}}</div>
+        <div class="right">{{ReDate[i]}}</div>
       </div>
     </div>
     <div class="placeholder"></div>
@@ -20,6 +20,7 @@
 </template>
 <script>
 import { clouds } from "@/clouds";
+import { formatDate } from "@/utils";
 export default {
   onShow() {
     this.getTodosData(true);
@@ -39,6 +40,7 @@ export default {
       mode: true,
       showitem: [],
       keywords: "",
+      ReDate: [],
       pageQuery: {
         totalPage: 0,
         pageSize: 20,
@@ -66,11 +68,14 @@ export default {
         key: this.keywords,
         pageQuery: this.pageQuery
       });
-      console.log(res);
       this.pageQuery.totalPage = Math.ceil(
         res.totalPage / this.pageQuery.pageSize
       );
       this.arrs.push(...res.data);
+      this.ReDate = [];
+      this.arrs.forEach(ele => {
+        this.ReDate.push(formatDate(ele.re_date));
+      });
     },
     handleCPage(i) {
       this.pageQuery.currentPage = i;
@@ -80,6 +85,9 @@ export default {
       this.pageQuery.currentPage = 1;
       this.arrs = [];
       this.getTodosData();
+    },
+    teset() {
+      return "a";
     }
   }
 };

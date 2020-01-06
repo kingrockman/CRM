@@ -48,7 +48,10 @@
       <div class="card-item">
         <div class="key">上门时间</div>:
         <div class="value">
-          <input type="text" v-model="arrs.re_date" :disabled="mode" />
+          <picker mode="date" v-model="ReDate" @change="bindReDateChange" :disabled="mode">
+            <span class="picker">{{ReDate}}</span>
+          </picker>
+          <!-- <input type="text" v-model="arrs.re_date" :disabled="mode" /> -->
         </div>
       </div>
       <div class="card-item">
@@ -91,7 +94,8 @@ export default {
       mode: true,
       cancel: true,
       customers: [],
-      ct_date: formatDate(new Date())
+      ct_date: formatDate(new Date()),
+      ReDate: formatDate(new Date())
     };
   },
   methods: {
@@ -111,9 +115,10 @@ export default {
         console.log("修改模式");
         this.mode = true;
         const { result: res } = await clouds("todoById", { _id: index });
-        res.data[0].ct_date = formatDate(ct_date);
-        console.log(res.data[0]);
+        this.ct_date = formatDate(res.data[0].ct_date);
+        this.ReDate = formatDate(res.data[0].re_date);
         this.arrs = res.data[0];
+        console.log("正在修改", res.data[0]);
       }
     },
 
@@ -130,9 +135,9 @@ export default {
         this.cancel = true;
         console.log("新增了:", res);
       } else {
-        console.log(this.arrs);
-        // await clouds("todoUpdate", this.arrs);
-        // console.log("修改了", this.arrs);
+        this.arrs.re_date = new Date(this.ReDate).getTime();
+        console.log("修改了", this.arrs);
+        await clouds("todoUpdate", this.arrs);
       }
       wx.hideLoading();
       wx.showToast({
@@ -173,6 +178,11 @@ export default {
       this.arrs.customer = val;
       this.$forceUpdate();
       this.customers = [];
+    },
+    bindReDateChange(e) {
+      this.ReDate = e.target.value;
+      this.arrs.re_date = formatDate(e.target.value);
+      console.log(e.target.value);
     }
   }
 };

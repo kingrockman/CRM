@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/todolist/main",
     "pages/me/main",
     "pages/customers/main",
-    "pages/todolist/main",
     "pages/product/main",
     "pages/customers/detail/main",
     "pages/project/main",

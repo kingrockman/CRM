@@ -25,6 +25,9 @@ export default {
   },
   onLoad() {
     this.init();
+    // 2019年12月16日
+    console.log(new Date("2019-11-22").getTime());
+
     // 1575158400000="2019-12-01"
     // const dt = new Date("2020-12-01").getTime();
     // const day = new Date();
