@@ -57,13 +57,15 @@
       <div class="card-item">
         <div class="key">创建者</div>:
         <div class="value">
-          <input type="text" v-model="arrs.creater" disabled />
+          {{arrs.creater}}
+          <!-- <input type="text" v-model="arrs.creater" disabled /> -->
         </div>
       </div>
       <div class="card-item">
         <div class="key">创建日期</div>:
         <div class="value">
-          <input type="text" v-model="ct_date" disabled />
+          {{ct_date}}
+          <!-- <input type="text" v-model="ct_date" disabled /> -->
         </div>
       </div>
     </div>
