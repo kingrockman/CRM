@@ -20,7 +20,7 @@ exports.main = async event => {
     data: obj
   } = await db.collection(conn).where(where)
     .skip((currentPage - 1) * pageSize).limit(pageSize)
-    .orderBy('ct_date', 'desc')
+    .orderBy('re_date', 'desc')
     .get()
 
   return {

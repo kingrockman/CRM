@@ -86,6 +86,8 @@ var index, thisTime;
 export default {
   onLoad() {
     this.init();
+    this.ct_date = formatDate(new Date());
+    this.ReDate = formatDate(new Date());
   },
 
   data() {
@@ -94,8 +96,8 @@ export default {
       mode: true,
       cancel: true,
       customers: [],
-      ct_date: formatDate(new Date()),
-      ReDate: formatDate(new Date())
+      ct_date: null,
+      ReDate: null
     };
   },
   methods: {
