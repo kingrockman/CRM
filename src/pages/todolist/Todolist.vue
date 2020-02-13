@@ -9,9 +9,9 @@
     </div>
     <div class="list" @click="toDetail(item._id)" v-for="(item,i) in arrs" :key="item">
       <div class="title">{{item.customer}}</div>
-      <div class="subtitle">{{item.description}}</div>
-      <div class="subtitle">
-        <div class="left">{{item.status}}</div>
+      <div :class="'subtitle '+ (item.status?'':'active')">{{item.description}}</div>
+      <div :class="'subtitle '+ (item.status?'':'active')">
+        <div class="left">{{item.status?"已完成":"未完成"}}</div>
         <div class="right">{{ReDate[i]}}</div>
       </div>
     </div>

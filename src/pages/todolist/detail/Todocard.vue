@@ -41,7 +41,9 @@
       <div class="card-item">
         <div class="key">状态</div>:
         <div class="value">
-          <input type="text" v-model="arrs.status" :disabled="mode" />
+          <switch type="checkbox" @change="handlerStatus" :disabled="mode" :checked="arrs.status" />
+          {{arrs.status?"已完成":"未完成"}}
+          <!-- <input type="text" v-model="arrs.status" :disabled="mode" /> -->
         </div>
       </div>
 
@@ -94,7 +96,7 @@ export default {
 
   data() {
     return {
-      arrs: {},
+      arrs: { status: false },
       mode: true,
       cancel: true,
       customers: [],
@@ -134,6 +136,7 @@ export default {
 
       if (index == -1) {
         this.arrs.ct_date = new Date(this.ct_date).getTime();
+        this.arrs.re_date = new Date(this.ReDate).getTime();
         const { result: res } = await clouds("todoCreate", this.arrs);
         this.$root.$mp.query.index = res._id;
         this.cancel = true;
@@ -186,6 +189,11 @@ export default {
     bindReDateChange(e) {
       this.ReDate = e.target.value;
       this.arrs.re_date = formatDate(e.target.value);
+      console.log(e.target.value);
+    },
+    handlerStatus(e) {
+      this.arrs.status = e.target.value;
+      this.$forceUpdate();
       console.log(e.target.value);
     }
   }
