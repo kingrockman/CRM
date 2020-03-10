@@ -1,6 +1,6 @@
 <template>
   <div class="contanier">
-    <div class="card">
+    <div class="el-card is-always-shadow">
       <p>基本信息</p>
       <div class="card-item" hidden>
         <div class="key">ID</div>
@@ -46,7 +46,6 @@
         </div>
         <div>{{pt.pt_module}}</div>
       </div>
-      <!-- <button>+</button> -->
       <div class="card-item">
         <div class="key">创建者</div>
         <div class="value">

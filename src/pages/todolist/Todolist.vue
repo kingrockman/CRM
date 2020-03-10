@@ -1,27 +1,38 @@
 <template>
-  <div class="container" style="padding:30px 0">
+  <div class="container">
     <div class="tools">
-      <button class="btn" @click="toDetail(-1)">新增</button>
+      <button class="btn circle right" @click="toDetail(-1)">+</button>
     </div>
-    <div class="searchbox">
-      <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
-      <input class="searchbtn" type="text" @click="getTodosData(true)" value="查询" disabled />
+    <div class="el-card is-always-shadow searchbox">
+      <input type="text" placeholder="请输入查询内容..." v-model="keywords" />
+      <input type="text" @click="getTodosData(true)" value="查询" disabled />
     </div>
-    <div class="list" @click="toDetail(item._id)" v-for="(item,i) in arrs" :key="item">
-      <div class="title">{{item.customer}}</div>
-      <div :class="'subtitle '+ (item.status?'':'active')">{{item.description}}</div>
-      <div :class="'subtitle '+ (item.status?'':'active')">
-        <div class="left">{{item.status?"已完成":"未完成"}}</div>
-        <div class="right">{{ReDate[i]}}</div>
+    <div style="padding-top:42px;padding-bottom:60px">
+      <div
+        :class="'el-card is-always-shadow '+(item.status?'done':'disdone')"
+        v-for="(item,i) in arrs"
+        :key="item"
+        @click="toDetail(item._id)"
+      >
+        <div class="header">{{item.customer}}</div>
+        <div class="content">{{item.description}}</div>
+        <div class="footer">
+          <div class="left">{{item.status?"已完成":"未完成"}}</div>
+          <div class="right">{{ReDate[i]}}</div>
+        </div>
       </div>
     </div>
-    <div class="placeholder"></div>
   </div>
 </template>
 <script>
 import { clouds } from "@/clouds";
 import { formatDate } from "@/utils";
+import Card from "@/hele/card";
+
 export default {
+  components: {
+    Card
+  },
   onShow() {
     this.getTodosData(true);
   },
@@ -76,6 +87,7 @@ export default {
       this.arrs.forEach(ele => {
         this.ReDate.push(formatDate(ele.re_date));
       });
+      console.log(this.arrs);
     },
     handleCPage(i) {
       this.pageQuery.currentPage = i;
@@ -99,9 +111,6 @@ export default {
 }
 .scrollpagesitem {
   display: inline-block;
-  padding: 30rpx;
-}
-.active {
-  color: red;
+  padding: 15px;
 }
 </style>

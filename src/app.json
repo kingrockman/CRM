@@ -1,18 +1,18 @@
 {
   "pages": [
     "pages/todolist/main",
-    "pages/me/main",
-    "pages/customers/main",
+    "pages/todolist/detail/main",
     "pages/product/main",
+    "pages/customers/main",
+    "pages/me/main",
     "pages/customers/detail/main",
     "pages/project/main",
-    "pages/todolist/detail/main",
     "pages/product/detail/main",
     "pages/login/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#ecf0f1",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black",
     "onReachBottomDistance": 500

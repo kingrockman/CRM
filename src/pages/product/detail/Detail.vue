@@ -1,6 +1,6 @@
 <template>
   <div class="contanier">
-    <div class="card">
+    <div class="el-card is-always-shadow">
       <div class="card-item" hidden>
         <div class="key">客户ID</div>
         <div class="value">
@@ -17,8 +17,9 @@
             :disabled="mode"
             v-model="arrs.cus_name"
             @input="getCusList"
+            @blur="handleblur"
           />
-          <ul class="ul-customer">
+          <ul class="ul-customer" v-if="customers.length">
             <li @click="setCusName(item)" v-for="item in customers" :key="item">{{item.customer}}</li>
           </ul>
         </div>
@@ -32,7 +33,17 @@
       <div class="card-item">
         <div class="key">产品名称</div>
         <div class="value">
-          <input v-model="arrs.pt_name" type="text" placeholder="产品名称" :disabled="mode" />
+          <input
+            type="text"
+            placeholder="产品名称"
+            :disabled="mode"
+            v-model="arrs.pt_name"
+            @input="getTypesData"
+            @blur="handleblur"
+          />
+          <ul class="ul-customer" v-if="products.length">
+            <li @click="setProduct(item)" v-for="item in products" :key="item">{{item}}</li>
+          </ul>
         </div>
       </div>
       <div class="card-item">
@@ -53,6 +64,8 @@
           <input v-model="arrs.serial" type="text" placeholder="序列号" :disabled="mode" />
         </div>
       </div>
+    </div>
+    <div class="el-card is-always-shadow">
       <div class="card-item">
         <div class="key">服务器名称</div>
         <div class="value">
@@ -90,6 +103,7 @@
         </div>
       </div>
     </div>
+
     <div class="placeholder"></div>
     <div class="placeholder"></div>
     <div class="placeholder"></div>
@@ -109,9 +123,12 @@
 <script>
 import { clouds } from "@/clouds";
 import { getData, formatDate } from "../../../utils";
+import types from "@/pttype";
 var index;
 export default {
   onShow() {
+    console.log(types[0].indexOf("7") != -1);
+
     this.init();
   },
   data() {
@@ -119,7 +136,8 @@ export default {
       cancel: true,
       mode: true,
       arrs: {},
-      customers: []
+      customers: [],
+      products: []
     };
   },
   methods: {
@@ -201,6 +219,7 @@ export default {
     },
     async getCusList() {
       console.log("getList");
+      this.products = [];
       this.customers = [{ customer: "正在加载数据" }];
       if (this.arrs.cus_name == "") return (this.customers = []);
       const { result: res } = await clouds("cusList", {
@@ -215,9 +234,39 @@ export default {
       this.arrs.cus_name = val.customer;
       this.$forceUpdate();
       this.customers = [];
+    },
+
+    getTypesData() {
+      // console.log(this.arrs.pt_name);
+      this.customers = [];
+      this.products = [];
+      if (this.arrs.pt_name == "") return (this.products = []);
+      // this.products = types.find(i => {
+      //   if (i == this.pt_name) return i;
+      // });
+      this.products = types.filter(v => {
+        return v.indexOf(this.arrs.pt_name) != -1;
+      });
+      // this.products = types;
+    },
+    setProduct(val) {
+      console.log(val);
+      this.arrs.pt_name = val;
+      this.$forceUpdate();
+      this.products = [];
+    },
+    bindChange(e) {
+      console.log(e);
+    },
+    handleblur() {
+      // this.products = [];
+      // this.customers = [];
     }
   }
 };
 </script>
 <style>
+.ul-customer {
+  margin-top: 20rpx;
+}
 </style>

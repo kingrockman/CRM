@@ -7,23 +7,38 @@
     <div class="login" v-if="!nickName">
       <input v-model="userName" type="text" placeholder="用户名" />
       <button class="btn" @click="login">登陆</button>
-    </div>
-    <!-- 日期选择器 -->
+    </div>日期选择器
     <picker mode="date" @change="bindTimeChange">
       <span class="picker">{{time}}</span>
     </picker>
+    <div>
+      <Card>
+        <Buttons size="mini" @click="console.log(12222)">确认</Buttons>
+        <Buttons type="primary">确认确认确认</Buttons>
+        <Buttons type="success">123</Buttons>
+        <Buttons type="info">123</Buttons>
+        <Buttons type="warning">123</Buttons>
+        <Buttons type="danger">123</Buttons>
+      </Card>
+    </div>
   </div>
 </template>
 <script>
 import Todolist from "@/components/Todolist";
 import Cuslist from "@/components/Cuslist";
+import Card from "@/hele/card";
+import Buttons from "@/hele/button";
 import { login, getData, setData, formatDate, formatDates } from "@/utils";
 export default {
   components: {
     Todolist,
-    Cuslist
+    Cuslist,
+    Card,
+    Buttons
   },
   onLoad() {
+    console.log(Buttons);
+
     this.init();
     // 2019年12月16日
     console.log(new Date("2019-11-22").getTime());

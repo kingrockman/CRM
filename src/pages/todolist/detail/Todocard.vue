@@ -1,75 +1,47 @@
 <template>
   <div class="container">
-    <div class="card">
+    <div class="el-card is-always-shadow">
       <div class="card-item" hidden>
-        <div class="key">编号</div>:
-        <div class="value">
-          <input type="text" v-model="arrs._id" :disabled="mode" />
-        </div>
+        <input type="text" v-model="arrs._id" :disabled="mode" />
       </div>
       <div class="card-item">
-        <div class="key">客户名称</div>:
-        <div class="value">
-          <input type="text" @input="getCusList" v-model="arrs.customer" :disabled="mode" />
-          <ul class="ul-customer">
-            <li
-              @click="setCusName(item.customer)"
-              v-for="item in customers"
-              :key="item"
-            >{{item.customer}}</li>
-          </ul>
-        </div>
+        <input
+          type="text"
+          @input="getCusList"
+          v-model="arrs.customer"
+          :disabled="mode"
+          placeholder="客户名称"
+        />
+        <ul class="ul-customer">
+          <li
+            @click="setCusName(item.customer)"
+            v-for="item in customers"
+            :key="item"
+          >{{item.customer}}</li>
+        </ul>
       </div>
       <div class="card-item">
-        <div class="key">服务内容</div>:
-        <div class="value">
-          <input type="text" v-model="arrs.description" :disabled="mode" />
-        </div>
+        <input type="text" v-model="arrs.description" :disabled="mode" placeholder="服务内容" />
       </div>
       <div class="card-item">
-        <div class="key">工作内容</div>:
-        <div class="value">
-          <textarea type="text" v-model="arrs.detail" :disabled="mode"></textarea>
-        </div>
+        <textarea type="text" v-model="arrs.detail" :disabled="mode" placeholder="工作内容"></textarea>
+      </div>
+    </div>
+    <div class="el-card is-always-shadow">
+      <div class="card-item">
+        <input type="text" v-model="arrs.handler" :disabled="mode" placeholder="处理人" />
       </div>
       <div class="card-item">
-        <div class="key">处理人</div>:
-        <div class="value">
-          <input type="text" v-model="arrs.handler" :disabled="mode" />
-        </div>
+        <switch type="checkbox" @change="handlerStatus" :disabled="mode" :checked="arrs.status" />
+        {{arrs.status?"已完成":"未完成"}}
       </div>
       <div class="card-item">
-        <div class="key">状态</div>:
-        <div class="value">
-          <switch type="checkbox" @change="handlerStatus" :disabled="mode" :checked="arrs.status" />
-          {{arrs.status?"已完成":"未完成"}}
-          <!-- <input type="text" v-model="arrs.status" :disabled="mode" /> -->
-        </div>
+        <picker mode="date" v-model="ReDate" @change="bindReDateChange" :disabled="mode">
+          <span class="picker">上门时间:{{ReDate}}</span>
+        </picker>
       </div>
-
-      <div class="card-item">
-        <div class="key">上门时间</div>:
-        <div class="value">
-          <picker mode="date" v-model="ReDate" @change="bindReDateChange" :disabled="mode">
-            <span class="picker">{{ReDate}}</span>
-          </picker>
-          <!-- <input type="text" v-model="arrs.re_date" :disabled="mode" /> -->
-        </div>
-      </div>
-      <div class="card-item">
-        <div class="key">创建者</div>:
-        <div class="value">
-          {{arrs.creater}}
-          <!-- <input type="text" v-model="arrs.creater" disabled /> -->
-        </div>
-      </div>
-      <div class="card-item">
-        <div class="key">创建日期</div>:
-        <div class="value">
-          {{ct_date}}
-          <!-- <input type="text" v-model="ct_date" disabled /> -->
-        </div>
-      </div>
+      <div class="card-item">创建者:{{arrs.creater}}</div>
+      <div class="card-item">创建日期:{{ct_date}}</div>
     </div>
     <div class="tools">
       <div class="navbar" v-if="mode">

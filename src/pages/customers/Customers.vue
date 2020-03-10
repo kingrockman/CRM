@@ -1,27 +1,26 @@
 <template>
-  <div class="container" style="padding:30px 0">
-    <div class="searchbox">
-      <input class="searchval" type="text" placeholder="请输入查询内容..." v-model="keywords" />
-      <input class="searchbtn" type="text" @click="getCustomersData(true)" value="查询" disabled />
-      <!-- <scroll-view class="scrollpages" scroll-x>
-        <div
-          :class="pageQuery.currentPage-1==i?'scrollpagesitem active':'scrollpagesitem'"
-          v-for="i in pageQuery.totalPage"
-          :key="i"
-          @click="handleCPage(i)"
-        >{{i+1}}</div>
-      </scroll-view>-->
+  <div class="container">
+    <div class="el-card is-always-shadow searchbox">
+      <input type="text" placeholder="请输入查询内容..." v-model="keywords" />
+      <input type="text" @click="getCustomersData(true)" value="查询" disabled />
     </div>
-    <div class="list" @click="toDetail(item._id)" :key="item" v-for="item in arrs">
-      <div class="title">{{item.customer}}</div>
-      <div class="subtitle">
-        <div class="left">{{item.person}}</div>
-        <div class="right">{{item.tel}}</div>
-      </div>
-    </div>
-    <div class="placeholder"></div>
     <div class="tools">
-      <button class="btn" @click="toDetail(-1)">新增</button>
+      <button class="btn circle right" @click="toDetail(-1)">+</button>
+    </div>
+
+    <div style="padding-top:42px;padding-bottom:60px">
+      <div
+        class="el-card is-always-shadow"
+        @click="toDetail(item._id)"
+        :key="item"
+        v-for="item in arrs"
+      >
+        <div class="header">{{item.customer}}</div>
+        <div class="footer">
+          <div class="left">{{item.person}}</div>
+          <div class="right">{{item.tel}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
